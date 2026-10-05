@@ -31,18 +31,41 @@
   gap: var(--sp-3);
 }
 
-.avatar {
-  width: 110px;
-  height: 110px;
+.avatarRing {
+  position: relative;
+  width: 126px;
+  height: 126px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--c-blue) 0%, #1E3A8A 100%);
-  color: white;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--c-blue) 0%, #38bdf8 50%, #1d4ed8 100%);
+  box-shadow: 0 10px 25px -4px rgba(37, 99, 235, 0.35), 0 0 0 4px rgba(37, 99, 235, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.2rem;
-  font-weight: 800;
-  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.avatarRing:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -4px rgba(37, 99, 235, 0.45), 0 0 0 6px rgba(37, 99, 235, 0.12);
+}
+
+.avatarInner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #ffffff;
+  border: 3px solid #ffffff;
+  position: relative;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
 }
 
 .roleBadge {

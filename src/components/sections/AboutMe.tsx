@@ -9,7 +9,15 @@ const AboutMe: React.FC = () => {
           {/* Columna Izquierda: Perfil y contacto */}
           <div className={styles.profileCol}>
             <div className={styles.avatarWrapper}>
-              <div className={styles.avatar}>AM</div>
+              <div className={styles.avatarRing}>
+                <div className={styles.avatarInner}>
+                  <img
+                    src="/perfil.jpg"
+                    alt="Adrián Morant - Desarrollador & Consultor IA"
+                    className={styles.avatarImage}
+                  />
+                </div>
+              </div>
               <div className={styles.roleBadge}>Desarrollador & Consultor IA</div>
             </div>
 
