@@ -169,15 +169,21 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--r-lg);
   padding: var(--sp-4);
-  min-height: 220px;
+  min-height: 200px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .codeBox pre {
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 0.85rem;
+  font-size: 0.825rem;
   color: #93C5FD;
   white-space: pre-wrap;
-  word-break: break-word;
+  word-break: break-all;
   line-height: 1.6;
 }
 
@@ -244,5 +250,21 @@
     flex-direction: column;
     text-align: center;
     padding: var(--sp-5);
+  }
+}
+
+@media (max-width: 480px) {
+  .stepCard {
+    padding: 1rem 0.875rem;
+    gap: var(--sp-3);
+  }
+  .consoleBody {
+    padding: 1rem 0.875rem;
+  }
+  .featuredNote {
+    padding: 1.25rem 1rem;
+  }
+  .noteText p {
+    font-size: 0.95rem;
   }
 }

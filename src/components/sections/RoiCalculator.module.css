@@ -179,8 +179,33 @@
     grid-template-columns: 1fr;
     padding: var(--sp-5);
     gap: var(--sp-6);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .resultsCol {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .metricsGrid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 1rem;
+    border-radius: var(--r-xl);
+  }
+  .resultsCol {
+    padding: 1rem;
+  }
+  .savingsValue {
+    font-size: 1.65rem;
+    word-break: break-word;
+  }
+  .savingsBox {
+    padding: 1rem;
   }
 }

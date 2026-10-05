@@ -122,3 +122,13 @@
     gap: 8px;
   }
 }
+
+@media (max-width: 480px) {
+  .box {
+    padding: 1.25rem 0.875rem;
+    border-radius: var(--r-xl);
+  }
+  .card {
+    padding: 1rem 0.875rem;
+  }
+}

@@ -177,9 +177,11 @@
   background: var(--c-surface);
   border: 1px solid var(--c-border);
   border-radius: var(--r-md);
-  font-size: 0.925rem;
+  font-size: 16px; /* Evita que iOS Safari haga zoom in automático */
   color: var(--c-ink);
   outline: none;
+  width: 100%;
+  box-sizing: border-box;
   transition: border-color var(--t-fast) ease, box-shadow var(--t-fast) ease;
 }
 
@@ -245,5 +247,21 @@
   }
   .formCol {
     padding: var(--sp-5);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 480px) {
+  .formCol {
+    padding: 1.25rem 1rem;
+    border-radius: var(--r-xl);
+  }
+  .directCard {
+    padding: 1.25rem 1rem;
+  }
+  .directLink {
+    word-break: break-all;
   }
 }

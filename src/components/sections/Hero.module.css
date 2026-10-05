@@ -105,18 +105,26 @@
   border-radius: var(--r-xl);
   box-shadow: var(--shadow-xl);
   overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 /* Pipeline Flow */
 .pipelineBar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   background: #F1F5F9;
   border-bottom: 1px solid var(--c-border);
   padding: 10px 14px;
   overflow-x: auto;
-  gap: 8px;
+  -webkit-overflow-scrolling: touch;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .pipelineStep {
@@ -350,6 +358,11 @@
   display: flex;
   flex-direction: column;
   gap: var(--sp-3);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .asientoTitle {
@@ -360,6 +373,7 @@
 
 .asientoTable {
   width: 100%;
+  min-width: 460px;
   border-collapse: collapse;
   font-size: 0.825rem;
   background: white;
@@ -444,8 +458,12 @@
 
 .tableScrollWrapper {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: block;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
 
 @media (max-width: 960px) {
@@ -466,6 +484,9 @@
     position: static;
     margin-top: var(--sp-4);
     box-shadow: var(--shadow-sm);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .ctas {
     flex-direction: column;
@@ -522,6 +543,11 @@
   }
   .accountSuggestion {
     padding: 8px 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .asientoFooter {
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;

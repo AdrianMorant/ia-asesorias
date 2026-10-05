@@ -174,23 +174,43 @@
 }
 
 @media (max-width: 1080px) {
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
   .nav, .actions {
     display: none;
   }
   .hamburger {
     display: flex;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .mobileMenu {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
 @media (max-width: 480px) {
   .inner {
-    height: 4rem;
+    height: 3.75rem;
+  }
+  .logo {
+    gap: 8px;
+  }
+  .logoMark {
+    width: 1.85rem;
+    height: 1.85rem;
+    font-size: 0.85rem;
   }
   .logoBadge {
     display: none;
   }
   .logoText {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
   .mobileMenu {
     padding: 1.25rem 1rem;

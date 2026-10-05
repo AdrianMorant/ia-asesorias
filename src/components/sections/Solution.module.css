@@ -190,3 +190,17 @@
     padding: var(--sp-5);
   }
 }
+
+@media (max-width: 480px) {
+  .optionCard {
+    padding: 1.25rem 1rem;
+    border-radius: var(--r-xl);
+  }
+  .capabilitiesWrapper {
+    padding: 1.25rem 1rem;
+    border-radius: var(--r-xl);
+  }
+  .capCard {
+    padding: 1rem 0.875rem;
+  }
+}

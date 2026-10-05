@@ -150,3 +150,18 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 480px) {
+  .card {
+    padding: 1.25rem 1rem;
+    border-radius: var(--r-xl);
+  }
+  .softwareBanner {
+    padding: 1.25rem 1rem;
+    border-radius: var(--r-xl);
+  }
+  .softwareChip {
+    font-size: 0.78rem;
+    padding: 5px 10px;
+  }
+}

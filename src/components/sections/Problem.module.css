@@ -203,3 +203,11 @@
     padding: var(--sp-5);
   }
 }
+
+@media (max-width: 480px) {
+  .colTraditional,
+  .colAutomated {
+    padding: 1.25rem 1rem;
+    border-radius: var(--r-xl);
+  }
+}

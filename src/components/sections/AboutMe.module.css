@@ -188,3 +188,16 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 480px) {
+  .card {
+    padding: 1.25rem 1rem;
+    border-radius: var(--r-xl);
+  }
+  .directCard {
+    padding: 1.25rem 1rem;
+  }
+  .directLink {
+    word-break: break-all;
+  }
+}
