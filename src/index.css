@@ -242,6 +242,67 @@ html, body, .app-container {
 .reveal--d4 { transition-delay: 0.32s; }
 .reveal--d5 { transition-delay: 0.40s; }
 
+/* Micro-animación Shimmer en botón principal */
+.btn--primary {
+  position: relative;
+  overflow: hidden;
+}
+.btn--primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transform: translateX(-150%) skewX(-20deg);
+  animation: btnShimmer 3.8s infinite ease-in-out;
+}
+@keyframes btnShimmer {
+  0%, 75% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(300%) skewX(-20deg); }
+}
+
+/* Elevación interactiva para tarjetas */
+.card-tech {
+  transition: transform 0.28s var(--ease), border-color 0.28s var(--ease), box-shadow 0.28s var(--ease);
+}
+.card-tech:hover {
+  transform: translateY(-3px);
+  border-color: #93C5FD;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Radar Pulse para estados en vivo */
+.radar-pulse {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.radar-pulse::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: inherit;
+  animation: radarPing 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes radarPing {
+  0% { transform: scale(1); opacity: 0.8; }
+  75%, 100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Float sutil para badges flotantes */
+.float-ambient {
+  animation: floatAmbient 5s ease-in-out infinite;
+}
+@keyframes floatAmbient {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
 /* ═══════════════════════════════════════════════
    SECTION HEADER (shared)
 ═══════════════════════════════════════════════ */

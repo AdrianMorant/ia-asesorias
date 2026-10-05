@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Hero from './components/sections/Hero';
@@ -14,6 +15,28 @@ import Faq from './components/sections/Faq';
 import Contact from './components/sections/Contact';
 
 function App() {
+  useEffect(() => {
+    // Observador para animaciones de revelado suave al hacer scroll
+    const sections = document.querySelectorAll('section, .reveal');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    sections.forEach((sec) => {
+      sec.classList.add('reveal');
+      observer.observe(sec);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="app-container">
       <Header />

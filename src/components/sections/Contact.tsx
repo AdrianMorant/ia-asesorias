@@ -1,5 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Contact.module.css';
+
+export interface LeadRecord {
+  id: string;
+  fecha: string;
+  nombre: string;
+  email: string;
+  telefono: string;
+  software: string;
+  volumen: string;
+}
+
+const STORAGE_KEY = 'ia_asesorias_leads';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +24,20 @@ const Contact: React.FC = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [leads, setLeads] = useState<LeadRecord[]>([]);
+  const [showModal, setShowModal] = useState(false);
+
+  // Cargar leads guardados en el navegador
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        setLeads(JSON.parse(saved));
+      }
+    } catch {
+      // Manejo silencioso en caso de modo privado estricto
+    }
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -22,10 +48,62 @@ const Contact: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    const now = new Date();
+    const formattedDate = `${now.toLocaleDateString('es-ES')} ${now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+
+    const newLead: LeadRecord = {
+      id: `LEAD-${Date.now().toString().slice(-4)}`,
+      fecha: formattedDate,
+      nombre: formData.nombre,
+      email: formData.email,
+      telefono: formData.telefono,
+      software: formData.software,
+      volumen: formData.volumen,
+    };
+
     setTimeout(() => {
+      try {
+        const updatedLeads = [newLead, ...leads];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedLeads));
+        setLeads(updatedLeads);
+      } catch (err) {
+        console.error('Error al guardar lead en localStorage:', err);
+      }
+
       setIsSubmitting(false);
       setSubmitted(true);
     }, 600);
+  };
+
+  const downloadCSV = () => {
+    if (leads.length === 0) return;
+    const headers = ['ID', 'Fecha', 'Nombre', 'Email', 'Telefono', 'Software', 'Volumen'];
+    const rows = leads.map((l) => [
+      l.id,
+      `"${l.fecha}"`,
+      `"${l.nombre.replace(/"/g, '""')}"`,
+      `"${l.email.replace(/"/g, '""')}"`,
+      `"${l.telefono.replace(/"/g, '""')}"`,
+      `"${l.software.replace(/"/g, '""')}"`,
+      `"${l.volumen.replace(/"/g, '""')}"`,
+    ]);
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `leads_asesorias_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const clearLeads = () => {
+    if (window.confirm('¿Seguro que deseas vaciar el historial de solicitudes recibidas?')) {
+      localStorage.removeItem(STORAGE_KEY);
+      setLeads([]);
+    }
   };
 
   return (
@@ -81,6 +159,16 @@ const Contact: React.FC = () => {
                 Respondo personalmente a todas las consultas en menos de 24 horas.
               </span>
             </div>
+
+            {/* Acceso a bandeja de solicitudes para el administrador */}
+            <button
+              type="button"
+              onClick={() => setShowModal(true)}
+              className={styles.adminTrigger}
+              title="Ver solicitudes registradas en este navegador"
+            >
+              📋 Ver solicitudes recibidas ({leads.length})
+            </button>
           </div>
 
           {/* Right Column: Optimized Agile Form */}
@@ -218,6 +306,103 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal de bandeja de solicitudes */}
+      {showModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowModal(false)}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <div className={styles.modalTitleGroup}>
+                <span>📥</span>
+                <h3 className={styles.modalTitle}>Bandeja de Solicitudes Recibidas ({leads.length})</h3>
+              </div>
+              <button 
+                className={styles.modalCloseBtn}
+                onClick={() => setShowModal(false)}
+                aria-label="Cerrar modal"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className={styles.modalBody}>
+              <div className={styles.modalExplainer}>
+                💡 <strong>¿Dónde se guardan los datos?</strong><br />
+                Cada vez que alguien envía el formulario, sus datos se almacenan de forma instantánea aquí en tu navegador (en <code>localStorage</code>) para que no se pierdan. Para recibirlos automáticamente en tu correo electrónico (<code>amorant2005@gmail.com</code>) o en Google Sheets/CRM al publicar tu web en Internet, solo necesitas conectar un endpoint gratuito (como Formspree o Web3Forms).
+              </div>
+
+              {leads.length === 0 ? (
+                <div className={styles.emptyState}>
+                  No hay solicitudes registradas todavía.<br />
+                  Rellena el formulario de la derecha para ver cómo aparece aquí en tiempo real.
+                </div>
+              ) : (
+                <div className={styles.leadsTableWrapper}>
+                  <table className={styles.leadsTable}>
+                    <thead>
+                      <tr>
+                        <th>Fecha</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Software Contable</th>
+                        <th>Volumen / Mes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {leads.map((l) => (
+                        <tr key={l.id}>
+                          <td><strong>{l.fecha}</strong></td>
+                          <td>{l.nombre}</td>
+                          <td><a href={`mailto:${l.email}`} style={{ color: 'var(--c-blue)' }}>{l.email}</a></td>
+                          <td><a href={`tel:${l.telefono}`} style={{ color: 'var(--c-blue)' }}>{l.telefono}</a></td>
+                          <td><span className="badge badge--blue">{l.software}</span></td>
+                          <td>{l.volumen}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+
+            <div className={styles.modalFooter}>
+              <div>
+                {leads.length > 0 && (
+                  <button 
+                    type="button" 
+                    onClick={clearLeads} 
+                    className="btn btn--ghost" 
+                    style={{ fontSize: '0.82rem', padding: '6px 12px', color: '#EF4444' }}
+                  >
+                    🗑️ Vaciar registros
+                  </button>
+                )}
+              </div>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                {leads.length > 0 && (
+                  <button 
+                    type="button" 
+                    onClick={downloadCSV} 
+                    className="btn btn--primary" 
+                    style={{ fontSize: '0.85rem', padding: '6px 14px' }}
+                  >
+                    📥 Descargar en Excel (CSV)
+                  </button>
+                )}
+                <button 
+                  type="button" 
+                  onClick={() => setShowModal(false)} 
+                  className="btn btn--ghost" 
+                  style={{ fontSize: '0.85rem', padding: '6px 14px' }}
+                >
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
