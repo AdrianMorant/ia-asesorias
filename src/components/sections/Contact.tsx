@@ -12,6 +12,7 @@ export interface LeadRecord {
 }
 
 const STORAGE_KEY = 'ia_asesorias_leads';
+const WEB3FORMS_KEY = '0415647e-e22b-4ed5-a00d-8bd10604a02f';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -45,7 +46,7 @@ const Contact: React.FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -62,18 +63,41 @@ const Contact: React.FC = () => {
       volumen: formData.volumen,
     };
 
-    setTimeout(() => {
-      try {
-        const updatedLeads = [newLead, ...leads];
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedLeads));
-        setLeads(updatedLeads);
-      } catch (err) {
-        console.error('Error al guardar lead en localStorage:', err);
-      }
+    // 1. Guardar en localStorage como copia de seguridad local
+    try {
+      const updatedLeads = [newLead, ...leads];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedLeads));
+      setLeads(updatedLeads);
+    } catch (err) {
+      console.error('Error al guardar lead en localStorage:', err);
+    }
 
-      setIsSubmitting(false);
-      setSubmitted(true);
-    }, 600);
+    // 2. Enviar a Web3Forms para recibir notificación instantánea por correo electrónico
+    try {
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `🚀 Nueva solicitud de viabilidad IA - ${formData.nombre}`,
+          from_name: 'IA Asesorías Web',
+          nombre: formData.nombre,
+          email: formData.email,
+          telefono: formData.telefono,
+          software_contable: formData.software,
+          volumen_facturas: formData.volumen,
+          mensaje: `El despacho ${formData.nombre} solicita estudio de viabilidad para su software ${formData.software} (${formData.volumen}). Teléfono: ${formData.telefono} | Email: ${formData.email}`,
+        }),
+      });
+    } catch (err) {
+      console.warn('Envío a Web3Forms con advertencia (respaldado en local):', err);
+    }
+
+    setIsSubmitting(false);
+    setSubmitted(true);
   };
 
   const downloadCSV = () => {

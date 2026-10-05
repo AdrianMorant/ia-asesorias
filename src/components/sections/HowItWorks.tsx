@@ -122,8 +122,7 @@ const HowItWorks: React.FC = () => {
 
                 <div className={styles.navRow}>
                   <button
-                    className="btn btn--ghost"
-                    style={{ padding: '6px 14px', fontSize: '0.85rem' }}
+                    className={`${styles.navBtn} ${styles.navBtnPrev}`}
                     disabled={activeStep === 0}
                     onClick={() => setActiveStep((prev) => Math.max(0, prev - 1))}
                   >
@@ -133,8 +132,7 @@ const HowItWorks: React.FC = () => {
                     Paso {activeStep + 1} de {STEPS.length}
                   </span>
                   <button
-                    className="btn btn--primary"
-                    style={{ padding: '6px 14px', fontSize: '0.85rem' }}
+                    className={`${styles.navBtn} ${styles.navBtnNext}`}
                     disabled={activeStep === STEPS.length - 1}
                     onClick={() => setActiveStep((prev) => Math.min(STEPS.length - 1, prev + 1))}
                   >
