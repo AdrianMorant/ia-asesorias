@@ -1,0 +1,125 @@
+.section {
+  padding: var(--sp-20) 0;
+  background: var(--c-surface);
+  border-top: 1px solid var(--c-border);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto var(--sp-12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.title {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--c-ink);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--c-muted);
+  line-height: 1.6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-8);
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-2xl);
+  padding: var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--t-fast) ease, box-shadow var(--t-fast) ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.cardFeatured {
+  background: linear-gradient(180deg, #F8FAFC 0%, #EFF6FF 100%);
+  border-color: #93C5FD;
+}
+
+.cardBadge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #E2E8F0;
+  color: var(--c-ink);
+  margin-bottom: var(--sp-4);
+}
+
+.cardBadgeFeatured {
+  background: var(--c-blue);
+  color: white;
+}
+
+.cardTitle {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--c-ink);
+  margin-bottom: var(--sp-3);
+}
+
+.cardDesc {
+  font-size: 0.95rem;
+  color: var(--c-muted);
+  line-height: 1.6;
+  margin-bottom: var(--sp-6);
+}
+
+.pillContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-6);
+  flex-grow: 1;
+}
+
+.pill {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1E293B;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.idealFor {
+  padding-top: var(--sp-4);
+  border-top: 1px solid rgba(0,0,0,0.07);
+  font-size: 0.875rem;
+  color: var(--c-muted);
+  line-height: 1.5;
+}
+
+.idealFor strong {
+  color: var(--c-ink);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

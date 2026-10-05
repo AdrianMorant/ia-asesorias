@@ -1,0 +1,131 @@
+.section {
+  padding: var(--sp-20) 0;
+  background: var(--c-surface);
+  border-top: 1px solid var(--c-border);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto var(--sp-12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.title {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--c-ink);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--c-muted);
+  line-height: 1.6;
+}
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-6);
+  position: relative;
+}
+
+.phaseCard {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-xl);
+  padding: var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform var(--t-fast) ease, box-shadow var(--t-fast) ease;
+}
+
+.phaseCard:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: #93C5FD;
+}
+
+.phaseHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: var(--sp-4);
+}
+
+.phaseNumber {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--c-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.timeframe {
+  font-size: 0.85rem;
+  color: var(--c-muted);
+  font-weight: 600;
+}
+
+.statusBadge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #047857;
+  background: #D1FAE5;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-top: 4px;
+}
+
+.phaseTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--c-ink);
+  margin-bottom: var(--sp-3);
+}
+
+.phaseDesc {
+  font-size: 0.92rem;
+  color: var(--c-muted);
+  line-height: 1.5;
+  margin-bottom: var(--sp-6);
+}
+
+.deliverables {
+  margin-top: auto;
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--c-border);
+}
+
+.delivTitle {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--c-ink);
+  margin-bottom: var(--sp-3);
+}
+
+.deliverables ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #334155;
+}
+
+@media (max-width: 960px) {
+  .timeline {
+    grid-template-columns: 1fr;
+  }
+}

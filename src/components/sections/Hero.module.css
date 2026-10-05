@@ -1,0 +1,479 @@
+.hero {
+  padding: var(--sp-24) 0 var(--sp-20);
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(37, 99, 235, 0.07) 0%, transparent 70%),
+    var(--c-bg);
+  overflow: hidden;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.12fr;
+  gap: var(--sp-12);
+  align-items: center;
+}
+
+/* ── Copy Column ── */
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1D4ED8;
+  font-size: 0.825rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.pillDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.title {
+  font-size: clamp(2.2rem, 3.8vw, 3.1rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--c-ink);
+  line-height: 1.15;
+}
+
+.sub {
+  font-size: 1.125rem;
+  color: var(--c-muted);
+  line-height: 1.6;
+}
+
+.ctas {
+  display: flex;
+  gap: var(--sp-4);
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: var(--sp-2);
+}
+
+/* Trust Badges under CTAs */
+.trustBadges {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--c-border);
+}
+
+.trustBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #334155;
+  font-weight: 600;
+}
+
+.trustIcon {
+  font-size: 1rem;
+}
+
+/* ── Visual Column ── */
+.visual {
+  position: relative;
+}
+
+.window {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+}
+
+/* Pipeline Flow */
+.pipelineBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #F1F5F9;
+  border-bottom: 1px solid var(--c-border);
+  padding: 10px 14px;
+  overflow-x: auto;
+  gap: 8px;
+}
+
+.pipelineStep {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.stepCircle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid var(--c-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.stepTexts {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--c-ink);
+  line-height: 1.1;
+}
+
+.stepTag {
+  font-size: 0.65rem;
+  color: var(--c-subtle);
+}
+
+.stepArrow {
+  font-size: 0.75rem;
+  color: #94A3B8;
+  margin-left: 4px;
+}
+
+/* Window Content */
+.windowContent {
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tabs {
+  display: flex;
+  background: #F1F5F9;
+  border-radius: var(--r-md);
+  padding: 3px;
+  gap: 4px;
+}
+
+.tabBtn {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: var(--r-sm);
+  color: var(--c-muted);
+  transition: all var(--t-fast) ease;
+}
+
+.tabBtnActive {
+  background: white;
+  color: var(--c-ink);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Data Card View */
+.dataCard {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.providerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.providerInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.providerLabel {
+  font-size: 0.72rem;
+  color: var(--c-subtle);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.providerName {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--c-ink);
+}
+
+.metaRow {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.metaChip {
+  font-size: 0.75rem;
+  background: white;
+  border: 1px solid var(--c-border);
+  padding: 3px 8px;
+  border-radius: 4px;
+  color: var(--c-muted);
+}
+
+.metaChip strong {
+  color: var(--c-ink);
+}
+
+/* Finance Grid */
+.financeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-2);
+}
+
+.financeItem {
+  background: white;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.financeLabel {
+  font-size: 0.72rem;
+  color: var(--c-subtle);
+  font-weight: 600;
+}
+
+.financeVal {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--c-ink);
+}
+
+.financeTotal {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+}
+
+.financeTotalVal {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--c-blue-dark);
+}
+
+/* Account Suggestion */
+.accountSuggestion {
+  background: #FEF3C7;
+  border: 1px solid #FDE68A;
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.suggestIcon {
+  font-size: 1.2rem;
+}
+
+.suggestText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.suggestTitle {
+  font-size: 0.72rem;
+  color: #92400E;
+  font-weight: 600;
+}
+
+.suggestAccount {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #78350F;
+}
+
+.suggestMatch {
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: #F59E0B;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* Asiento Tab View */
+.asientoCard {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.asientoTitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--c-ink);
+}
+
+.asientoTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.825rem;
+  background: white;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--c-border);
+}
+
+.asientoTable th {
+  background: #F8FAFC;
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--c-muted);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.asientoTable td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--c-border);
+  color: var(--c-ink);
+}
+
+.asientoTable tr:last-child td {
+  border-bottom: none;
+}
+
+.asientoFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: var(--sp-2);
+}
+
+.asientoSync {
+  font-size: 0.78rem;
+  color: var(--c-blue);
+  font-weight: 600;
+}
+
+/* Floating Badge */
+.floatBadge {
+  position: absolute;
+  bottom: -16px;
+  right: 16px;
+  background: white;
+  border: 1px solid var(--c-border);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--r-lg);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+}
+
+.floatBadgeIcon {
+  font-size: 1.3rem;
+  background: #DCFCE7;
+  color: #16A34A;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floatBadgeTitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--c-ink);
+}
+
+.floatBadgeSub {
+  font-size: 0.72rem;
+  color: #16A34A;
+  font-weight: 600;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-8);
+  }
+  .financeGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--sp-12) 0 var(--sp-12);
+  }
+  .floatBadge {
+    position: static;
+    margin-top: var(--sp-4);
+    box-shadow: var(--shadow-sm);
+  }
+  .ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ctas .btn {
+    width: 100%;
+    text-align: center;
+  }
+  .financeGrid {
+    grid-template-columns: 1fr;
+  }
+  .metaRow {
+    flex-direction: column;
+    gap: 4px;
+  }
+}

@@ -1,0 +1,184 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  transition: background var(--t-base) ease, box-shadow var(--t-base) ease;
+  background: rgba(248, 250, 252, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+  width: 100%;
+}
+
+.scrolled {
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 0 var(--c-border);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  height: 4.5rem;
+  width: 100%;
+  gap: var(--sp-4);
+}
+
+/* ── Logo ── */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: start;
+  text-decoration: none;
+}
+
+.logoMark {
+  width: 2.1rem;
+  height: 2.1rem;
+  background: linear-gradient(135deg, var(--c-blue) 0%, #1D4ED8 100%);
+  color: white;
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+
+.logoText {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--c-ink);
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+
+.logoAccent {
+  color: var(--c-blue);
+}
+
+.logoBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--c-blue);
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* ── Desktop Navigation (Strictly Centered) ── */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navLink {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--c-muted);
+  transition: all var(--t-fast) ease;
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--r-md);
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  color: var(--c-ink);
+  background: rgba(241, 245, 249, 0.85);
+}
+
+/* ── Actions / CTA (Pinned to Right inside Container) ── */
+.actions {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+}
+
+.ctaBtn {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--r-md);
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+}
+
+/* ── Mobile Hamburger ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--sp-2);
+  border-radius: var(--r-md);
+  justify-self: end;
+}
+
+.hamburger:hover {
+  background: #F1F5F9;
+}
+
+.hLine {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--c-ink);
+  border-radius: 999px;
+  transition: all var(--t-base) var(--ease);
+  transform-origin: center;
+}
+
+.hLineOpen1 { transform: rotate(45deg) translate(5px, 5px); }
+.hLineOpen2 { opacity: 0; transform: scaleX(0); }
+.hLineOpen3 { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* ── Mobile Menu Dropdown ── */
+.mobileMenu {
+  background: var(--c-surface);
+  border-top: 1px solid var(--c-border);
+  padding: var(--sp-6) var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  box-shadow: var(--shadow-xl);
+}
+
+.mobileLink {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--c-ink);
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.mobileLink:hover {
+  color: var(--c-blue);
+}
+
+/* Breakpoint: switch to hamburger before any overlap can occur */
+@media (max-width: 1080px) {
+  .nav, .actions {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+}

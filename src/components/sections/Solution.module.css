@@ -1,0 +1,192 @@
+.section {
+  padding: var(--sp-20) 0;
+  background: var(--c-bg);
+}
+
+.top {
+  text-align: center;
+  margin-bottom: var(--sp-12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.headline {
+  font-size: clamp(2.1rem, 3.8vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--c-ink);
+  line-height: 1.2;
+}
+
+.highlight {
+  background: linear-gradient(135deg, var(--c-blue) 0%, #1D4ED8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subheadline {
+  font-size: 1.15rem;
+  color: var(--c-muted);
+  line-height: 1.6;
+}
+
+/* Two Options Grid */
+.optionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-8);
+  margin-bottom: var(--sp-16);
+}
+
+.optionCard {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-2xl);
+  padding: var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--t-fast) ease, box-shadow var(--t-fast) ease;
+}
+
+.optionCard:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.optionCardB {
+  background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%);
+  border-color: #BFDBFE;
+}
+
+.optionTag {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #E2E8F0;
+  color: var(--c-ink);
+  margin-bottom: var(--sp-3);
+}
+
+.optionTagB {
+  background: var(--c-blue);
+  color: white;
+}
+
+.optionTitle {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--c-ink);
+  margin-bottom: var(--sp-2);
+}
+
+.optionDesc {
+  font-size: 0.95rem;
+  color: var(--c-muted);
+  line-height: 1.6;
+  margin-bottom: var(--sp-5);
+}
+
+.optionList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #1E293B;
+  font-weight: 500;
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--c-border);
+}
+
+/* Capabilities */
+.capabilitiesWrapper {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-2xl);
+  padding: var(--sp-10);
+  box-shadow: var(--shadow-sm);
+}
+
+.capHeader {
+  text-align: center;
+  margin-bottom: var(--sp-8);
+}
+
+.capTitle {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--c-ink);
+  margin-bottom: 4px;
+}
+
+.capSub {
+  font-size: 0.95rem;
+  color: var(--c-muted);
+}
+
+.capGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--sp-5);
+}
+
+.capCard {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-xl);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform var(--t-fast) ease;
+}
+
+.capCard:hover {
+  transform: translateY(-2px);
+  border-color: #93C5FD;
+}
+
+.capIcon {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.capItemTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--c-ink);
+}
+
+.capItemDesc {
+  font-size: 0.88rem;
+  color: var(--c-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 860px) {
+  .section {
+    padding: var(--sp-12) 0;
+  }
+  .optionsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-6);
+    margin-bottom: var(--sp-10);
+  }
+  .optionCard {
+    padding: var(--sp-5);
+  }
+  .capabilitiesWrapper {
+    padding: var(--sp-5);
+  }
+}

@@ -1,0 +1,188 @@
+.section {
+  padding: var(--sp-20) 0;
+  background: var(--c-bg);
+}
+
+.header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto var(--sp-12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.title {
+  font-size: clamp(2rem, 3.5vw, 2.7rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--c-ink);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--c-muted);
+  line-height: 1.6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-6);
+}
+
+.card {
+  background: var(--c-surface);
+  border-radius: var(--r-2xl);
+  padding: var(--sp-8);
+  border: 1px solid var(--c-border);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--t-fast) ease, box-shadow var(--t-fast) ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Green Level */
+.green {
+  border-top: 4px solid #16A34A;
+}
+
+.green .actionBadge {
+  background: #DCFCE7;
+  color: #15803D;
+}
+
+.green .statsVal {
+  color: #15803D;
+}
+
+/* Yellow Level */
+.yellow {
+  border-top: 4px solid #CA8A04;
+}
+
+.yellow .actionBadge {
+  background: #FEF9C3;
+  color: #A16207;
+}
+
+.yellow .statsVal {
+  color: #A16207;
+}
+
+/* Red Level */
+.red {
+  border-top: 4px solid #DC2626;
+}
+
+.red .actionBadge {
+  background: #FEE2E2;
+  color: #B91C1C;
+}
+
+.red .statsVal {
+  color: #B91C1C;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--sp-4);
+}
+
+.levelRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trafficLight {
+  font-size: 1.2rem;
+}
+
+.levelName {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--c-ink);
+}
+
+.actionBadge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--c-ink);
+  margin-bottom: var(--sp-4);
+}
+
+.sectionBlock {
+  margin-bottom: var(--sp-4);
+}
+
+.blockLabel {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--c-subtle);
+  margin-bottom: 2px;
+}
+
+.blockDesc {
+  font-size: 0.9rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.cardFooter {
+  margin-top: auto;
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--c-border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.825rem;
+}
+
+.statsLabel {
+  color: var(--c-subtle);
+  font-weight: 600;
+}
+
+.statsVal {
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.exampleText {
+  font-size: 0.78rem;
+  color: var(--c-muted);
+  line-height: 1.4;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,186 @@
+.section {
+  padding: var(--sp-20) 0;
+  background: var(--c-surface);
+  border-top: 1px solid var(--c-border);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto var(--sp-12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.title {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--c-ink);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--c-muted);
+  line-height: 1.6;
+}
+
+.card {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-2xl);
+  padding: var(--sp-10);
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--sp-10);
+  box-shadow: var(--shadow-sm);
+  align-items: center;
+}
+
+/* Sliders column */
+.slidersCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+}
+
+.sliderGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.sliderLabelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.sliderLabel {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--c-ink);
+}
+
+.sliderValue {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--c-blue);
+}
+
+.rangeInput {
+  width: 100%;
+  accent-color: var(--c-blue);
+  height: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.rangeTicks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--c-subtle);
+}
+
+/* Results column */
+.resultsCol {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-xl);
+  padding: var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+  box-shadow: var(--shadow-md);
+}
+
+.resultsTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--c-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+}
+
+.metricCard {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+}
+
+.metricLabel {
+  font-size: 0.78rem;
+  color: var(--c-muted);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.metricBig {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--c-ink);
+  line-height: 1.2;
+}
+
+.metricSub {
+  font-size: 0.75rem;
+  color: var(--c-subtle);
+  margin-top: 4px;
+}
+
+.savingsBox {
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+  border: 1px solid #93C5FD;
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  text-align: center;
+}
+
+.savingsLabel {
+  font-size: 0.85rem;
+  color: #1E3A8A;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.savingsValue {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--c-blue-dark);
+  letter-spacing: -0.02em;
+}
+
+.savingsNote {
+  font-size: 0.8rem;
+  color: #3B82F6;
+  margin-top: 4px;
+}
+
+@media (max-width: 860px) {
+  .section {
+    padding: var(--sp-12) 0;
+  }
+  .card {
+    grid-template-columns: 1fr;
+    padding: var(--sp-5);
+    gap: var(--sp-6);
+  }
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+}
