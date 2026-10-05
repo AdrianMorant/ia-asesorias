@@ -153,36 +153,38 @@ const Hero: React.FC = () => {
                 ) : (
                   <div className={styles.asientoCard}>
                     <div className={styles.asientoTitle}>Borrador de Asiento en Partida Doble:</div>
-                    <table className={styles.asientoTable}>
-                      <thead>
-                        <tr>
-                          <th>Cuenta PGC</th>
-                          <th>Descripción</th>
-                          <th>Debe</th>
-                          <th>Haber</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td><strong>628.0001</strong></td>
-                          <td>Suministros de energía</td>
-                          <td>1.250,00 €</td>
-                          <td>—</td>
-                        </tr>
-                        <tr>
-                          <td><strong>472.0021</strong></td>
-                          <td>H.P. IVA Soportado (21%)</td>
-                          <td>262,50 €</td>
-                          <td>—</td>
-                        </tr>
-                        <tr>
-                          <td><strong>410.0849</strong></td>
-                          <td>Suministros Industriales Ibérica</td>
-                          <td>—</td>
-                          <td><strong>1.512,50 €</strong></td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div className={styles.tableScrollWrapper}>
+                      <table className={styles.asientoTable}>
+                        <thead>
+                          <tr>
+                            <th>Cuenta PGC</th>
+                            <th>Descripción</th>
+                            <th>Debe</th>
+                            <th>Haber</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td><strong>628.0001</strong></td>
+                            <td>Suministros de energía</td>
+                            <td>1.250,00 €</td>
+                            <td>—</td>
+                          </tr>
+                          <tr>
+                            <td><strong>472.0021</strong></td>
+                            <td>H.P. IVA Soportado (21%)</td>
+                            <td>262,50 €</td>
+                            <td>—</td>
+                          </tr>
+                          <tr>
+                            <td><strong>410.0849</strong></td>
+                            <td>Suministros Industriales Ibérica</td>
+                            <td>—</td>
+                            <td><strong>1.512,50 €</strong></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                     <div className={styles.asientoFooter}>
                       <span className="badge badge--green">✓ Cuadre exacto (Debe = Haber = 1.512,50 €)</span>
                       <span className={styles.asientoSync}>Listo para exportar a Holded / A3 / Sage / Contasol</span>

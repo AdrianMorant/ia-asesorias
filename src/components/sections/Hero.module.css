@@ -442,6 +442,12 @@
   font-weight: 600;
 }
 
+.tableScrollWrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 @media (max-width: 960px) {
   .grid {
     grid-template-columns: 1fr;
@@ -470,10 +476,54 @@
     text-align: center;
   }
   .financeGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  .financeItem {
+    padding: 8px 10px;
   }
   .metaRow {
     flex-direction: column;
     gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.65rem;
+    line-height: 1.22;
+  }
+  .sub {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .windowContent {
+    padding: 0.875rem;
+  }
+  .cardHeader {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+  .tabs {
+    width: 100%;
+  }
+  .tabBtn {
+    flex: 1;
+    font-size: 0.72rem;
+    padding: 6px 4px;
+    text-align: center;
+  }
+  .dataCard {
+    padding: 0.75rem;
+  }
+  .providerName {
+    font-size: 0.95rem;
+  }
+  .accountSuggestion {
+    padding: 8px 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
   }
 }

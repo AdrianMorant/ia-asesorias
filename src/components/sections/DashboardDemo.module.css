@@ -347,11 +347,65 @@
 
 @media (max-width: 1040px) {
   .kpiGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .section {
+    padding: var(--sp-12) 0;
+  }
+  .frameHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.75rem 1rem;
+    gap: 4px;
+  }
+  .syncStatus {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .kpiGrid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0.75rem;
+    gap: 8px;
+  }
+  .kpiCard {
+    padding: 0.75rem;
+  }
+  .kpiVal,
+  .kpiValHighlight,
+  .kpiValSaved {
+    font-size: 1.45rem;
+  }
+  .tableWrapper {
+    padding: 0.75rem;
+  }
+  .tableToolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .filterTabs {
+    width: 100%;
+    overflow-x: auto;
+  }
+  .filterBtn {
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+    padding: 5px 8px;
+    font-size: 0.72rem;
+  }
+  .tableFooter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 420px) {
   .kpiGrid {
     grid-template-columns: 1fr;
   }
