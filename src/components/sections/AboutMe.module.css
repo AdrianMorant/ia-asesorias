@@ -1,24 +1,29 @@
 .section {
+  position: relative;
   padding: var(--sp-20) 0;
-  background: var(--c-bg);
+  background: var(--c-bg-subtle);
+  border-top: 1px solid var(--c-border);
+  border-bottom: 1px solid var(--c-border);
 }
 
 .card {
-  background: var(--c-surface);
+  background: #FFFFFF;
   border: 1px solid var(--c-border);
-  border-radius: var(--r-2xl);
-  padding: var(--sp-12);
+  border-radius: var(--r-xl);
+  padding: var(--sp-10);
   display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: var(--sp-12);
+  grid-template-columns: 320px 1fr;
+  gap: var(--sp-10);
   box-shadow: var(--shadow-sm);
+  max-width: 1080px;
+  margin: 0 auto;
 }
 
 /* Profile Column */
 .profileCol {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-6);
+  gap: var(--sp-5);
   border-right: 1px solid var(--c-border);
   padding-right: var(--sp-8);
 }
@@ -33,21 +38,15 @@
 
 .avatarRing {
   position: relative;
-  width: 126px;
-  height: 126px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   padding: 3px;
-  background: linear-gradient(135deg, var(--c-blue) 0%, #38bdf8 50%, #1d4ed8 100%);
-  box-shadow: 0 10px 25px -4px rgba(37, 99, 235, 0.35), 0 0 0 4px rgba(37, 99, 235, 0.08);
+  background: linear-gradient(135deg, #0A78FC 0%, #0062D6 100%);
+  box-shadow: 0 4px 14px rgba(10, 120, 252, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
-}
-
-.avatarRing:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px -4px rgba(37, 99, 235, 0.45), 0 0 0 6px rgba(37, 99, 235, 0.12);
 }
 
 .avatarInner {
@@ -55,9 +54,8 @@
   height: 100%;
   border-radius: 50%;
   overflow: hidden;
-  background: #ffffff;
-  border: 3px solid #ffffff;
-  position: relative;
+  background: #FFFFFF;
+  border: 2px solid #FFFFFF;
 }
 
 .avatarImage {
@@ -69,53 +67,56 @@
 }
 
 .roleBadge {
-  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
   font-weight: 700;
-  color: var(--c-blue);
-  background: var(--c-blue-light);
+  color: var(--c-blue-700);
+  background: var(--c-blue-50);
+  border: 1px solid var(--c-blue-100);
   padding: 4px 12px;
-  border-radius: 999px;
+  border-radius: var(--r-full);
 }
 
 .directCard {
-  background: var(--c-bg);
+  background: var(--c-bg-subtle);
   border: 1px solid var(--c-border);
-  border-radius: var(--r-xl);
-  padding: var(--sp-5);
+  border-radius: var(--r-lg);
+  padding: var(--sp-4);
   display: flex;
   flex-direction: column;
-  gap: var(--sp-3);
+  gap: var(--sp-2);
 }
 
 .directTitle {
   font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
   font-weight: 700;
+  text-transform: uppercase;
   color: var(--c-subtle);
 }
 
 .directLinks {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .directLink {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--c-blue-dark);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--c-navy-900);
+  font-weight: 600;
+  transition: color var(--t-fast) ease;
 }
 
 .directLink:hover {
-  text-decoration: underline;
+  color: var(--c-blue-600);
 }
 
 .location {
-  font-size: 0.8rem;
-  color: var(--c-muted);
-  padding-top: var(--sp-2);
-  border-top: 1px solid var(--c-border);
+  font-size: 0.75rem;
+  color: var(--c-subtle);
+  line-height: 1.4;
+  margin-top: 4px;
 }
 
 /* Content Column */
@@ -126,28 +127,22 @@
 }
 
 .title {
-  font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+  font-size: clamp(1.75rem, 2.5vw, 2.2rem);
   font-weight: 800;
+  color: var(--c-navy-900);
   letter-spacing: -0.025em;
-  color: var(--c-ink);
-  line-height: 1.2;
 }
 
 .statementBox {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-3);
-  margin: var(--sp-2) 0;
+  gap: var(--sp-2);
 }
 
 .leadParagraph {
-  font-size: 1.05rem;
-  color: #334155;
-  line-height: 1.65;
-}
-
-.leadParagraph strong {
-  color: var(--c-ink);
+  font-size: 0.95rem;
+  color: var(--c-muted);
+  line-height: 1.6;
 }
 
 .principlesGrid {
@@ -158,69 +153,54 @@
 }
 
 .principleItem {
-  background: var(--c-bg);
+  background: var(--c-bg-subtle);
   border: 1px solid var(--c-border);
-  border-radius: var(--r-lg);
+  border-radius: var(--r-md);
   padding: var(--sp-4);
   display: flex;
-  gap: var(--sp-3);
+  gap: 10px;
 }
 
 .principleIcon {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   flex-shrink: 0;
 }
 
 .principleItem strong {
+  font-size: 0.875rem;
+  color: var(--c-navy-900);
   display: block;
-  font-size: 0.95rem;
-  color: var(--c-ink);
   margin-bottom: 2px;
 }
 
 .principleItem p {
-  font-size: 0.85rem;
-  color: var(--c-muted);
+  font-size: 0.8125rem;
+  color: var(--c-subtle);
   line-height: 1.45;
+  margin: 0;
 }
 
 .ctaRow {
   display: flex;
   gap: var(--sp-3);
-  align-items: center;
-  flex-wrap: wrap;
   margin-top: var(--sp-4);
+  flex-wrap: wrap;
 }
 
 @media (max-width: 900px) {
-  .section {
-    padding: var(--sp-12) 0;
-  }
   .card {
     grid-template-columns: 1fr;
-    padding: var(--sp-5);
-    gap: var(--sp-6);
   }
   .profileCol {
     border-right: none;
-    padding-right: 0;
     border-bottom: 1px solid var(--c-border);
-    padding-bottom: var(--sp-5);
-  }
-  .principlesGrid {
-    grid-template-columns: 1fr;
+    padding-right: 0;
+    padding-bottom: var(--sp-6);
   }
 }
 
-@media (max-width: 480px) {
-  .card {
-    padding: 1.25rem 1rem;
-    border-radius: var(--r-xl);
-  }
-  .directCard {
-    padding: 1.25rem 1rem;
-  }
-  .directLink {
-    word-break: break-all;
+@media (max-width: 600px) {
+  .principlesGrid {
+    grid-template-columns: 1fr;
   }
 }

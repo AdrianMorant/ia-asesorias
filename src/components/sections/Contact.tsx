@@ -1,432 +1,437 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './Contact.module.css';
+import { useLanguage } from '../../i18n';
+import LegalModal from '../common/LegalModal';
 
-export interface LeadRecord {
-  id: string;
-  fecha: string;
-  nombre: string;
-  email: string;
-  telefono: string;
-  software: string;
-  volumen: string;
-}
+const DEFAULT_WEB3FORMS_KEY = '0415647e-e22b-4ed5-a00d-8bd10604a02f';
 
-const STORAGE_KEY = 'ia_asesorias_leads';
-const WEB3FORMS_KEY = '0415647e-e22b-4ed5-a00d-8bd10604a02f';
+// Utilidad estricta para desinfección contextual de entradas (prevención XSS e inyecciones de cabeceras)
+const sanitizeText = (input: string, maxLen = 200): string => {
+  if (!input) return '';
+  return input
+    .replace(/<[^>]*>?/gm, '') // Elimina etiquetas HTML
+    .replace(/[\r\n\t]+/g, ' ') // Evita HTTP header injection
+    .trim()
+    .slice(0, maxLen);
+};
 
 const Contact: React.FC = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     nombre: '',
+    empresa: '',
     email: '',
     telefono: '',
     software: '',
     volumen: '500 a 2.000 facturas/mes',
+    notas: '',
   });
+
+  // Campo señuelo honeypot para trampas automáticas contra bots
+  const [honeypot, setHoneypot] = useState('');
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [leads, setLeads] = useState<LeadRecord[]>([]);
-  const [showModal, setShowModal] = useState(false);
+  const [legalOpen, setLegalOpen] = useState(false);
 
-  // Cargar leads guardados en el navegador
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        setLeads(JSON.parse(saved));
-      }
-    } catch {
-      // Manejo silencioso en caso de modo privado estricto
-    }
+  // Registro de tiempo de renderizado para control de spam algorítmico (< 2.5s = bot)
+  const mountTimeRef = useRef<number>(0);
+  const lastSubmitRef = useRef<number>(0);
+
+  React.useEffect(() => {
+    mountTimeRef.current = Date.now();
   }, []);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (errorMessage) setErrorMessage(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setErrorMessage(null);
 
-    const now = new Date();
-    const formattedDate = `${now.toLocaleDateString('es-ES')} ${now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
-
-    const newLead: LeadRecord = {
-      id: `LEAD-${Date.now().toString().slice(-4)}`,
-      fecha: formattedDate,
-      nombre: formData.nombre,
-      email: formData.email,
-      telefono: formData.telefono,
-      software: formData.software,
-      volumen: formData.volumen,
-    };
-
-    // 1. Guardar en localStorage como copia de seguridad local
-    try {
-      const updatedLeads = [newLead, ...leads];
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedLeads));
-      setLeads(updatedLeads);
-    } catch (err) {
-      console.error('Error al guardar lead en localStorage:', err);
+    // 1. Control Anti-Bot: Trampa Honeypot
+    if (honeypot) {
+      // Si el campo invisible fue rellenado por un bot, se finge éxito para descartar el payload sin sobrecargar la API
+      setIsSubmitting(false);
+      setSubmitted(true);
+      return;
     }
 
-    // 2. Enviar a Web3Forms para recibir notificación instantánea por correo electrónico
+    // 2. Control Anti-Bot: Envío instantáneo inhumano (< 2000 ms desde renderizado)
+    const timeSinceMount = Date.now() - mountTimeRef.current;
+    if (timeSinceMount < 2000) {
+      setErrorMessage('Por motivos de seguridad, por favor verifica tus datos antes de enviar.');
+      return;
+    }
+
+    // 3. Limitación de frecuencia (Anti-Flood / Cooldown de 45 segundos)
+    const timeSinceLast = Date.now() - lastSubmitRef.current;
+    if (lastSubmitRef.current > 0 && timeSinceLast < 45000) {
+      setErrorMessage('Ya se ha enviado una solicitud recientemente. Por favor, espera un minuto antes de enviar otra.');
+      return;
+    }
+
+    // 4. Validación de consentimiento RGPD
+    if (!privacyAccepted) {
+      setErrorMessage('Debes aceptar la Política de Privacidad para que podamos coordinar la demostración.');
+      return;
+    }
+
+    // 5. Validación y sanitización estricta de campos
+    const cleanNombre = sanitizeText(formData.nombre, 80);
+    const cleanEmpresa = sanitizeText(formData.empresa, 100);
+    const cleanEmail = sanitizeText(formData.email, 120).toLowerCase();
+    const cleanTelefono = sanitizeText(formData.telefono, 25);
+    const cleanSoftware = sanitizeText(formData.software, 60);
+    const cleanNotas = formData.notas ? formData.notas.replace(/<[^>]*>?/gm, '').trim().slice(0, 500) : '';
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(cleanEmail)) {
+      setErrorMessage('Por favor, introduce una dirección de correo corporativo válida.');
+      return;
+    }
+
+    const phoneRegex = /^[+]?[\d\s\-().]{8,20}$/;
+    if (!phoneRegex.test(cleanTelefono)) {
+      setErrorMessage('Por favor, introduce un número de teléfono de contacto válido.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    lastSubmitRef.current = Date.now();
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || DEFAULT_WEB3FORMS_KEY;
+
     try {
-      await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: `🚀 Nueva solicitud de viabilidad IA - ${formData.nombre}`,
-          from_name: 'IA Asesorías Web',
-          nombre: formData.nombre,
-          email: formData.email,
-          telefono: formData.telefono,
-          software_contable: formData.software,
+          access_key: accessKey,
+          subject: `🚀 Solicitud Demo KontaPro - ${cleanEmpresa || cleanNombre}`,
+          from_name: 'KontaPro Web Segura',
+          responsable: cleanNombre,
+          empresa: cleanEmpresa,
+          email: cleanEmail,
+          telefono: cleanTelefono,
+          software_contable: cleanSoftware || 'No especificado',
           volumen_facturas: formData.volumen,
-          mensaje: `El despacho ${formData.nombre} solicita estudio de viabilidad para su software ${formData.software} (${formData.volumen}). Teléfono: ${formData.telefono} | Email: ${formData.email}`,
+          notas: cleanNotas,
+          mensaje: `Solicitud de demostración técnica recibida para el despacho ${cleanEmpresa} (${cleanNombre}). Tel: ${cleanTelefono} | Email: ${cleanEmail} | ERP: ${cleanSoftware} | Volumen: ${formData.volumen}. Notas: ${cleanNotas}`,
         }),
       });
+
+      if (!response.ok) {
+        throw new Error('Respuesta no exitosa del servicio');
+      }
+
+      setSubmitted(true);
     } catch (err) {
-      console.warn('Envío a Web3Forms con advertencia (respaldado en local):', err);
-    }
-
-    setIsSubmitting(false);
-    setSubmitted(true);
-  };
-
-  const downloadCSV = () => {
-    if (leads.length === 0) return;
-    const headers = ['ID', 'Fecha', 'Nombre', 'Email', 'Telefono', 'Software', 'Volumen'];
-    const rows = leads.map((l) => [
-      l.id,
-      `"${l.fecha}"`,
-      `"${l.nombre.replace(/"/g, '""')}"`,
-      `"${l.email.replace(/"/g, '""')}"`,
-      `"${l.telefono.replace(/"/g, '""')}"`,
-      `"${l.software.replace(/"/g, '""')}"`,
-      `"${l.volumen.replace(/"/g, '""')}"`,
-    ]);
-    const csvContent = '\uFEFF' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', `leads_asesorias_${new Date().toISOString().slice(0, 10)}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const clearLeads = () => {
-    if (window.confirm('¿Seguro que deseas vaciar el historial de solicitudes recibidas?')) {
-      localStorage.removeItem(STORAGE_KEY);
-      setLeads([]);
+      console.warn('Incidencia temporal en la pasarela de envío:', err);
+      // Mensaje de contingencia profesional sin revelar trazas internas
+      setErrorMessage('No ha sido posible procesar la solicitud en este momento. Puedes llamarnos directamente al teléfono +34 686 766 266.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <section className={styles.section} id="contacto">
+    <section className={styles.section} id="demo">
+      <div id="contacto" aria-hidden="true" style={{ position: 'absolute', top: 0 }}></div>
       <div className="container">
         <div className={styles.grid}>
-          {/* Left Column: Direct Info & Value */}
+          {/* Columna Izquierda: Información de Valor */}
           <div className={styles.infoCol}>
-            <span className="badge badge--blue">Contacto Directo</span>
-            <h2 className={styles.title}>¿Cuánto tiempo dedica tu equipo a picar facturas?</h2>
-            <p className={styles.subtitle}>
-              Cuéntame cómo trabajáis y analizamos la viabilidad técnica para vuestro software contable sin compromiso.
-            </p>
+            <span className="badge badge--blue">{t.demoForm.badge}</span>
+            <h2 className={styles.title}>{t.demoForm.title}</h2>
+            <p className={styles.subtitle}>{t.demoForm.subtitle}</p>
 
             <div className={styles.benefitsList}>
               <div className={styles.benefitItem}>
-                <span className={styles.benefitIcon}>🔍</span>
+                <div className={styles.benefitIcon}>⏱️</div>
                 <div>
-                  <strong>Diagnóstico de viabilidad técnica</strong>
-                  <span>Analizamos cómo se conectaría la IA a tu programa contable habitual.</span>
+                  <strong>Sesión ejecutiva de 20 minutos</strong>
+                  <span>Sin rodeos ni presentaciones genéricas. Vamos directos a la operativa contable de tu despacho.</span>
                 </div>
               </div>
 
               <div className={styles.benefitItem}>
-                <span className={styles.benefitIcon}>⚡</span>
+                <div className={styles.benefitIcon}>📑</div>
                 <div>
-                  <strong>Prueba con tus propias facturas</strong>
-                  <span>Procesamos ejemplos reales de tus clientes para comprobar la tasa de acierto.</span>
+                  <strong>Prueba con tus facturas reales</strong>
+                  <span>Puedes traer un lote de facturas complejas de tus clientes para comprobar la extracción y cuadre en vivo.</span>
                 </div>
               </div>
 
               <div className={styles.benefitItem}>
-                <span className={styles.benefitIcon}>🔒</span>
+                <div className={styles.benefitIcon}>🔌</div>
                 <div>
-                  <strong>Garantía de confidencialidad</strong>
-                  <span>Acuerdo formal previo para total tranquilidad de tus clientes y de tu despacho.</span>
+                  <strong>Validación de enlace con tu ERP</strong>
+                  <span>Comprobamos la generación de enlaces contables para A3, Sage, Contasol o Holded sin compromiso.</span>
                 </div>
               </div>
             </div>
 
-            {/* Direct Contact Card */}
             <div className={styles.directCard}>
-              <span className={styles.directLabel}>Hablemos directamente:</span>
+              <span className={styles.directLabel}>Atención telefónica directa para despachos:</span>
               <div className={styles.directLinks}>
-                <a href="mailto:amorant2005@gmail.com" className={styles.directLink}>
-                  ✉️ amorant2005@gmail.com
-                </a>
-                <a href="tel:+34686766266" className={styles.directLink}>
-                  📞 +34 686 766 266
+                <a href="tel:+34686766266" className={styles.directPhoneLink}>
+                  <span className={styles.directPhoneIcon} aria-hidden="true">📞</span>
+                  <div className={styles.directPhoneInfo}>
+                    <strong className={styles.directPhoneNumber}>+34 686 766 266</strong>
+                    <span className={styles.directPhoneHours}>Lunes a Viernes · 9:00 a 19:00</span>
+                  </div>
                 </a>
               </div>
-              <span className={styles.directNote}>
-                Respondo personalmente a todas las consultas en menos de 24 horas.
-              </span>
             </div>
-
-            {/* Acceso a bandeja de solicitudes para el administrador */}
-            <button
-              type="button"
-              onClick={() => setShowModal(true)}
-              className={styles.adminTrigger}
-              title="Ver solicitudes registradas en este navegador"
-            >
-              📋 Ver solicitudes recibidas ({leads.length})
-            </button>
           </div>
 
-          {/* Right Column: Optimized Agile Form */}
-          <div className={styles.formCol}>
-            <div className={styles.formCard}>
-              {submitted ? (
-                <div className={styles.successState}>
-                  <div className={styles.successBadge}>✓</div>
-                  <h3 className={styles.successTitle}>¡Solicitud enviada correctamente!</h3>
-                  <p className={styles.successMsg}>
-                    Muchas gracias, <strong>{formData.nombre}</strong>. He recibido tus datos para evaluar la automatización con <strong>{formData.software}</strong>. Me pondré en contacto contigo muy pronto.
-                  </p>
-                  <button
-                    className="btn btn--ghost"
-                    onClick={() => {
-                      setSubmitted(false);
-                      setFormData({
-                        nombre: '',
-                        email: '',
-                        telefono: '',
-                        software: '',
-                        volumen: '500 a 2.000 facturas/mes',
-                      });
-                    }}
-                  >
-                    Enviar otra solicitud
-                  </button>
+          {/* Columna Derecha: Formulario o Confirmación */}
+          <div>
+            {!submitted ? (
+              <div className={styles.formCard}>
+                <div className={styles.formHeader}>
+                  <h3 className={styles.formTitle}>Solicitar sesión personalizada</h3>
+                  <p className={styles.formSub}>Completa tus datos y coordinaremos la fecha de la demostración.</p>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className={styles.form}>
-                  <div className={styles.formHeader}>
-                    <h3 className={styles.formTitle}>Solicitar estudio de viabilidad</h3>
-                    <p className={styles.formSub}>
-                      Completa estos 5 campos breves y evaluaremos tu caso.
-                    </p>
-                  </div>
 
-                  {/* 1. Nombre y Apellidos (obligatorio) */}
-                  <div className={styles.inputGroup}>
-                    <label htmlFor="nombre">
-                      1. Nombre y Apellidos <span className={styles.req}>*</span>
-                    </label>
-                    <input
-                      id="nombre"
-                      name="nombre"
-                      type="text"
-                      required
-                      placeholder="Ej. Laura Gómez Martínez"
-                      value={formData.nombre}
-                      onChange={handleChange}
-                    />
+                {errorMessage && (
+                  <div className={styles.errorMessage} role="alert">
+                    <span>⚠️</span>
+                    <span>{errorMessage}</span>
                   </div>
+                )}
 
-                  {/* 2 & 3. Email corporativo y Teléfono */}
+                <form className={styles.form} onSubmit={handleSubmit} noValidate>
+                  {/* Trampa Honeypot para detección de robots */}
+                  <input
+                    type="text"
+                    name="_hp_security_check"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    className={styles.honeypot}
+                    aria-hidden="true"
+                  />
+
                   <div className={styles.formRow}>
-                    <div className={styles.inputGroup}>
-                      <label htmlFor="email">
-                        2. Email corporativo <span className={styles.req}>*</span>
+                    <div className={styles.fieldGroup}>
+                      <label htmlFor="nombre" className={styles.fieldLabel}>
+                        {t.demoForm.nameLabel}
+                      </label>
+                      <input
+                        id="nombre"
+                        type="text"
+                        name="nombre"
+                        required
+                        maxLength={80}
+                        placeholder={t.demoForm.namePlaceholder}
+                        value={formData.nombre}
+                        onChange={handleChange}
+                        className={styles.input}
+                      />
+                    </div>
+
+                    <div className={styles.fieldGroup}>
+                      <label htmlFor="empresa" className={styles.fieldLabel}>
+                        {t.demoForm.companyLabel}
+                      </label>
+                      <input
+                        id="empresa"
+                        type="text"
+                        name="empresa"
+                        required
+                        maxLength={100}
+                        placeholder={t.demoForm.companyPlaceholder}
+                        value={formData.empresa}
+                        onChange={handleChange}
+                        className={styles.input}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={styles.formRow}>
+                    <div className={styles.fieldGroup}>
+                      <label htmlFor="email" className={styles.fieldLabel}>
+                        {t.demoForm.emailLabel}
                       </label>
                       <input
                         id="email"
-                        name="email"
                         type="email"
+                        name="email"
                         required
-                        placeholder="laura@asesoriagomez.es"
+                        maxLength={120}
+                        placeholder={t.demoForm.emailPlaceholder}
                         value={formData.email}
                         onChange={handleChange}
+                        className={styles.input}
                       />
                     </div>
 
-                    <div className={styles.inputGroup}>
-                      <label htmlFor="telefono">
-                        3. Teléfono de contacto <span className={styles.req}>*</span>
+                    <div className={styles.fieldGroup}>
+                      <label htmlFor="telefono" className={styles.fieldLabel}>
+                        {t.demoForm.phoneLabel}
                       </label>
                       <input
                         id="telefono"
-                        name="telefono"
                         type="tel"
+                        name="telefono"
                         required
-                        placeholder="600 123 456"
+                        maxLength={25}
+                        placeholder={t.demoForm.phonePlaceholder}
                         value={formData.telefono}
                         onChange={handleChange}
+                        className={styles.input}
                       />
                     </div>
                   </div>
 
-                  {/* 4. Software contable utilizado actualmente (obligatorio) */}
-                  <div className={styles.inputGroup}>
-                    <label htmlFor="software">
-                      4. Software contable utilizado actualmente <span className={styles.req}>*</span>
+                  <div className={styles.formRow}>
+                    <div className={styles.fieldGroup}>
+                      <label htmlFor="software" className={styles.fieldLabel}>
+                        {t.demoForm.softwareLabel}
+                      </label>
+                      <select
+                        id="software"
+                        name="software"
+                        required
+                        value={formData.software}
+                        onChange={handleChange}
+                        className={styles.select}
+                      >
+                        <option value="">{t.demoForm.softwareDefault}</option>
+                        <option value="Wolters Kluwer A3 (a3innuva / A3ASESOR)">Wolters Kluwer A3 (a3innuva / A3ASESOR)</option>
+                        <option value="Sage Despachos Connected / Sage 50">Sage Despachos Connected / Sage 50</option>
+                        <option value="Contasol (Software DELSOL)">Contasol (Software DELSOL)</option>
+                        <option value="Holded ERP">Holded ERP</option>
+                        <option value="Cegid / Diez Software">Cegid / Diez Software</option>
+                        <option value="Anfix">Anfix</option>
+                        <option value="Otro software contable">Otro programa contable</option>
+                      </select>
+                    </div>
+
+                    <div className={styles.fieldGroup}>
+                      <label htmlFor="volumen" className={styles.fieldLabel}>
+                        {t.demoForm.volumeLabel}
+                      </label>
+                      <select
+                        id="volumen"
+                        name="volumen"
+                        value={formData.volumen}
+                        onChange={handleChange}
+                        className={styles.select}
+                      >
+                        <option value="Menos de 500 facturas/mes">Menos de 500 facturas/mes</option>
+                        <option value="500 a 2.000 facturas/mes">500 a 2.000 facturas/mes</option>
+                        <option value="2.000 a 5.000 facturas/mes">2.000 a 5.000 facturas/mes</option>
+                        <option value="Más de 5.000 facturas/mes">Más de 5.000 facturas/mes</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className={styles.fieldGroup}>
+                    <label htmlFor="notas" className={styles.fieldLabel}>
+                      {t.demoForm.notesLabel}
                     </label>
-                    <input
-                      id="software"
-                      name="software"
-                      type="text"
-                      required
-                      placeholder="Ej. A3innuva, Sage 50, Contasol, Holded, etc."
-                      value={formData.software}
+                    <textarea
+                      id="notas"
+                      name="notas"
+                      maxLength={500}
+                      placeholder={t.demoForm.notesPlaceholder}
+                      value={formData.notas}
                       onChange={handleChange}
+                      className={styles.textarea}
                     />
                   </div>
 
-                  {/* 5. Volumen mensual aproximado de facturas */}
-                  <div className={styles.inputGroup}>
-                    <label htmlFor="volumen">
-                      5. Volumen mensual aproximado de facturas (despacho)
+                  {/* Consentimiento Explícito RGPD */}
+                  <div className={styles.consentGroup}>
+                    <label className={styles.checkboxLabel}>
+                      <input
+                        type="checkbox"
+                        required
+                        checked={privacyAccepted}
+                        onChange={(e) => {
+                          setPrivacyAccepted(e.target.checked);
+                          if (errorMessage) setErrorMessage(null);
+                        }}
+                        className={styles.checkboxInput}
+                      />
+                      <span>
+                        Acepto el tratamiento de mis datos de contacto para la coordinación de la demostración conforme a la{' '}
+                        <button
+                          type="button"
+                          className={styles.legalBtn}
+                          onClick={() => setLegalOpen(true)}
+                        >
+                          Política de Privacidad
+                        </button>
+                        .
+                      </span>
                     </label>
-                    <select
-                      id="volumen"
-                      name="volumen"
-                      value={formData.volumen}
-                      onChange={handleChange}
-                    >
-                      <option value="Menos de 500 facturas/mes">Menos de 500 facturas / mes</option>
-                      <option value="500 a 2.000 facturas/mes">500 a 2.000 facturas / mes</option>
-                      <option value="Más de 2.000 facturas/mes">Más de 2.000 facturas / mes</option>
-                    </select>
                   </div>
 
                   <button
                     type="submit"
-                    className="btn btn--primary"
-                    style={{ width: '100%', marginTop: 'var(--sp-2)' }}
                     disabled={isSubmitting}
+                    className={`btn btn--primary ${styles.submitBtn}`}
                   >
-                    {isSubmitting ? 'Enviando estudio...' : 'Solicitar estudio de automatización →'}
+                    {isSubmitting ? t.demoForm.submittingBtn : t.demoForm.submitBtn}
                   </button>
 
-                  <p className={styles.legalNotice}>
-                    🔒 Compromiso de confidencialidad: tus datos solo se emplearán para evaluar la viabilidad de tu despacho. Sin spam.
-                  </p>
+                  <p className={styles.privacyPledge}>{t.demoForm.privacyNotice}</p>
                 </form>
-              )}
-            </div>
+              </div>
+            ) : (
+              <div className={styles.successCard}>
+                <div className={styles.successIcon} aria-hidden="true">✓</div>
+                <h3 className={styles.successTitle}>{t.demoForm.successTitle}</h3>
+                <p className={styles.successDesc}>{t.demoForm.successMessage}</p>
+                <span className="badge badge--green">{t.demoForm.successDetails}</span>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSubmitted(false);
+                    setFormData({
+                      nombre: '',
+                      empresa: '',
+                      email: '',
+                      telefono: '',
+                      software: '',
+                      volumen: '500 a 2.000 facturas/mes',
+                      notas: '',
+                    });
+                    setPrivacyAccepted(false);
+                    mountTimeRef.current = Date.now();
+                  }}
+                  className="btn btn--outline"
+                  style={{ marginTop: '1rem' }}
+                >
+                  {t.demoForm.newRequestBtn}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Modal de bandeja de solicitudes */}
-      {showModal && (
-        <div className={styles.modalOverlay} onClick={() => setShowModal(false)}>
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-            <div className={styles.modalHeader}>
-              <div className={styles.modalTitleGroup}>
-                <span>📥</span>
-                <h3 className={styles.modalTitle}>Bandeja de Solicitudes Recibidas ({leads.length})</h3>
-              </div>
-              <button 
-                className={styles.modalCloseBtn}
-                onClick={() => setShowModal(false)}
-                aria-label="Cerrar modal"
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className={styles.modalBody}>
-              <div className={styles.modalExplainer}>
-                💡 <strong>¿Dónde se guardan los datos?</strong><br />
-                Cada vez que alguien envía el formulario, sus datos se almacenan de forma instantánea aquí en tu navegador (en <code>localStorage</code>) para que no se pierdan. Para recibirlos automáticamente en tu correo electrónico (<code>amorant2005@gmail.com</code>) o en Google Sheets/CRM al publicar tu web en Internet, solo necesitas conectar un endpoint gratuito (como Formspree o Web3Forms).
-              </div>
-
-              {leads.length === 0 ? (
-                <div className={styles.emptyState}>
-                  No hay solicitudes registradas todavía.<br />
-                  Rellena el formulario de la derecha para ver cómo aparece aquí en tiempo real.
-                </div>
-              ) : (
-                <div className={styles.leadsTableWrapper}>
-                  <table className={styles.leadsTable}>
-                    <thead>
-                      <tr>
-                        <th>Fecha</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Teléfono</th>
-                        <th>Software Contable</th>
-                        <th>Volumen / Mes</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {leads.map((l) => (
-                        <tr key={l.id}>
-                          <td><strong>{l.fecha}</strong></td>
-                          <td>{l.nombre}</td>
-                          <td><a href={`mailto:${l.email}`} style={{ color: 'var(--c-blue)' }}>{l.email}</a></td>
-                          <td><a href={`tel:${l.telefono}`} style={{ color: 'var(--c-blue)' }}>{l.telefono}</a></td>
-                          <td><span className="badge badge--blue">{l.software}</span></td>
-                          <td>{l.volumen}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-
-            <div className={styles.modalFooter}>
-              <div>
-                {leads.length > 0 && (
-                  <button 
-                    type="button" 
-                    onClick={clearLeads} 
-                    className="btn btn--ghost" 
-                    style={{ fontSize: '0.82rem', padding: '6px 12px', color: '#EF4444' }}
-                  >
-                    🗑️ Vaciar registros
-                  </button>
-                )}
-              </div>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                {leads.length > 0 && (
-                  <button 
-                    type="button" 
-                    onClick={downloadCSV} 
-                    className="btn btn--primary" 
-                    style={{ fontSize: '0.85rem', padding: '6px 14px' }}
-                  >
-                    📥 Descargar en Excel (CSV)
-                  </button>
-                )}
-                <button 
-                  type="button" 
-                  onClick={() => setShowModal(false)} 
-                  className="btn btn--ghost" 
-                  style={{ fontSize: '0.85rem', padding: '6px 14px' }}
-                >
-                  Cerrar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Modal Legal y de Privacidad */}
+      <LegalModal
+        isOpen={legalOpen}
+        initialTab="privacy"
+        onClose={() => setLegalOpen(false)}
+      />
     </section>
   );
 };

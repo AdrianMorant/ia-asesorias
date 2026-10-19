@@ -1,72 +1,125 @@
 import React, { useState } from 'react';
 import styles from './Hero.module.css';
+import { useLanguage } from '../../i18n';
 
 const PIPELINE_STEPS = [
-  { label: 'Factura recibida', tag: 'Email / Cloud', icon: '📥' },
-  { label: 'Análisis IA', tag: 'Extracción multimodal', icon: '⚡' },
-  { label: 'Validación aritmética', tag: 'Base + IVA = Total', icon: '⚖️' },
-  { label: 'Asiento propuesto', tag: 'Subcuenta PGC', icon: '💡' },
-  { label: 'Exportación / Integración', tag: 'Software contable', icon: '🚀' },
+  { label: 'Recepción', tag: 'Email / PWA / Web', icon: '📥' },
+  { label: 'Triaje IA', tag: 'Extracción & Semáforo', icon: '📊' },
+  { label: 'Asiento PGC', tag: 'Partida doble sugerida', icon: '⚖️' },
+  { label: 'Enlace ERP', tag: 'A3, Sage, Contasol', icon: '🚀' },
 ];
 
 const Hero: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'datos' | 'asiento'>('datos');
+  const { t } = useLanguage();
 
   return (
     <section className={styles.hero}>
+      <div className={styles.ambientGlow} aria-hidden="true"></div>
+
       <div className="container">
         <div className={styles.grid}>
-
-          {/* ── Left: Copy & CTAs ── */}
+          {/* ── Left Column: Value Proposition & CTAs ── */}
           <div className={styles.copy}>
             <div className={`hero-enter ${styles.pill}`}>
-              <span className={styles.pillDot}></span>
-              Automatización inteligente para asesorías
+              <span className={styles.pillPulse} aria-hidden="true"></span>
+              <span className={styles.pillText}>{t.hero.badge}</span>
+              <span className={styles.pillBadge}>{t.hero.version}</span>
             </div>
 
             <h1 className={`hero-enter hero-enter--d1 ${styles.title}`}>
-              Automatiza el trabajo contable que todavía haces a mano.
+              {t.hero.titleStart}
+              <span className={styles.titleHighlight}>{t.hero.titleHighlight}</span>
+              {t.hero.titleEnd}
             </h1>
 
             <p className={`hero-enter hero-enter--d2 ${styles.sub}`}>
-              Integramos Inteligencia Artificial y flujos automáticos en el software de tu asesoría para extraer facturas, cuadrar importes y sugerir asientos contables sin cambiar tu forma de trabajar.
+              {t.hero.subtitle}
             </p>
 
-            <div className={`hero-enter hero-enter--d3 ${styles.ctas}`}>
-              <a href="#contacto" className="btn btn--primary">
-                Solicitar demostración
-              </a>
-              <a href="#como-funciona" className="btn btn--ghost">
-                Ver cómo funciona
+            {/* ── Demo Spotlight: Foco Visual Primario al Abrir la Web ── */}
+            <div className={`hero-enter hero-enter--d3 ${styles.demoSpotlight}`}>
+              <div className={styles.spotlightHeader}>
+                <span className={styles.spotlightBadge}>
+                  <span className={styles.spotlightPulse} aria-hidden="true"></span>
+                  DEMOSTRACIÓN EN DIRECTO (20 MIN)
+                </span>
+                <span className={styles.spotlightTag}>Con las facturas de tu despacho</span>
+              </div>
+
+              <div className={styles.spotlightActionRow}>
+                <a href="#demo" className={`btn btn--primary ${styles.spotlightMainBtn}`}>
+                  <span className={styles.btnShimmer} aria-hidden="true"></span>
+                  <span className={styles.spotlightBtnText}>{t.hero.ctaPrimary}</span>
+                  <span className={styles.btnArrow} aria-hidden="true">→</span>
+                </a>
+
+                <a
+                  href="tel:+34686766266"
+                  className={styles.spotlightPhoneBtn}
+                  title="Llamar directamente al equipo de KontaPro"
+                >
+                  <span className={styles.phoneIcon} aria-hidden="true">📞</span>
+                  <div className={styles.phoneBtnTexts}>
+                    <span className={styles.phoneBtnSub}>Llamada directa</span>
+                    <strong className={styles.phoneBtnNum}>+34 686 766 266</strong>
+                  </div>
+                </a>
+              </div>
+
+              <div className={styles.spotlightPerks}>
+                <span className={styles.perkItem}>
+                  <span className={styles.perkCheck} aria-hidden="true">✓</span> Sesión 1 a 1 en directo
+                </span>
+                <span className={styles.perkItem}>
+                  <span className={styles.perkCheck} aria-hidden="true">✓</span> Enlace con tu software contable
+                </span>
+                <span className={styles.perkItem}>
+                  <span className={styles.perkCheck} aria-hidden="true">✓</span> Sin compromiso
+                </span>
+              </div>
+            </div>
+
+            <div className={`hero-enter hero-enter--d4 ${styles.secondaryActions}`}>
+              <a href="#showcase" className={styles.exploreLink}>
+                <span>O explora la consola operativa en tiempo real</span>
+                <span aria-hidden="true">↓</span>
               </a>
             </div>
 
-            {/* Badges de confianza bajo los CTAs */}
-            <div className={`hero-enter hero-enter--d4 ${styles.trustBadges}`}>
+            {/* Badges de Confianza y Cumplimiento Normativo */}
+            <div className={`hero-enter hero-enter--d4 ${styles.trustGrid}`}>
               <div className={styles.trustBadge}>
-                <span className={styles.trustIcon}>🛡️</span>
-                <span>100% Adaptado a normativa RGPD</span>
+                <span className={styles.trustIcon} aria-hidden="true">🛡️</span>
+                <span>{t.hero.trust1}</span>
               </div>
               <div className={styles.trustBadge}>
-                <span className={styles.trustIcon}>🔒</span>
-                <span>Tus datos nunca entrenan modelos públicos</span>
+                <span className={styles.trustIcon} aria-hidden="true">📱</span>
+                <span>{t.hero.trust2}</span>
               </div>
               <div className={styles.trustBadge}>
-                <span className={styles.trustIcon}>🔌</span>
-                <span>Compatible con A3, Sage, Contasol y Holded</span>
+                <span className={styles.trustIcon} aria-hidden="true">🔌</span>
+                <span>{t.hero.trust3}</span>
+              </div>
+              <div className={styles.trustBadge}>
+                <span className={styles.trustIcon} aria-hidden="true">🔒</span>
+                <span>{t.hero.trust4}</span>
               </div>
             </div>
           </div>
 
-          {/* ── Right: SaaS Financial Visual Mockup ── */}
-          <div className={`hero-enter hero-enter--d2 ${styles.visual}`}>
+          {/* ── Right Column: Interactive SaaS Preview Mockup ── */}
+          <div className={`hero-enter hero-enter--d2 ${styles.visualContainer}`}>
             <div className={styles.window}>
-              {/* Window Header */}
+              {/* Top macOS-style bar */}
               <div className="mac-bar">
                 <span className="mac-bar__dot mac-bar__dot--r"></span>
                 <span className="mac-bar__dot mac-bar__dot--y"></span>
                 <span className="mac-bar__dot mac-bar__dot--g"></span>
-                <span className="mac-bar__title">Pipeline de Facturación Inteligente — Asesoría Pro</span>
+                <span className="mac-bar__title">KONTAPRO SUITE // GESTIÓN CONTABLE DESPACHO</span>
+                <div className={styles.liveTag}>
+                  <span className={styles.liveDot}></span> {t.hero.liveEngine}
+                </div>
               </div>
 
               {/* Pipeline Flow Bar */}
@@ -80,45 +133,47 @@ const Hero: React.FC = () => {
                       <span className={styles.stepLabel}>{s.label}</span>
                       <span className={styles.stepTag}>{s.tag}</span>
                     </div>
-                    {idx < PIPELINE_STEPS.length - 1 && (
-                      <span className={styles.stepArrow}>➔</span>
-                    )}
                   </div>
                 ))}
               </div>
 
-              {/* Card Demo Content */}
+              {/* Window Content */}
               <div className={styles.windowContent}>
-                {/* Tabs for switching preview */}
                 <div className={styles.cardHeader}>
-                  <div className={styles.tabs}>
+                  <div className={styles.tabs} role="tablist">
                     <button
+                      type="button"
+                      role="tab"
+                      aria-selected={activeTab === 'datos'}
                       className={`${styles.tabBtn} ${activeTab === 'datos' ? styles.tabBtnActive : ''}`}
                       onClick={() => setActiveTab('datos')}
                     >
-                      Factura extraída
+                      Factura extraída (OCR/IA)
                     </button>
                     <button
+                      type="button"
+                      role="tab"
+                      aria-selected={activeTab === 'asiento'}
                       className={`${styles.tabBtn} ${activeTab === 'asiento' ? styles.tabBtnActive : ''}`}
                       onClick={() => setActiveTab('asiento')}
                     >
-                      Propuesta de asiento contable
+                      Propuesta de asiento PGC
                     </button>
                   </div>
-                  <span className="badge badge--green">✓ Validado (Confianza 99.4%)</span>
+                  <span className="badge badge--green">✓ Semáforo Verde (Confianza 99.8%)</span>
                 </div>
 
                 {activeTab === 'datos' ? (
                   <div className={styles.dataCard}>
                     <div className={styles.providerRow}>
-                      <div className={styles.providerInfo}>
-                        <span className={styles.providerLabel}>Proveedor / Emisor</span>
+                      <div>
+                        <span className={styles.providerLabel}>EMISOR / PROVEEDOR</span>
                         <span className={styles.providerName}>Suministros Industriales Ibérica S.L.</span>
                       </div>
                       <div className={styles.metaRow}>
                         <span className={styles.metaChip}>CIF: <strong>B-84920183</strong></span>
                         <span className={styles.metaChip}>Fecha: <strong>14/05/2026</strong></span>
-                        <span className={styles.metaChip}>Factura: <strong>FAC-2026-089</strong></span>
+                        <span className={styles.metaChip}>Doc: <strong>FAC-2026-089</strong></span>
                       </div>
                     </div>
 
@@ -142,22 +197,21 @@ const Hero: React.FC = () => {
                     </div>
 
                     <div className={styles.accountSuggestion}>
-                      <div className={styles.suggestIcon}>💡</div>
                       <div className={styles.suggestText}>
-                        <span className={styles.suggestTitle}>Cuenta sugerida según histórico del cliente:</span>
-                        <span className={styles.suggestAccount}>628.0001 (Suministros de energía)</span>
+                        <span className={styles.suggestTitle}>Subcuenta PGC sugerida según histórico del cliente:</span>
+                        <span className={styles.suggestAccount}>628.0001 — Suministros de energía y consumos</span>
                       </div>
-                      <span className={styles.suggestMatch}>Coincidencia 100%</span>
+                      <span className={styles.suggestMatch}>100% Coincidencia</span>
                     </div>
                   </div>
                 ) : (
                   <div className={styles.asientoCard}>
-                    <div className={styles.asientoTitle}>Borrador de Asiento en Partida Doble:</div>
+                    <div className={styles.asientoTitle}>Borrador en Partida Doble (Cuadre verificado):</div>
                     <div className={styles.tableScrollWrapper}>
                       <table className={styles.asientoTable}>
                         <thead>
                           <tr>
-                            <th>Cuenta PGC</th>
+                            <th>Subcuenta PGC</th>
                             <th>Descripción</th>
                             <th>Debe</th>
                             <th>Haber</th>
@@ -167,43 +221,47 @@ const Hero: React.FC = () => {
                           <tr>
                             <td><strong>628.0001</strong></td>
                             <td>Suministros de energía</td>
-                            <td>1.250,00 €</td>
+                            <td className={styles.amountCol}>1.250,00 €</td>
                             <td>—</td>
                           </tr>
                           <tr>
                             <td><strong>472.0021</strong></td>
                             <td>H.P. IVA Soportado (21%)</td>
-                            <td>262,50 €</td>
+                            <td className={styles.amountCol}>262,50 €</td>
                             <td>—</td>
                           </tr>
                           <tr>
                             <td><strong>410.0849</strong></td>
                             <td>Suministros Industriales Ibérica</td>
                             <td>—</td>
-                            <td><strong>1.512,50 €</strong></td>
+                            <td className={styles.amountTotalCol}>1.512,50 €</td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
                     <div className={styles.asientoFooter}>
-                      <span className="badge badge--green">✓ Cuadre exacto (Debe = Haber = 1.512,50 €)</span>
-                      <span className={styles.asientoSync}>Listo para exportar a Holded / A3 / Sage / Contasol</span>
+                      <span className="badge badge--green">✓ Debe = Haber = 1.512,50 €</span>
+                      <span className={styles.asientoSync}>Listo para exportar a A3 (SUENLACE) / Sage / Contasol</span>
                     </div>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Floating verification badge */}
+            {/* Badges Flotantes de Verificación Técnica */}
             <div className={styles.floatBadge}>
-              <span className={styles.floatBadgeIcon}>⚡</span>
+              <div className={styles.floatBadgeIcon}>✓</div>
               <div>
                 <div className={styles.floatBadgeTitle}>Lectura multimodal completada</div>
                 <div className={styles.floatBadgeSub}>Validación matemática: 0 descuadres</div>
               </div>
             </div>
-          </div>
 
+            <div className={styles.floatBadgeSecondary}>
+              <div className={styles.floatBadgeDot}></div>
+              <span>Sincronización ERP: Conectado</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

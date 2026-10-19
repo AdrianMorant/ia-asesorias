@@ -1,4 +1,10 @@
-# Logs
+# Dependencias y compilación
+node_modules
+dist
+dist-ssr
+*.local
+
+# Logs y depuración
 logs
 *.log
 npm-debug.log*
@@ -7,16 +13,28 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Secretos y variables de entorno (Prevenir fugas en repositorio público)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
 
-# Editor directories and files
+# Archivos temporales y volcados de datos
+leads_*.csv
+manual_chagpt*
+*.docx
+*.bak
+
+# Editores y sistemas operativos
 .vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
+Thumbs.db
 *.suo
 *.ntvs*
 *.njsproj

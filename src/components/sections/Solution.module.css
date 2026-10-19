@@ -1,6 +1,7 @@
 .section {
+  position: relative;
   padding: var(--sp-20) 0;
-  background: var(--c-bg);
+  background: #FFFFFF;
 }
 
 .top {
@@ -10,29 +11,27 @@
   flex-direction: column;
   align-items: center;
   gap: var(--sp-3);
-  max-width: 860px;
+  max-width: 880px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .headline {
-  font-size: clamp(2.1rem, 3.8vw, 3rem);
+  font-size: clamp(2rem, 3.4vw, 2.75rem);
   font-weight: 800;
   letter-spacing: -0.03em;
-  color: var(--c-ink);
-  line-height: 1.2;
+  color: var(--c-navy-900);
+  line-height: 1.25;
 }
 
 .highlight {
-  background: linear-gradient(135deg, var(--c-blue) 0%, #1D4ED8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--c-blue-600);
 }
 
 .subheadline {
-  font-size: 1.15rem;
+  font-size: 1.08rem;
   color: var(--c-muted);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 /* Two Options Grid */
@@ -44,54 +43,59 @@
 }
 
 .optionCard {
-  background: var(--c-surface);
+  background: var(--c-bg-subtle);
   border: 1px solid var(--c-border);
-  border-radius: var(--r-2xl);
+  border-radius: var(--r-xl);
   padding: var(--sp-8);
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-sm);
-  transition: transform var(--t-fast) ease, box-shadow var(--t-fast) ease;
+  transition: transform var(--t-base) ease, border-color var(--t-base) ease, box-shadow var(--t-base) ease;
 }
 
 .optionCard:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: var(--c-blue-500);
+  box-shadow: var(--shadow-md);
 }
 
 .optionCardB {
-  background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%);
-  border-color: #BFDBFE;
+  background: #FFFFFF;
+  border-color: var(--c-blue-600);
+  box-shadow: 0 8px 24px -4px rgba(10, 120, 252, 0.12), var(--shadow-sm);
 }
 
 .optionTag {
   display: inline-block;
   align-self: flex-start;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   padding: 4px 12px;
-  border-radius: 999px;
-  background: #E2E8F0;
-  color: var(--c-ink);
+  border-radius: var(--r-full);
+  background: var(--c-blue-50);
+  border: 1px solid var(--c-blue-100);
+  color: var(--c-blue-700);
   margin-bottom: var(--sp-3);
 }
 
 .optionTagB {
-  background: var(--c-blue);
-  color: white;
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+  color: var(--c-navy-900);
 }
 
 .optionTitle {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--c-ink);
-  margin-bottom: var(--sp-2);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--c-navy-900);
+  margin-bottom: var(--sp-3);
 }
 
 .optionDesc {
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   color: var(--c-muted);
   line-height: 1.6;
   margin-bottom: var(--sp-5);
@@ -99,108 +103,96 @@
 
 .optionList {
   list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  font-size: 0.9rem;
-  color: #1E293B;
-  font-weight: 500;
-  padding-top: var(--sp-4);
-  border-top: 1px solid var(--c-border);
+  gap: var(--sp-2);
 }
 
-/* Capabilities */
+.optionList li {
+  font-size: 0.875rem;
+  color: var(--c-navy-900);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Capabilities Grid */
 .capabilitiesWrapper {
-  background: var(--c-surface);
-  border: 1px solid var(--c-border);
-  border-radius: var(--r-2xl);
-  padding: var(--sp-10);
-  box-shadow: var(--shadow-sm);
+  border-top: 1px solid var(--c-border);
+  padding-top: var(--sp-12);
 }
 
 .capHeader {
   text-align: center;
-  margin-bottom: var(--sp-8);
+  margin-bottom: var(--sp-10);
 }
 
 .capTitle {
-  font-size: 1.6rem;
+  font-size: 1.65rem;
   font-weight: 800;
-  color: var(--c-ink);
-  margin-bottom: 4px;
+  color: var(--c-navy-900);
+  margin-bottom: var(--sp-2);
 }
 
 .capSub {
   font-size: 0.95rem;
-  color: var(--c-muted);
+  color: var(--c-subtle);
 }
 
 .capGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--sp-5);
 }
 
 .capCard {
-  background: var(--c-bg);
+  background: #FFFFFF;
   border: 1px solid var(--c-border);
-  border-radius: var(--r-xl);
-  padding: var(--sp-5);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6);
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  transition: transform var(--t-fast) ease;
+  gap: var(--sp-2);
+  transition: all var(--t-base) ease;
 }
 
 .capCard:hover {
+  border-color: var(--c-border-hover);
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
-  border-color: #93C5FD;
 }
 
 .capIcon {
-  font-size: 1.8rem;
-  margin-bottom: 4px;
+  font-size: 1.5rem;
+  margin-bottom: var(--sp-1);
 }
 
 .capItemTitle {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: var(--c-ink);
+  color: var(--c-navy-900);
 }
 
 .capItemDesc {
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   color: var(--c-muted);
   line-height: 1.5;
 }
 
-@media (max-width: 860px) {
-  .section {
-    padding: var(--sp-12) 0;
-  }
-  .optionsGrid {
-    grid-template-columns: 1fr;
-    gap: var(--sp-6);
-    margin-bottom: var(--sp-10);
-  }
-  .optionCard {
-    padding: var(--sp-5);
-  }
-  .capabilitiesWrapper {
-    padding: var(--sp-5);
+@media (max-width: 1024px) {
+  .capGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 480px) {
-  .optionCard {
-    padding: 1.25rem 1rem;
-    border-radius: var(--r-xl);
+@media (max-width: 768px) {
+  .optionsGrid {
+    grid-template-columns: 1fr;
   }
-  .capabilitiesWrapper {
-    padding: 1.25rem 1rem;
-    border-radius: var(--r-xl);
-  }
-  .capCard {
-    padding: 1rem 0.875rem;
+  .capGrid {
+    grid-template-columns: 1fr;
   }
 }

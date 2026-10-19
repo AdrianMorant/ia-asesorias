@@ -1,13 +1,12 @@
 .section {
+  position: relative;
   padding: var(--sp-20) 0;
-  background: var(--c-surface);
-  border-top: 1px solid var(--c-border);
-  border-bottom: 1px solid var(--c-border);
+  background: #FFFFFF;
 }
 
 .header {
   text-align: center;
-  max-width: 760px;
+  max-width: 800px;
   margin: 0 auto var(--sp-12);
   display: flex;
   flex-direction: column;
@@ -16,14 +15,14 @@
 }
 
 .title {
-  font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+  font-size: clamp(2rem, 3.2vw, 2.65rem);
   font-weight: 800;
-  letter-spacing: -0.025em;
-  color: var(--c-ink);
+  letter-spacing: -0.03em;
+  color: var(--c-navy-900);
 }
 
 .subtitle {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--c-muted);
   line-height: 1.6;
 }
@@ -36,60 +35,53 @@
 }
 
 .card {
-  background: var(--c-bg);
+  background: var(--c-bg-subtle);
   border: 1px solid var(--c-border);
-  border-radius: var(--r-2xl);
+  border-radius: var(--r-xl);
   padding: var(--sp-8);
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-sm);
-  transition: transform var(--t-fast) ease, box-shadow var(--t-fast) ease;
+  transition: all var(--t-base) ease;
 }
 
 .card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
+  border-color: var(--c-blue-500);
   box-shadow: var(--shadow-md);
-  border-color: #93C5FD;
 }
 
 .cardTop {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: var(--sp-4);
 }
 
 .icon {
-  font-size: 1.8rem;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: white;
-  border-radius: var(--r-lg);
-  border: 1px solid var(--c-border);
+  font-size: 1.75rem;
 }
 
 .badge {
   font-size: 0.72rem;
+  font-family: var(--font-mono);
   font-weight: 700;
-  color: var(--c-blue);
-  background: var(--c-blue-light);
-  padding: 4px 10px;
-  border-radius: 999px;
-  letter-spacing: 0.02em;
+  padding: 3px 9px;
+  border-radius: var(--r-full);
+  background: var(--c-blue-50);
+  color: var(--c-blue-700);
+  border: 1px solid var(--c-blue-100);
 }
 
 .cardTitle {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 800;
-  color: var(--c-ink);
+  color: var(--c-navy-900);
   margin-bottom: var(--sp-2);
 }
 
 .cardDesc {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   color: var(--c-muted);
   line-height: 1.55;
   margin-bottom: var(--sp-4);
@@ -97,71 +89,69 @@
 
 .featureList {
   list-style: none;
+  padding: 0;
+  margin: auto 0 0 0;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-top: auto;
-  padding-top: var(--sp-4);
   border-top: 1px solid var(--c-border);
-  font-size: 0.85rem;
-  color: #1E293B;
+  padding-top: var(--sp-4);
+}
+
+.featureList li {
+  font-size: 0.8125rem;
+  color: var(--c-navy-900);
   font-weight: 500;
 }
 
 /* Software Banner */
 .softwareBanner {
-  background: var(--c-bg);
+  background: var(--c-bg-subtle);
   border: 1px solid var(--c-border);
   border-radius: var(--r-xl);
   padding: var(--sp-6) var(--sp-8);
   display: flex;
   flex-direction: column;
-  gap: var(--sp-3);
+  align-items: center;
+  gap: var(--sp-4);
   text-align: center;
 }
 
 .softwareTitle {
-  font-size: 0.825rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-size: 0.875rem;
   font-weight: 700;
-  color: var(--c-subtle);
+  text-transform: uppercase;
+  color: var(--c-navy-900);
+  letter-spacing: 0.04em;
 }
 
 .tagsRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
   justify-content: center;
+  gap: 10px;
 }
 
 .softwareChip {
-  font-size: 0.85rem;
+  font-size: 0.8125rem;
   font-weight: 600;
-  color: #1E293B;
-  background: white;
+  color: var(--c-navy-900);
+  background: #FFFFFF;
   border: 1px solid var(--c-border);
   padding: 6px 14px;
-  border-radius: 999px;
+  border-radius: var(--r-full);
+  box-shadow: var(--shadow-xs);
+  transition: all var(--t-fast) ease;
 }
 
-@media (max-width: 900px) {
+.softwareChip:hover {
+  border-color: var(--c-blue-500);
+  color: var(--c-blue-700);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 960px) {
   .grid {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .card {
-    padding: 1.25rem 1rem;
-    border-radius: var(--r-xl);
-  }
-  .softwareBanner {
-    padding: 1.25rem 1rem;
-    border-radius: var(--r-xl);
-  }
-  .softwareChip {
-    font-size: 0.78rem;
-    padding: 5px 10px;
   }
 }

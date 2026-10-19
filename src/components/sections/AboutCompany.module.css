@@ -1,0 +1,224 @@
+.section {
+  position: relative;
+  padding: var(--sp-20) 0;
+  background: #FFFFFF;
+}
+
+.box {
+  background: var(--c-navy-950);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--r-2xl);
+  padding: var(--sp-12);
+  color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(11, 32, 70, 0.25);
+}
+
+.box::before {
+  content: '';
+  position: absolute;
+  top: -150px;
+  right: -150px;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(10, 120, 252, 0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto var(--sp-12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-size: clamp(2rem, 3.4vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: #94A3B8;
+  line-height: 1.6;
+}
+
+.pillarsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-6);
+  margin-bottom: var(--sp-10);
+  position: relative;
+  z-index: 1;
+}
+
+.pillarCard {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-xl);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  backdrop-filter: blur(8px);
+  transition: all var(--t-base) ease;
+}
+
+.pillarCard:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(10, 120, 252, 0.5);
+  transform: translateY(-2px);
+}
+
+.pillarTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pillarIcon {
+  font-size: 1.75rem;
+}
+
+.pillarBadge {
+  font-size: 0.6875rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #38BDF8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 3px 8px;
+  border-radius: var(--r-full);
+}
+
+.pillarTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.pillarDesc {
+  font-size: 0.875rem;
+  color: #94A3B8;
+  line-height: 1.6;
+}
+
+.pillarMetric {
+  margin-top: auto;
+  padding-top: var(--sp-3);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.8125rem;
+  font-family: var(--font-mono);
+  color: #E2E8F0;
+  font-weight: 600;
+}
+
+/* Institutional Banner Bottom */
+.contactBanner {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--r-xl);
+  padding: var(--sp-6) var(--sp-8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-6);
+  position: relative;
+  z-index: 1;
+}
+
+.bannerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bannerTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.bannerSub {
+  font-size: 0.875rem;
+  color: #94A3B8;
+}
+
+.bannerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+}
+
+.phoneLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  padding: 0.65rem 1.25rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--r-md);
+  transition: all var(--t-fast) ease;
+}
+
+.phoneLink:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #38BDF8;
+  color: #38BDF8;
+}
+
+/* Responsive Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+  .box {
+    padding: var(--sp-8);
+  }
+  .pillarsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-4);
+  }
+  .contactBanner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .bannerActions {
+    width: 100%;
+  }
+  .bannerActions .phoneLink,
+  .bannerActions a {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Responsive Mobile (<640px) */
+@media (max-width: 640px) {
+  .section {
+    padding: var(--sp-12) 0;
+  }
+  .box {
+    padding: var(--sp-6) var(--sp-4);
+    border-radius: var(--r-xl);
+  }
+  .title {
+    font-size: 1.75rem;
+  }
+  .contactBanner {
+    padding: var(--sp-5);
+  }
+}

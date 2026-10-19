@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
+import { LanguageProvider } from './i18n/LanguageContext';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Hero from './components/sections/Hero';
+import StatsBanner from './components/sections/StatsBanner';
 import Problem from './components/sections/Problem';
 import Solution from './components/sections/Solution';
 import HowItWorks from './components/sections/HowItWorks';
@@ -10,13 +12,16 @@ import Integrations from './components/sections/Integrations';
 import DashboardDemo from './components/sections/DashboardDemo';
 import RoiCalculator from './components/sections/RoiCalculator';
 import Security from './components/sections/Security';
-import AboutMe from './components/sections/AboutMe';
+import AboutCompany from './components/sections/AboutCompany';
 import Faq from './components/sections/Faq';
 import Contact from './components/sections/Contact';
 
-function App() {
+function AppContent() {
   useEffect(() => {
-    // Observador para animaciones de revelado suave al hacer scroll
+    // Observador para revelado suave al hacer scroll respetando accesibilidad
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isReducedMotion) return;
+
     const sections = document.querySelectorAll('section, .reveal');
     const observer = new IntersectionObserver(
       (entries) => {
@@ -40,8 +45,9 @@ function App() {
   return (
     <div className="app-container">
       <Header />
-      <main>
+      <main id="main-content">
         <Hero />
+        <StatsBanner />
         <Problem />
         <Solution />
         <HowItWorks />
@@ -50,12 +56,20 @@ function App() {
         <DashboardDemo />
         <RoiCalculator />
         <Security />
-        <AboutMe />
+        <AboutCompany />
         <Faq />
         <Contact />
       </main>
       <Footer />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }
 

@@ -1,82 +1,79 @@
 import React from 'react';
 import styles from './Problem.module.css';
+import { useLanguage } from '../../i18n';
 
 const TRADITIONAL_STEPS = [
-  '1. Abrir correo o escanear papel.',
-  '2. Descargar y abrir el PDF.',
-  '3. Picar datos manualmente en el teclado.',
-  '4. Revisar si cuadran base e IVA.',
-  '5. Asignar subcuenta contable de memoria.',
-  '6. Repetir 500 veces al mes.',
+  'Ingesta dispersa: descarga manual de PDFs y escaneo de tickets.',
+  'Revisión individual: apertura secuencial documento a documento.',
+  'Picado manual: tecleo de CIF, bases imponibles, IVA e IRPF.',
+  'Cuadre aritmético: comprobación manual de redondeos de céntimos.',
+  'Mapeo PGC: búsqueda manual de subcuentas en históricos.',
+  'Sobrecarga trimestral: jornadas saturadas en cierres fiscales.',
 ];
 
 const AUTOMATED_STEPS = [
-  '1. La factura entra directamente al sistema.',
-  '2. La IA extrae y desglosa los impuestos.',
-  '3. Validación matemática automática.',
-  '4. Asignación contable por histórico.',
-  '5. El equipo solo valida excepciones complejas.',
-  '6. Integración directa o descarga de enlace contable.',
+  'Ingesta unificada: buzón directo, portal cliente y app PWA.',
+  'Extracción multimodal: lectura instantánea de CIF, bases e IVA.',
+  'Semáforo fiscal: validación matemática y filtro anti-duplicados.',
+  'Partida doble PGC: propuesta de asiento cuadrado (Debe = Haber).',
+  'Supervisión ágil: validación de incidencias en 1 solo clic.',
+  'Enlace nativo ERP: exportación directa a A3, Sage, Contasol y Holded.',
 ];
 
 const Problem: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <section className={styles.section} id="problema">
       <div className="container">
         <div className={styles.header}>
-          <span className="badge badge--amber">La realidad operativa del despacho</span>
-          <h2 className={styles.title}>Tu equipo no debería perder horas picando facturas.</h2>
-          <p className={styles.subtitle}>
-            En pleno 2026, profesionales cualificados siguen dedicando más del 40% de su jornada a transcribir datos de facturas en PDF a su programa contable.
-          </p>
+          <span className="badge badge--amber">{t.problem.badge}</span>
+          <h2 className={styles.title}>{t.problem.title}</h2>
+          <p className={styles.subtitle}>{t.problem.subtitle}</p>
         </div>
 
         {/* Comparativa en dos columnas */}
         <div className={styles.comparisonGrid}>
           {/* Columna 1: Flujo Tradicional */}
           <div className={styles.colTraditional}>
-            <div className={styles.colHeader}>
-              <span className={styles.tagTraditional}>Flujo Tradicional</span>
-              <h3 className={styles.colTitle}>Lento, manual y propenso a errores</h3>
-            </div>
+            <span className={styles.tagTraditional}>Flujo Tradicional Manual</span>
+            <h3 className={styles.colTitleTrad}>Fricción operativa y riesgo fiscal</h3>
 
             <ol className={styles.stepsList}>
               {TRADITIONAL_STEPS.map((step, idx) => (
                 <li key={idx} className={styles.stepItemTrad}>
-                  <span className={styles.iconTrad}>❌</span>
+                  <span className={styles.iconTrad} aria-hidden="true">❌</span>
                   <span>{step}</span>
                 </li>
               ))}
             </ol>
 
             <div className={styles.resultBoxTrad}>
-              <span className={styles.resultLabel}>Resultado:</span>
+              <span className={styles.resultLabel}>Impacto en el despacho:</span>
               <p className={styles.resultText}>
-                Cuello de botella insostenible en cierres trimestrales, horas extras forzadas y riesgo continuo de error humano en importes y NIFs.
+                Hasta un 60% de la jornada consumida en transcripción mecánica, riesgo de sanciones tributarias y saturación en cierres trimestrales.
               </p>
             </div>
           </div>
 
-          {/* Columna 2: Con Automatización Inteligente */}
+          {/* Columna 2: Con KontaPro */}
           <div className={styles.colAutomated}>
-            <div className={styles.colHeader}>
-              <span className={styles.tagAutomated}>Con Automatización Inteligente</span>
-              <h3 className={styles.colTitle}>Inmediato, auditado y supervisado</h3>
-            </div>
+            <span className={styles.tagAutomated}>Con KontaPro Suite</span>
+            <h3 className={styles.colTitleAuto}>Automatización con rigor contable</h3>
 
             <ol className={styles.stepsList}>
               {AUTOMATED_STEPS.map((step, idx) => (
                 <li key={idx} className={styles.stepItemAuto}>
-                  <span className={styles.iconAuto}>✅</span>
+                  <span className={styles.iconAuto} aria-hidden="true">✅</span>
                   <span>{step}</span>
                 </li>
               ))}
             </ol>
 
             <div className={styles.resultBoxAuto}>
-              <span className={styles.resultLabelAuto}>Resultado:</span>
+              <span className={styles.resultLabelAuto}>Garantía técnica:</span>
               <p className={styles.resultTextAuto}>
-                Cierres en minutos, cero datos picados manualmente, facturas cuadradas al céntimo y control total en manos del equipo contable.
+                Procesamiento masivo en segundos, trazabilidad inalterable SHA-256 y capacidad para duplicar clientes sin incrementar costes estructurales.
               </p>
             </div>
           </div>

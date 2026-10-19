@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 100" fill="none" width="100%" height="100%">
+  <!-- Icon Mark K with Upward Arrow -->
+  <g transform="translate(10, 5)">
+    <!-- Base Left Vertical Stem -->
+    <rect x="15" y="10" width="22" height="70" rx="4" fill="#0B2046" />
+    
+    <!-- Lower Diagonal Leg -->
+    <path d="M37 45 L68 80 H88 L48 35 Z" fill="#0B2046" />
+    
+    <!-- Dynamic Diagonal Slash with Ascending Arrow -->
+    <path d="M22 62 L65 24 L75 32 L88 10 L52 14 L60 21 L17 58 Z" fill="#0A78FC" />
+  </g>
+  
+  <!-- Wordmark "KontaPro" -->
+  <text x="125" y="65" font-family="'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif" font-size="46" font-weight="800" letter-spacing="-1">
+    <tspan fill="#0B2046">Konta</tspan><tspan fill="#0A78FC">Pro</tspan>
+  </text>
+</svg>

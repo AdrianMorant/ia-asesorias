@@ -1,69 +1,88 @@
 import React, { useState } from 'react';
 import styles from './HowItWorks.module.css';
+import { useLanguage } from '../../i18n';
 
 const STEPS = [
   {
     num: '01',
-    badge: 'Paso 01 — Recibe',
-    title: 'Captura desatendida y centralizada',
-    desc: 'El sistema ingiere las facturas entrantes de forma continua sin que nadie tenga que descargarlas a mano.',
+    badge: 'Paso 01 — Captura',
+    title: 'Recepción multicanal desatendida',
+    desc: 'El sistema ingiere las facturas y tickets entrantes de forma continua sin que nadie tenga que descargarlas a mano.',
     details: [
-      'Buzones de correo electrónico dedicados por cliente o despacho',
+      'Buzones de correo dedicados por empresa o despacho',
       'Sincronización automática de Google Drive, OneDrive o carpetas en red',
-      'Soporte completo para facturas electrónicas, PDFs nativos, escaneos y fotos de tickets',
+      'App móvil PWA para captura de tickets y gastos en movilidad con sellado AEAT',
     ],
-    consoleOutput: `[09:14:02] NUEVA ENTRADA DETECTADA\n• Origen: Buzón facturas@asesoria-ejemplo.es\n• Cliente: Grupo Metálicas del Norte S.L.\n• Archivo: Factura_Proveedor_2026_05.pdf (1.4 MB)\n• Estado: Ingesta completada con éxito.`,
+    consoleOutput: `[09:14:02] NUEVA ENTRADA DETECTADA EN KONTAPRO
+• Canal: Buzón facturas@asesoria-ejemplo.es
+• Cliente: Grupo Metálicas del Norte S.L.
+• Archivo: Factura_Proveedor_2026_05.pdf (1.4 MB)
+• Hash SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+• Estado: Documento sellado y en cola de triaje.`,
   },
   {
     num: '02',
-    badge: 'Paso 02 — Analiza',
-    title: 'Lectura precisa con IA Multimodal',
+    badge: 'Paso 02 — Extracción',
+    title: 'Lectura multimodal & Semáforo Fiscal',
     desc: 'Modelos avanzados de visión y lenguaje leen la estructura completa del documento sin depender de plantillas rígidas.',
     details: [
       'Extracción de Proveedor, CIF/NIF, fecha de devengo y número de factura',
       'Desglose en tablas de múltiples tipos de IVA (4%, 10%, 21%) y recargos',
       'Detección de retenciones de IRPF profesional y conceptos facturados',
     ],
-    consoleOutput: `[09:14:04] EXTRACCIÓN MULTIMODAL\n• Emisor: "Distribuciones Comerciales S.A." (A-28491029)\n• N.º Factura: D-2026/894 | Fecha: 12/05/2026\n• Base 21%: 800,00 € (IVA: 168,00 €)\n• Base 10%: 350,00 € (IVA: 35,00 €)\n• Total Factura: 1.353,00 €`,
+    consoleOutput: `[09:14:04] EXTRACCIÓN MULTIMODAL VERIFICADA
+• Emisor: "Distribuciones Comerciales S.A." (A-28491029)
+• N.º Factura: D-2026/894 | Fecha: 12/05/2026
+• Base 21%: 800,00 € (IVA: 168,00 €)
+• Base 10%: 350,00 € (IVA: 35,00 €)
+• Total Factura: 1.353,00 €
+• Semáforo Fiscal: VERDE (Fiabilidad 99.7%)`,
   },
   {
     num: '03',
-    badge: 'Paso 03 — Valida',
+    badge: 'Paso 03 — Validación',
     title: 'Comprobación aritmética y anti-duplicados',
-    desc: 'Auditoría automática de cada dato para garantizar que ningún descuadre o duplicado llegue a la contabilidad.',
+    desc: 'Auditoría automática de cada cifra para garantizar que ningún descuadre o duplicado llegue a la contabilidad.',
     details: [
-      'Verificación matemática: Suma de Bases + Cuotas IVA - IRPF = Total al céntimo',
-      'Validación de algoritmos de CIF/NIF español',
+      'Verificación matemática: Bases + Cuotas IVA - IRPF = Total al céntimo',
+      'Comprobación de NIF censado y formato fiscal español',
       'Búsqueda de duplicados en el histórico de facturas del cliente',
     ],
-    consoleOutput: `[09:14:05] CONTROL DE INTEGRIDAD\n✓ Cuadre matemático: 800 + 168 + 350 + 35 = 1.353,00 € (Correcto)\n✓ Algoritmo NIF: Válido\n✓ Chequeo anti-duplicados: 0 coincidencias en histórico\n✓ Nivel de confianza: 99.6% (VERDE)`,
+    consoleOutput: `[09:14:05] CONTROL DE INTEGRIDAD & REGLAMENTO VERI*FACTU
+✓ Cuadre matemático: 800 + 168 + 350 + 35 = 1.353,00 € (Exacto)
+✓ Algoritmo NIF: Válido y activo en base censal
+✓ Chequeo anti-duplicados: 0 coincidencias en histórico
+✓ Registro encadenado: Encadenamiento hash conforme a Ley Antifraude`,
   },
   {
     num: '04',
-    badge: 'Paso 04 — Integra',
-    title: 'Asiento contable directo en tu software',
-    desc: 'El apunte contable queda registrado en tu programa habitual sin que nadie haya tenido que picar un solo dígito.',
+    badge: 'Paso 04 — Asiento',
+    title: 'Asiento contable directo en tu ERP',
+    desc: 'El apunte contable queda registrado en tu software habitual sin que nadie haya tenido que picar un solo dígito.',
     details: [
       'Propuesta de subcuenta del PGC según histórico contable del cliente',
-      'Conexión vía API directa o generación de ficheros SUENLACE / CSV',
+      'Generación de ficheros de intercambio nativos (SUENLACE para A3, CSV para Contasol)',
       'PDF original vinculado al registro para auditorías fiscales',
     ],
-    consoleOutput: `[09:14:07] GENERACIÓN CONTABLE\n• Cuenta Debe: (600.0001) Compras de mercaderías (1.150,00 €)\n• Cuenta Debe: (472.0000) H.P. IVA Soportado (203,00 €)\n• Cuenta Haber: (400.0284) Proveedor habitual (1.353,00 €)\n🚀 Asiento volcado a Holded / Sage / A3 con PDF adjunto.`,
+    consoleOutput: `[09:14:07] GENERACIÓN DEL ASIENTO CONTABLE
+• Subcuenta Debe: (600.0001) Compras de mercaderías (1.150,00 €)
+• Subcuenta Debe: (472.0000) H.P. IVA Soportado (203,00 €)
+• Subcuenta Haber: (400.0284) Proveedor habitual (1.353,00 €)
+🚀 Asiento exportado a A3 (SUENLACE.DAT) / Sage / Contasol con PDF vinculado.`,
   },
 ];
 
 const HowItWorks: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const { t } = useLanguage();
 
   return (
     <section className={styles.section} id="como-funciona">
       <div className="container">
         <div className={styles.header}>
-          <span className="badge badge--blue">Flujo de Automatización</span>
-          <h2 className={styles.title}>Cómo funciona paso a paso</h2>
-          <p className={styles.subtitle}>
-            De la recepción del archivo al asiento contable en 4 etapas transparentes, verificadas y bajo supervisión humana.
-          </p>
+          <span className="badge badge--blue">{t.workflow.badge}</span>
+          <h2 className={styles.title}>{t.workflow.title}</h2>
+          <p className={styles.subtitle}>{t.workflow.subtitle}</p>
         </div>
 
         <div className={styles.grid}>
@@ -122,7 +141,8 @@ const HowItWorks: React.FC = () => {
 
                 <div className={styles.navRow}>
                   <button
-                    className={`${styles.navBtn} ${styles.navBtnPrev}`}
+                    type="button"
+                    className={styles.navBtn}
                     disabled={activeStep === 0}
                     onClick={() => setActiveStep((prev) => Math.max(0, prev - 1))}
                   >
@@ -132,7 +152,8 @@ const HowItWorks: React.FC = () => {
                     Paso {activeStep + 1} de {STEPS.length}
                   </span>
                   <button
-                    className={`${styles.navBtn} ${styles.navBtnNext}`}
+                    type="button"
+                    className={styles.navBtn}
                     disabled={activeStep === STEPS.length - 1}
                     onClick={() => setActiveStep((prev) => Math.min(STEPS.length - 1, prev + 1))}
                   >
@@ -144,13 +165,13 @@ const HowItWorks: React.FC = () => {
           </div>
         </div>
 
-        {/* Nota destacada obligatoria */}
+        {/* Criterio y Supervisión Humana */}
         <div className={styles.featuredNote}>
-          <div className={styles.noteIcon}>⚖️</div>
+          <div className={styles.noteIcon} aria-hidden="true">⚖️</div>
           <div className={styles.noteText}>
-            <strong>Criterio y supervisión humana:</strong>
+            <strong>Criterio profesional y control del despacho:</strong>
             <p>
-              “La IA no sustituye el criterio contable de tu despacho; elimina el trabajo mecánico para que tu equipo supervise solo lo necesario.”
+              “La inteligencia artificial de KontaPro no sustituye el criterio contable de tu equipo; elimina el trabajo mecánico de transcripción para que los contables supervisen con rigor solo las excepciones que lo merecen.”
             </p>
           </div>
         </div>

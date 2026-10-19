@@ -1,28 +1,29 @@
 import React from 'react';
 import styles from './Triage.module.css';
+import { useLanguage } from '../../i18n';
 
 const LEVELS = [
   {
     level: 'Nivel Verde',
-    title: 'Alta Confianza (95% - 99%)',
+    title: 'Alta Confianza (95% - 99.9%)',
     badge: 'Procesamiento Directo',
     colorClass: 'green',
     icon: '🟢',
-    condition: 'Datos nítidos, proveedor conocido y cuadre aritmético 100% verificado.',
-    action: 'Generación directa del borrador o apunte en el diario contable de tu ERP sin intervención manual.',
+    condition: 'Datos nítidos, proveedor recurrente identificado y cuadre aritmético 100% verificado.',
+    action: 'Generación directa del borrador o apunte cuadrado en el diario contable de tu ERP sin intervención manual.',
     stats: '~94% del volumen mensual',
-    example: 'Factura mensual de suministros o proveedor recurrente con desglose habitual.',
+    example: 'Factura mensual de suministros o acreedor habitual con desglose de IVA estándar.',
   },
   {
     level: 'Nivel Amarillo',
-    title: 'Revisión Rápida',
-    badge: 'Verificación en 1 Clic',
+    title: 'Revisión en 1 Clic',
+    badge: 'Verificación Humana',
     colorClass: 'yellow',
     icon: '🟡',
-    condition: 'Proveedor nuevo, importe inusualmente alto o subcuenta ambigua.',
-    action: 'Se deriva a una bandeja de triaje ágil: visor de factura al lado de la propuesta para validar o ajustar con un solo clic.',
+    condition: 'Proveedor nuevo, concepto atípico o posible retención de IRPF profesional que requiere confirmar.',
+    action: 'Se deriva a la bandeja de triaje: visor dividido de factura junto a la propuesta para validar con un solo clic.',
     stats: '~4% del volumen mensual',
-    example: 'Primera factura de un acreedor o factura con concepto no habitual.',
+    example: 'Primera factura de un proveedor o factura con tipos mixtos de IVA.',
   },
   {
     level: 'Nivel Rojo',
@@ -30,22 +31,24 @@ const LEVELS = [
     badge: 'Bloqueo Preventivo',
     colorClass: 'red',
     icon: '🔴',
-    condition: 'Duplicado detectado, descuadre matemático de base + IVA o NIF erróneo.',
+    condition: 'Duplicado detectado, descuadre matemático de base + IVA o NIF erróneo / no censado.',
     action: 'Bloqueo inmediato para impedir que un dato defectuoso contamine los balances o las declaraciones fiscales.',
     stats: '~2% del volumen mensual',
-    example: 'Factura ya contabilizada el mes anterior o suma de líneas que no coincide con el total.',
+    example: 'Factura ya registrada el mes anterior o suma de bases que no coincide con el total.',
   },
 ];
 
 const Triage: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
-    <section className={styles.section} id="control-semaforo">
+    <section className={styles.section} id="triage">
       <div className="container">
         <div className={styles.header}>
           <span className="badge badge--blue">Seguridad Operativa</span>
-          <h2 className={styles.title}>“La IA propone. Tu despacho tiene el control.”</h2>
+          <h2 className={styles.title}>“La IA propone. Tu despacho mantiene el control.”</h2>
           <p className={styles.subtitle}>
-            Para evitar errores a ciegas, implementamos un sistema de triaje por semáforo. Ninguna factura dudosa se asienta sin que el equipo contable dé su visto bueno.
+            {t.solution.s1Desc}
           </p>
         </div>
 

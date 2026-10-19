@@ -1,13 +1,14 @@
 .section {
+  position: relative;
   padding: var(--sp-20) 0;
-  background: var(--c-surface);
+  background: var(--c-bg-subtle);
   border-top: 1px solid var(--c-border);
   border-bottom: 1px solid var(--c-border);
 }
 
 .header {
   text-align: center;
-  max-width: 720px;
+  max-width: 800px;
   margin: 0 auto var(--sp-12);
   display: flex;
   flex-direction: column;
@@ -16,14 +17,14 @@
 }
 
 .title {
-  font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+  font-size: clamp(2rem, 3.2vw, 2.65rem);
   font-weight: 800;
-  letter-spacing: -0.025em;
-  color: var(--c-ink);
+  letter-spacing: -0.03em;
+  color: var(--c-navy-900);
 }
 
 .subtitle {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--c-muted);
   line-height: 1.6;
 }
@@ -45,25 +46,27 @@
 
 .stepCard {
   display: flex;
-  gap: var(--sp-4);
-  padding: var(--sp-5);
-  background: var(--c-bg);
+  gap: var(--sp-5);
+  padding: var(--sp-6);
+  background: #FFFFFF;
   border: 1px solid var(--c-border);
   border-radius: var(--r-xl);
   cursor: pointer;
   outline: none;
-  transition: all var(--t-fast) ease;
+  transition: all var(--t-base) ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .stepCard:hover {
-  border-color: #93C5FD;
-  background: #F1F5F9;
+  border-color: var(--c-blue-500);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-md);
 }
 
 .stepCardActive {
   background: #FFFFFF;
-  border-color: var(--c-blue);
-  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.08);
+  border-color: var(--c-blue-600);
+  box-shadow: 0 8px 24px -4px rgba(10, 120, 252, 0.15), var(--shadow-md);
 }
 
 .stepNumCol {
@@ -77,76 +80,82 @@
   width: 44px;
   height: 44px;
   border-radius: var(--r-lg);
-  background: var(--c-surface);
+  background: var(--c-bg-subtle);
   border: 1px solid var(--c-border);
+  font-family: var(--font-mono);
   font-weight: 800;
   font-size: 1rem;
-  color: var(--c-muted);
+  color: var(--c-subtle);
   transition: all var(--t-fast) ease;
 }
 
 .stepCardActive .stepNum {
-  background: var(--c-blue);
-  color: white;
-  border-color: var(--c-blue);
+  background: var(--c-blue-600);
+  color: #FFFFFF;
+  border-color: var(--c-blue-600);
+  box-shadow: var(--shadow-blue);
 }
 
 .stepBody {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
 }
 
 .stepBadge {
-  display: inline-block;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
   font-weight: 700;
-  color: var(--c-blue);
+  color: var(--c-blue-700);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  margin-bottom: 2px;
 }
 
 .stepTitle {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 800;
-  color: var(--c-ink);
-  margin-bottom: 4px;
+  color: var(--c-navy-900);
 }
 
 .stepDesc {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   color: var(--c-muted);
   line-height: 1.5;
 }
 
 .stepDetails {
   list-style: none;
-  margin-top: var(--sp-3);
-  padding-top: var(--sp-3);
-  border-top: 1px dashed var(--c-border);
+  padding: 0;
+  margin: var(--sp-3) 0 0 0;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  font-size: 0.85rem;
-  color: #166534;
+  border-top: 1px solid var(--c-border-subtle);
+  padding-top: var(--sp-3);
+}
+
+.stepDetails li {
+  font-size: 0.8125rem;
+  color: var(--c-navy-900);
   font-weight: 500;
 }
 
-/* Console Column */
+/* Console Card */
 .consoleCol {
   position: sticky;
-  top: 96px;
+  top: 6rem;
 }
 
 .consoleCard {
-  background: var(--c-dark);
-  border: 1px solid var(--c-dark-border);
+  background: #FFFFFF;
+  border: 1px solid var(--c-border);
   border-radius: var(--r-xl);
   overflow: hidden;
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 16px 36px -8px rgba(11, 32, 70, 0.12), var(--shadow-sm);
 }
 
 .consoleBody {
-  padding: var(--sp-6);
+  padding: var(--sp-5);
   display: flex;
   flex-direction: column;
   gap: var(--sp-4);
@@ -154,122 +163,78 @@
 
 .consoleHeader {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .pulseActive {
-  font-size: 0.75rem;
-  color: #10B981;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
   font-weight: 600;
+  color: #059669;
 }
 
 .codeBox {
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--r-lg);
+  background: #0B2046;
+  border-radius: var(--r-md);
   padding: var(--sp-4);
-  min-height: 200px;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  border: 1px solid #122E5E;
 }
 
 .codeBox pre {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 0.825rem;
-  color: #93C5FD;
-  white-space: pre-wrap;
-  word-break: break-all;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   line-height: 1.6;
+  color: #E2E8F0;
+  white-space: pre-wrap;
+  margin: 0;
 }
 
 .navRow {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--c-border);
   padding-top: var(--sp-3);
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  gap: 8px;
-}
-
-.navTracker {
-  font-size: 0.825rem;
-  color: #E2E8F0;
-  font-weight: 600;
-  letter-spacing: 0.02em;
 }
 
 .navBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: var(--r-md);
-  font-size: 0.85rem;
+  font-size: 0.8125rem;
   font-weight: 600;
-  cursor: pointer;
+  color: var(--c-blue-700);
+  background: var(--c-blue-50);
+  border: 1px solid var(--c-blue-100);
+  padding: 6px 12px;
+  border-radius: var(--r-md);
   transition: all var(--t-fast) ease;
-  font-family: inherit;
 }
 
-.navBtnPrev {
-  background: #1E293B;
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+.navBtn:hover:not(:disabled) {
+  background: var(--c-blue-100);
+  color: var(--c-blue-800);
 }
 
-.navBtnPrev:hover:not(:disabled) {
-  background: #334155;
-  border-color: rgba(255, 255, 255, 0.45);
-  color: #FFFFFF;
-  transform: translateY(-1px);
-}
-
-.navBtnPrev:disabled {
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.35);
-  border-color: rgba(255, 255, 255, 0.08);
+.navBtn:disabled {
+  opacity: 0.4;
   cursor: not-allowed;
-  opacity: 0.6;
 }
 
-.navBtnNext {
-  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
-}
-
-.navBtnNext:hover:not(:disabled) {
-  background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5);
-}
-
-.navBtnNext:disabled {
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.4);
-  border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: none;
-  cursor: not-allowed;
-  opacity: 0.6;
+.navTracker {
+  font-size: 0.75rem;
+  color: var(--c-subtle);
+  font-weight: 600;
 }
 
 /* Featured Note */
 .featuredNote {
-  background: #EFF6FF;
-  border: 1px solid #BFDBFE;
+  background: #FFFFFF;
+  border: 1px solid var(--c-border);
   border-radius: var(--r-xl);
   padding: var(--sp-5) var(--sp-8);
   display: flex;
   align-items: center;
-  gap: var(--sp-4);
+  gap: var(--sp-5);
+  box-shadow: var(--shadow-sm);
   max-width: 900px;
   margin: 0 auto;
 }
@@ -280,51 +245,24 @@
 }
 
 .noteText strong {
+  font-size: 0.9375rem;
+  color: var(--c-navy-900);
   display: block;
-  font-size: 0.825rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #1E40AF;
   margin-bottom: 2px;
 }
 
 .noteText p {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: #1E3A8A;
-  font-style: italic;
+  font-size: 0.875rem;
+  color: var(--c-muted);
   line-height: 1.5;
+  margin: 0;
 }
 
-@media (max-width: 900px) {
-  .section {
-    padding: var(--sp-12) 0;
-  }
+@media (max-width: 960px) {
   .grid {
     grid-template-columns: 1fr;
   }
   .consoleCol {
     position: static;
-  }
-  .featuredNote {
-    flex-direction: column;
-    text-align: center;
-    padding: var(--sp-5);
-  }
-}
-
-@media (max-width: 480px) {
-  .stepCard {
-    padding: 1rem 0.875rem;
-    gap: var(--sp-3);
-  }
-  .consoleBody {
-    padding: 1rem 0.875rem;
-  }
-  .featuredNote {
-    padding: 1.25rem 1rem;
-  }
-  .noteText p {
-    font-size: 0.95rem;
   }
 }

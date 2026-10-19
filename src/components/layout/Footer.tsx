@@ -1,64 +1,137 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Footer.module.css';
+import KontaProLogo from '../common/KontaProLogo';
+import { useLanguage } from '../../i18n';
+import LegalModal, { type LegalTab } from '../common/LegalModal';
+
+const CURRENT_YEAR = 2026;
 
 const Footer: React.FC = () => {
-  const year = new Date().getFullYear();
+  const { t } = useLanguage();
+  const [legalModalOpen, setLegalModalOpen] = useState(false);
+  const [legalTab, setLegalTab] = useState<LegalTab>('privacy');
+
+  const openLegal = (tab: LegalTab) => {
+    setLegalTab(tab);
+    setLegalModalOpen(true);
+  };
 
   return (
     <footer className={styles.footer}>
       <div className={`container ${styles.inner}`}>
         <div className={styles.top}>
+          {/* Marca KontaPro */}
           <div className={styles.brand}>
-            <div className={styles.logo}>
-              <span className={styles.logoMark}>A</span>
-              <span className={styles.logoText}>
-                adrián<span className={styles.logoAccent}>morant</span>
-              </span>
+            <div className={styles.logoWrapper}>
+              <KontaProLogo theme="dark" height={36} />
             </div>
-            <p className={styles.tagline}>
-              Automatización e Inteligencia Artificial para asesorías y despachos profesionales en España.
-            </p>
-            <div className={styles.contact}>
-              <a href="mailto:amorant2005@gmail.com" className={styles.contactLink}>
-                ✉️ amorant2005@gmail.com
+            <p className={styles.tagline}>{t.footer.tagline}</p>
+            <div className={styles.securityPledge}>
+              <span>🛡️</span>
+              <span>{t.footer.securityNotice}</span>
+            </div>
+          </div>
+
+          {/* Columnas de Navegación y Soluciones */}
+          <div className={styles.cols}>
+            <div className={styles.col}>
+              <h4 className={styles.colTitle}>{t.footer.colProduct}</h4>
+              <a href="#showcase" className={styles.colLink}>
+                {t.footer.colProductLinks[0]}
               </a>
-              <a href="tel:+34686766266" className={styles.contactLink}>
+              <a href="#showcase" className={styles.colLink}>
+                {t.footer.colProductLinks[1]}
+              </a>
+              <a href="#showcase" className={styles.colLink}>
+                {t.footer.colProductLinks[2]}
+              </a>
+              <a href="#showcase" className={styles.colLink}>
+                {t.footer.colProductLinks[3]}
+              </a>
+              <a href="#showcase" className={styles.colLink}>
+                {t.footer.colProductLinks[4]}
+              </a>
+            </div>
+
+            <div className={styles.col}>
+              <h4 className={styles.colTitle}>{t.footer.colCompliance}</h4>
+              <a href="#seguridad" className={styles.colLink}>
+                {t.footer.colComplianceLinks[0]}
+              </a>
+              <a href="#seguridad" className={styles.colLink}>
+                {t.footer.colComplianceLinks[1]}
+              </a>
+              <a href="#seguridad" className={styles.colLink}>
+                {t.footer.colComplianceLinks[2]}
+              </a>
+              <a href="#seguridad" className={styles.colLink}>
+                {t.footer.colComplianceLinks[3]}
+              </a>
+              <a href="#seguridad" className={styles.colLink}>
+                {t.footer.colComplianceLinks[4]}
+              </a>
+            </div>
+
+            <div className={styles.col}>
+              <h4 className={styles.colTitle}>{t.footer.colCompany}</h4>
+              <a href="#demo" className={styles.colLink}>
+                {t.footer.colCompanyLinks[0]}
+              </a>
+              <a href="#calculadora" className={styles.colLink}>
+                {t.footer.colCompanyLinks[1]}
+              </a>
+              <a href="#integraciones" className={styles.colLink}>
+                {t.footer.colCompanyLinks[2]}
+              </a>
+              <a href="tel:+34686766266" className={styles.colLink}>
                 📞 +34 686 766 266
               </a>
             </div>
           </div>
+        </div>
 
-          <div className={styles.cols}>
-            <div className={styles.col}>
-              <h4 className={styles.colTitle}>Solución</h4>
-              <a href="#como-funciona" className={styles.colLink}>Cómo funciona</a>
-              <a href="#control-semaforo" className={styles.colLink}>Sistema Semáforo</a>
-              <a href="#conectividad" className={styles.colLink}>Conectividad & ERPs</a>
-              <a href="#dashboard" className={styles.colLink}>Panel Demo interactivo</a>
-              <a href="#calculadora" className={styles.colLink}>Calculadora de ahorro</a>
-            </div>
+        {/* Fila Inferior Legal */}
+        <div className={styles.bottom}>
+          <p>© {CURRENT_YEAR} {t.footer.rightsReserved}</p>
 
-            <div className={styles.col}>
-              <h4 className={styles.colTitle}>Despacho</h4>
-              <a href="#problema" className={styles.colLink}>El problema contable</a>
-              <a href="#propuesta" className={styles.colLink}>Propuesta de valor</a>
-              <a href="#sobre-mi" className={styles.colLink}>Sobre mí (Adrián Morant)</a>
-              <a href="#contacto" className={styles.colLink}>Solicitar demostración</a>
-            </div>
+          <div className={styles.legalLinks}>
+            <button
+              type="button"
+              className={styles.legalBtn}
+              onClick={() => openLegal('privacy')}
+            >
+              {t.footer.privacy}
+            </button>
+            <span>•</span>
+            <button
+              type="button"
+              className={styles.legalBtn}
+              onClick={() => openLegal('legal')}
+            >
+              {t.footer.legal}
+            </button>
+            <span>•</span>
+            <button
+              type="button"
+              className={styles.legalBtn}
+              onClick={() => openLegal('cookies')}
+            >
+              {t.footer.cookies}
+            </button>
+          </div>
 
-            <div className={styles.col}>
-              <h4 className={styles.colTitle}>Seguridad & Legal</h4>
-              <a href="#seguridad" className={styles.colLink}>Normativa RGPD</a>
-              <a href="#seguridad" className={styles.colLink}>Contrato DPA</a>
-              <a href="#seguridad" className={styles.colLink}>Privacidad empresarial</a>
-            </div>
+          <div className={styles.statusIndicator}>
+            <span className={styles.statusDot}></span>
+            <span>Motores de Ingesta & Veri*factu Operativos</span>
           </div>
         </div>
-
-        <div className={styles.bottom}>
-          <p>© {year} Adrián Morant. Desarrollador especializado en IA y automatización contable. Todos los derechos reservados.</p>
-        </div>
       </div>
+
+      <LegalModal
+        isOpen={legalModalOpen}
+        initialTab={legalTab}
+        onClose={() => setLegalModalOpen(false)}
+      />
     </footer>
   );
 };
