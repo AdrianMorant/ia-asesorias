@@ -86,8 +86,27 @@
   justify-content: space-between;
 }
 
-.pillarIcon {
-  font-size: 1.75rem;
+.pillarIconBox {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconGold {
+  color: #FBBF24;
+}
+
+.iconBlue {
+  color: #38BDF8;
+}
+
+.iconNavy {
+  color: #818CF8;
 }
 
 .pillarBadge {

@@ -28,6 +28,7 @@ leads_*.csv
 manual_chagpt*
 *.docx
 *.bak
+scratch/
 
 # Editores y sistemas operativos
 .vscode/*

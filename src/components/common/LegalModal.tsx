@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './LegalModal.module.css';
+import { Shield, FileText, Cookie, X, Check, Sliders, AlertCircle } from 'lucide-react';
 
-export type LegalTab = 'privacy' | 'legal' | 'cookies';
+export type LegalTab = 'privacy' | 'legal' | 'cookies' | 'preferences';
 
 interface LegalModalProps {
   isOpen: boolean;
@@ -12,6 +13,17 @@ interface LegalModalProps {
 const LegalModal: React.FC<LegalModalProps> = ({ isOpen, initialTab = 'privacy', onClose }) => {
   const [tab, setTab] = useState<LegalTab>(initialTab);
   const [prevInitial, setPrevInitial] = useState<LegalTab>(initialTab);
+
+  // Estados de preferencias de cookies
+  const [analyticsConsent, setAnalyticsConsent] = useState(false);
+  const [savedNotice, setSavedNotice] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('kontapro_cookie_analytics');
+    if (stored === 'true') {
+      setAnalyticsConsent(true);
+    }
+  }, []);
 
   if (initialTab !== prevInitial) {
     setPrevInitial(initialTab);
@@ -32,6 +44,16 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, initialTab = 'privacy',
     };
   }, [isOpen, onClose]);
 
+  const handleSaveCookiePreferences = () => {
+    localStorage.setItem('kontapro_cookie_analytics', analyticsConsent ? 'true' : 'false');
+    localStorage.setItem('kontapro_cookie_consent_status', 'customized');
+    setSavedNotice(true);
+    setTimeout(() => {
+      setSavedNotice(false);
+      onClose();
+    }, 1200);
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -45,130 +67,232 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, initialTab = 'privacy',
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
           <div className={styles.titleRow}>
-            <span className={styles.titleIcon} aria-hidden="true">⚖️</span>
+            <div className={styles.titleIconBox}>
+              <Shield size={20} className={styles.titleIcon} />
+            </div>
             <h3 id="legal-modal-title" className={styles.title}>
-              Información Legal y Cumplimiento Normativo
+              Información Legal & Transparencia Normativa
             </h3>
           </div>
           <button
             type="button"
             className={styles.closeBtn}
             onClick={onClose}
-            aria-label="Cerrar modal"
+            aria-label="Cerrar ventana legal"
           >
-            ✕
+            <X size={20} />
           </button>
         </div>
 
-        <div className={styles.tabBar}>
+        {/* Tab Navigation Bar */}
+        <div className={styles.tabBar} role="tablist">
           <button
             type="button"
+            role="tab"
+            aria-selected={tab === 'privacy'}
             className={`${styles.tabBtn} ${tab === 'privacy' ? styles.tabBtnActive : ''}`}
             onClick={() => setTab('privacy')}
           >
-            Política de Privacidad (RGPD)
+            <Shield size={15} />
+            Política de Privacidad
           </button>
           <button
             type="button"
+            role="tab"
+            aria-selected={tab === 'legal'}
             className={`${styles.tabBtn} ${tab === 'legal' ? styles.tabBtnActive : ''}`}
             onClick={() => setTab('legal')}
           >
+            <FileText size={15} />
             Aviso Legal
           </button>
           <button
             type="button"
+            role="tab"
+            aria-selected={tab === 'cookies'}
             className={`${styles.tabBtn} ${tab === 'cookies' ? styles.tabBtnActive : ''}`}
             onClick={() => setTab('cookies')}
           >
+            <Cookie size={15} />
             Política de Cookies
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={tab === 'preferences'}
+            className={`${styles.tabBtn} ${tab === 'preferences' ? styles.tabBtnActive : ''}`}
+            onClick={() => setTab('preferences')}
+          >
+            <Sliders size={15} />
+            Configurar Cookies
           </button>
         </div>
 
+        {/* Modal Scrollable Content */}
         <div className={styles.content}>
           {tab === 'privacy' && (
             <>
+              <div className={styles.noticePending}>
+                <AlertCircle size={16} className={styles.noticeIcon} />
+                <span>
+                  <strong>Nota de transparencia:</strong> Los datos identificativos del responsable señalados con <code>[Pendiente de confirmación]</code> serán completados de forma definitiva con los datos mercantiles antes del lanzamiento comercial abierto.
+                </span>
+              </div>
+
               <h4>1. Responsable del Tratamiento de Datos</h4>
               <p>
-                El responsable del tratamiento de los datos recogidos a través de este sitio web es <strong>KontaPro Suite</strong> (en adelante, &quot;KontaPro&quot;), con canal de atención en materia de protección de datos a través del teléfono oficial: <strong>+34 686 766 266</strong>.
+                El responsable del tratamiento de los datos recogidos a través de este sitio web es:
               </p>
+              <ul>
+                <li><strong>Denominación comercial:</strong> KontaPro Suite</li>
+                <li><strong>Titular / Razón Social:</strong> <em>[Razón social del titular pendiente de confirmación antes de publicación final]</em></li>
+                <li><strong>NIF / CIF:</strong> <em>[NIF pendiente de confirmación antes de publicación final]</em></li>
+                <li><strong>Domicilio Social:</strong> <em>[Domicilio fiscal pendiente de confirmación antes de publicación final]</em></li>
+                <li><strong>Email de Contacto Privacidad:</strong> <em>[Email corporativo legal pendiente de confirmación antes de publicación final]</em></li>
+                <li><strong>Atención Telefónica de Soporte:</strong> +34 686 766 266</li>
+              </ul>
 
               <h4>2. Finalidad del Tratamiento y Legitimación</h4>
               <p>
-                Los datos personales facilitados a través del formulario de contacto y solicitud de demostración (nombre, empresa, correo corporativo, teléfono y software contable utilizado) se tratan con las siguientes finalidades:
+                Los datos personales aportados mediante el formulario de contacto y solicitud de acceso a la beta cerrada (nombre, empresa, correo corporativo, teléfono y software contable utilizado) se tratan estrictamente para:
               </p>
               <ul>
-                <li>Coordinar, agendar y realizar la sesión de demostración técnica del software KontaPro.</li>
-                <li>Evaluar la compatibilidad técnica y el volumen operativo del despacho solicitante.</li>
-                <li>Responder a consultas técnicas, presupuestos y soporte previo a la contratación.</li>
+                <li>Gestionar y coordinar la sesión de demostración técnica del software KontaPro.</li>
+                <li>Evaluar la compatibilidad técnica y el volumen de facturación del despacho solicitante.</li>
+                <li>Atender consultas técnicas previas y facilitar el acceso guiado a la beta.</li>
               </ul>
               <p>
-                La base jurídica que legitima este tratamiento es el <strong>consentimiento expreso del interesado</strong> y la <strong>aplicación de medidas precontractuales</strong> a petición del propio usuario (Artículos 6.1.a y 6.1.b del Reglamento General de Protección de Datos - RGPD UE 2016/679).
+                La base jurídica del tratamiento es la <strong>aplicación de medidas precontractuales a petición del interesado</strong> y el <strong>consentimiento expreso</strong> facilitado al enviar el formulario (Arts. 6.1.a y 6.1.b del RGPD UE 2016/679).
               </p>
 
               <h4>3. Conservación de los Datos</h4>
               <p>
-                Los datos se conservarán durante el tiempo estrictamente necesario para la atención de la solicitud comercial y el seguimiento técnico de la demostración, o hasta que el interesado solicite su supresión.
+                Los datos se conservarán durante el periodo necesario para gestionar la relación precontractual con el despacho y el seguimiento de la beta, o hasta que el usuario solicite su supresión.
               </p>
 
-              <h4>4. Destinatarios y Transferencias Internacionales</h4>
+              <h4>4. Destinatarios y Proveedores</h4>
               <p>
-                KontaPro no vende, alquila ni cede datos de contacto a terceros. Para la entrega segura de notificaciones de formularios se emplean proveedores de infraestructura con servidores situados en la Unión Europea o bajo marcos de adecuación conformes al RGPD. Los datos contables o fiscales de clientes nunca se emplean para entrenar modelos públicos de inteligencia artificial.
+                KontaPro no cede ni comercializa datos personales con terceros. Los servidores de almacenamiento y cómputo se encuentran alojados exclusivamente en la Unión Europea bajo estándares conformes al RGPD. Los datos contables nunca se transfieren a terceros ni se utilizan para entrenar modelos públicos de inteligencia artificial.
               </p>
 
-              <h4>5. Derechos del Usuario (ARSOPOL)</h4>
+              <h4>5. Ejercicio de Derechos</h4>
               <p>
-                El usuario puede ejercer en cualquier momento sus derechos de <strong>Acceso, Rectificación, Supresión, Limitación del tratamiento, Oposición y Portabilidad</strong> de sus datos personales comunicándose directamente al teléfono oficial <strong>+34 686 766 266</strong> con la referencia &quot;Protección de Datos&quot;, acreditando fehacientemente su identidad.
+                El usuario puede solicitar el ejercicio de sus derechos de Acceso, Rectificación, Supresión, Limitación, Oposición y Portabilidad dirigiéndose por escrito con referencia &quot;Protección de Datos&quot; al teléfono <strong>+34 686 766 266</strong> o al correo legal de la entidad una vez designado formalmente.
               </p>
             </>
           )}
 
           {tab === 'legal' && (
             <>
+              <div className={styles.noticePending}>
+                <AlertCircle size={16} className={styles.noticeIcon} />
+                <span>
+                  <strong>Información LSSI-CE:</strong> Campos societarios oficiales pendientes de incorporación registral definitiva.
+                </span>
+              </div>
+
               <h4>1. Información General y Titularidad</h4>
               <p>
-                En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa de que este sitio web es titularidad de la entidad desarrolladora de <strong>KontaPro Suite</strong>, con teléfono oficial de atención directa y soporte técnico para despachos <strong>+34 686 766 266</strong>.
+                En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE):
+              </p>
+              <ul>
+                <li><strong>Nombre del Proyecto:</strong> KontaPro</li>
+                <li><strong>Titular de la Web:</strong> <em>[Razón social / Titular de la explotación pendiente de confirmación]</em></li>
+                <li><strong>NIF:</strong> <em>[NIF pendiente de confirmación]</em></li>
+                <li><strong>Dirección:</strong> <em>[Dirección de la sede pendiente de confirmación]</em></li>
+                <li><strong>Contacto Directo:</strong> +34 686 766 266</li>
+              </ul>
+
+              <h4>2. Propiedad Intelectual e Industrial</h4>
+              <p>
+                El código fuente, arquitectura del software, logotipos, elementos gráficos, textos explicativos, maquetas de interfaz y algoritmos de triaje de KontaPro son titularidad de sus desarrolladores legítimos o cuentan con autorización de uso, estando protegidos por la normativa de propiedad intelectual.
               </p>
 
-              <h4>2. Condiciones de Uso y Propiedad Intelectual</h4>
+              <h4>3. Carácter Demostrativo del Entorno Web</h4>
               <p>
-                El acceso y navegación por este sitio web atribuye la condición de usuario, implicando la aceptación de las presentes condiciones.
-              </p>
-              <p>
-                Todos los contenidos, marcas comerciales, logotipos, código fuente, diseños gráficos, algoritmos de triaje y textos explicativos son propiedad exclusiva de KontaPro o cuentan con licencia de uso, estando protegidos por la legislación española e internacional sobre propiedad intelectual e industrial.
-              </p>
-
-              <h4>3. Limitación de Responsabilidad</h4>
-              <p>
-                KontaPro no se hace responsable de los daños o perjuicios derivados de interferencias, interrupciones, virus informáticos o desconexiones en las redes de telecomunicaciones ajenas al control de la plataforma. La información expuesta en la web pública tiene carácter orientativo y demostrativo sobre las funcionalidades de la plataforma SaaS.
+                Los paneles interactivos, importes numéricos y tablas de facturación mostrados en la web pública tienen carácter de prototipo demostrativo con datos ficticios. No constituyen operaciones bancarias reales ni implican homologaciones no acreditadas.
               </p>
             </>
           )}
 
           {tab === 'cookies' && (
             <>
-              <h4>1. ¿Qué son las cookies y qué uso hace KontaPro?</h4>
+              <h4>1. ¿Qué son las cookies?</h4>
               <p>
-                Una cookie es un pequeño fichero de texto que se almacena en el navegador del usuario al visitar una página web.
+                Una cookie es un fichero técnico que se descarga en el navegador del usuario al acceder a determinados sitios web para permitir la navegación segura y el almacenamiento de preferencias operativas.
               </p>
-              <p>
-                La web pública de KontaPro sigue un principio de <strong>privacidad por diseño</strong>:
-              </p>
-              <ul>
-                <li><strong>Cookies Técnicas Estrictamente Necesarias:</strong> Se emplean únicamente para almacenar la preferencia de idioma (ES, CA, EN) mediante almacenamiento local (<code>kontapro_language_preference</code>) y para garantizar la seguridad en la transmisión de formularios.</li>
-                <li><strong>Sin Rastreo Publicitario de Terceros:</strong> No instalamos cookies de terceros con fines de perfilado comercial ni rastreo publicitario masivo.</li>
-              </ul>
 
-              <h4>2. Gestión y Desactivación</h4>
-              <p>
-                El usuario puede configurar su navegador para rechazar o eliminar cookies en cualquier momento a través de las opciones de configuración de su navegador web (Chrome, Firefox, Safari, Edge).
-              </p>
+              <h4>2. Tipología de Cookies Empleadas en KontaPro</h4>
+              <ul>
+                <li>
+                  <strong>Cookies Técnicas (Estrictamente Necesarias):</strong> Indispensables para el funcionamiento de la web (almacenamiento de preferencia de idioma <code>kontapro_language_preference</code> y control de sesiones seguras). No requieren consentimiento previo al ser necesarias para prestar el servicio solicitado.
+                </li>
+                <li>
+                  <strong>Cookies de Preferencias / Rendimiento:</strong> Destinadas a recordar configuraciones personalizadas del usuario. Vienen desactivadas por defecto y solo se ejecutan tras consentimiento explícito.
+                </li>
+                <li>
+                  <strong>Sin Cookies Publicitarias de Terceros:</strong> KontaPro no instala cookies de rastreo publicitario cruzado ni comparte identificadores con redes de publicidad.
+                </li>
+              </ul>
             </>
+          )}
+
+          {tab === 'preferences' && (
+            <div className={styles.preferencesPanel}>
+              <h4>Panel de Configuración de Cookies</h4>
+              <p className={styles.prefDesc}>
+                Puedes activar o desactivar cada categoría de cookies. Las cookies técnicas son obligatorias para el funcionamiento de la plataforma web.
+              </p>
+
+              <div className={styles.prefItem}>
+                <div className={styles.prefInfo}>
+                  <strong>Cookies Técnicas y de Navegación</strong>
+                  <span className={styles.prefSub}>
+                    Necesarias para la selección de idioma, envío seguro de formularios y renderizado visual.
+                  </span>
+                </div>
+                <span className={styles.alwaysActive}>Siempre activas</span>
+              </div>
+
+              <div className={styles.prefItem}>
+                <div className={styles.prefInfo}>
+                  <strong>Métricas y Rendimiento Agregado</strong>
+                  <span className={styles.prefSub}>
+                    Permiten medir de forma anónima el rendimiento de la consola y la estabilidad de carga.
+                  </span>
+                </div>
+                <label className={styles.switch}>
+                  <input
+                    type="checkbox"
+                    checked={analyticsConsent}
+                    onChange={(e) => setAnalyticsConsent(e.target.checked)}
+                  />
+                  <span className={styles.slider}></span>
+                </label>
+              </div>
+
+              {savedNotice && (
+                <div className={styles.savedAlert}>
+                  <Check size={16} /> Preferencias guardadas correctamente.
+                </div>
+              )}
+
+              <div className={styles.prefActions}>
+                <button
+                  type="button"
+                  className="btn btn--primary"
+                  onClick={handleSaveCookiePreferences}
+                >
+                  Guardar Preferencias
+                </button>
+              </div>
+            </div>
           )}
         </div>
 
         <div className={styles.footer}>
           <button type="button" className="btn btn--secondary" onClick={onClose}>
-            Entendido y Aceptar
+            Cerrar
           </button>
         </div>
       </div>

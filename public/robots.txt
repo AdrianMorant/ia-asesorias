@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /dist/
 
-Sitemap: https://kontaprosuite.com/sitemap.xml
+Sitemap: https://www.kontaprosuite.com/sitemap.xml

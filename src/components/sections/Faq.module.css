@@ -74,24 +74,26 @@
   letter-spacing: -0.01em;
 }
 
-.icon {
-  font-family: var(--font-mono);
-  font-size: 1.25rem;
-  font-weight: 700;
+.badgeIcon {
   color: var(--c-blue-600);
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+}
+
+.iconWrap {
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--c-blue-50);
   border: 1px solid var(--c-blue-100);
+  color: var(--c-blue-600);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--t-fast) ease;
+  flex-shrink: 0;
+  transition: transform 0.25s var(--ease), background 0.2s ease, color 0.2s ease;
 }
 
-.itemOpen .icon {
+.iconWrapRotated {
+  transform: rotate(180deg);
   background: var(--c-blue-600);
   color: #FFFFFF;
 }

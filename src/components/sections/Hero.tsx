@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
 import styles from './Hero.module.css';
 import { useLanguage } from '../../i18n';
+import {
+  Inbox,
+  SlidersHorizontal,
+  Scale,
+  Send,
+  PhoneCall,
+  CheckCircle2,
+  ShieldCheck,
+  FileCode2,
+  Lock,
+  ArrowRight,
+  ArrowDown,
+  Sparkles,
+} from 'lucide-react';
 
 const PIPELINE_STEPS = [
-  { label: 'Recepción', tag: 'Email / PWA / Web', icon: '📥' },
-  { label: 'Triaje IA', tag: 'Extracción & Semáforo', icon: '📊' },
-  { label: 'Asiento PGC', tag: 'Partida doble sugerida', icon: '⚖️' },
-  { label: 'Enlace ERP', tag: 'A3, Sage, Contasol', icon: '🚀' },
+  { label: 'Recepción', tag: 'Buzón / PWA / Web', icon: Inbox },
+  { label: 'Triaje IA', tag: 'Extracción & Semáforo', icon: SlidersHorizontal },
+  { label: 'Asiento PGC', tag: 'Partida doble sugerida', icon: Scale },
+  { label: 'Enlace ERP', tag: 'A3, Sage, Contasol', icon: Send },
 ];
 
 const Hero: React.FC = () => {
@@ -21,6 +35,7 @@ const Hero: React.FC = () => {
         <div className={styles.grid}>
           {/* ── Left Column: Value Proposition & CTAs ── */}
           <div className={styles.copy}>
+            {/* Pill Indicador de Beta Cerrada */}
             <div className={`hero-enter ${styles.pill}`}>
               <span className={styles.pillPulse} aria-hidden="true"></span>
               <span className={styles.pillText}>{t.hero.badge}</span>
@@ -37,12 +52,12 @@ const Hero: React.FC = () => {
               {t.hero.subtitle}
             </p>
 
-            {/* ── Demo Spotlight: Foco Visual Primario al Abrir la Web ── */}
+            {/* ── Demo Spotlight: Acceso a Beta & Contacto Directo ── */}
             <div className={`hero-enter hero-enter--d3 ${styles.demoSpotlight}`}>
               <div className={styles.spotlightHeader}>
                 <span className={styles.spotlightBadge}>
-                  <span className={styles.spotlightPulse} aria-hidden="true"></span>
-                  DEMOSTRACIÓN EN DIRECTO (20 MIN)
+                  <Sparkles size={13} className={styles.badgeSparkle} />
+                  SESIÓN TÉCNICA 1 A 1 EN DIRECTO (20 MIN)
                 </span>
                 <span className={styles.spotlightTag}>Con las facturas de tu despacho</span>
               </div>
@@ -51,17 +66,19 @@ const Hero: React.FC = () => {
                 <a href="#demo" className={`btn btn--primary ${styles.spotlightMainBtn}`}>
                   <span className={styles.btnShimmer} aria-hidden="true"></span>
                   <span className={styles.spotlightBtnText}>{t.hero.ctaPrimary}</span>
-                  <span className={styles.btnArrow} aria-hidden="true">→</span>
+                  <ArrowRight size={18} className={styles.btnArrow} />
                 </a>
 
                 <a
                   href="tel:+34686766266"
                   className={styles.spotlightPhoneBtn}
-                  title="Llamar directamente al equipo de KontaPro"
+                  title="Contactar directamente con el equipo técnico de KontaPro"
                 >
-                  <span className={styles.phoneIcon} aria-hidden="true">📞</span>
+                  <div className={styles.phoneIconBox}>
+                    <PhoneCall size={18} className={styles.phoneIcon} />
+                  </div>
                   <div className={styles.phoneBtnTexts}>
-                    <span className={styles.phoneBtnSub}>Llamada directa</span>
+                    <span className={styles.phoneBtnSub}>Soporte directo</span>
                     <strong className={styles.phoneBtnNum}>+34 686 766 266</strong>
                   </div>
                 </a>
@@ -69,40 +86,40 @@ const Hero: React.FC = () => {
 
               <div className={styles.spotlightPerks}>
                 <span className={styles.perkItem}>
-                  <span className={styles.perkCheck} aria-hidden="true">✓</span> Sesión 1 a 1 en directo
+                  <CheckCircle2 size={14} className={styles.perkCheck} /> Sesión personalizada
                 </span>
                 <span className={styles.perkItem}>
-                  <span className={styles.perkCheck} aria-hidden="true">✓</span> Enlace con tu software contable
+                  <CheckCircle2 size={14} className={styles.perkCheck} /> Enlace con tu software contable
                 </span>
                 <span className={styles.perkItem}>
-                  <span className={styles.perkCheck} aria-hidden="true">✓</span> Sin compromiso
+                  <CheckCircle2 size={14} className={styles.perkCheck} /> Sin compromiso
                 </span>
               </div>
             </div>
 
             <div className={`hero-enter hero-enter--d4 ${styles.secondaryActions}`}>
               <a href="#showcase" className={styles.exploreLink}>
-                <span>O explora la consola operativa en tiempo real</span>
-                <span aria-hidden="true">↓</span>
+                <span>Explorar consola operativa y simulación interactiva</span>
+                <ArrowDown size={15} />
               </a>
             </div>
 
-            {/* Badges de Confianza y Cumplimiento Normativo */}
+            {/* Badges de Confianza y Cumplimiento Normativo (Sin afirmaciones no acreditadas) */}
             <div className={`hero-enter hero-enter--d4 ${styles.trustGrid}`}>
               <div className={styles.trustBadge}>
-                <span className={styles.trustIcon} aria-hidden="true">🛡️</span>
+                <ShieldCheck size={16} className={styles.trustIcon} />
                 <span>{t.hero.trust1}</span>
               </div>
               <div className={styles.trustBadge}>
-                <span className={styles.trustIcon} aria-hidden="true">📱</span>
+                <FileCode2 size={16} className={styles.trustIcon} />
                 <span>{t.hero.trust2}</span>
               </div>
               <div className={styles.trustBadge}>
-                <span className={styles.trustIcon} aria-hidden="true">🔌</span>
+                <FileCode2 size={16} className={styles.trustIcon} />
                 <span>{t.hero.trust3}</span>
               </div>
               <div className={styles.trustBadge}>
-                <span className={styles.trustIcon} aria-hidden="true">🔒</span>
+                <Lock size={16} className={styles.trustIcon} />
                 <span>{t.hero.trust4}</span>
               </div>
             </div>
@@ -111,30 +128,35 @@ const Hero: React.FC = () => {
           {/* ── Right Column: Interactive SaaS Preview Mockup ── */}
           <div className={`hero-enter hero-enter--d2 ${styles.visualContainer}`}>
             <div className={styles.window}>
-              {/* Top macOS-style bar */}
+              {/* Top macOS-style bar con etiqueta obligatoria de simulación */}
               <div className="mac-bar">
                 <span className="mac-bar__dot mac-bar__dot--r"></span>
                 <span className="mac-bar__dot mac-bar__dot--y"></span>
                 <span className="mac-bar__dot mac-bar__dot--g"></span>
                 <span className="mac-bar__title">KONTAPRO SUITE // GESTIÓN CONTABLE DESPACHO</span>
-                <div className={styles.liveTag}>
-                  <span className={styles.liveDot}></span> {t.hero.liveEngine}
+                
+                {/* ETIQUETA OBLIGATORIA DE SIMULACIÓN */}
+                <div className={styles.simulatedTag}>
+                  DEMO · DATOS SIMULADOS
                 </div>
               </div>
 
               {/* Pipeline Flow Bar */}
               <div className={styles.pipelineBar}>
-                {PIPELINE_STEPS.map((s, idx) => (
-                  <div key={idx} className={styles.pipelineStep}>
-                    <div className={styles.stepCircle}>
-                      <span>{s.icon}</span>
+                {PIPELINE_STEPS.map((s, idx) => {
+                  const IconComp = s.icon;
+                  return (
+                    <div key={idx} className={styles.pipelineStep}>
+                      <div className={styles.stepCircle}>
+                        <IconComp size={15} />
+                      </div>
+                      <div className={styles.stepTexts}>
+                        <span className={styles.stepLabel}>{s.label}</span>
+                        <span className={styles.stepTag}>{s.tag}</span>
+                      </div>
                     </div>
-                    <div className={styles.stepTexts}>
-                      <span className={styles.stepLabel}>{s.label}</span>
-                      <span className={styles.stepTag}>{s.tag}</span>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Window Content */}
@@ -160,7 +182,7 @@ const Hero: React.FC = () => {
                       Propuesta de asiento PGC
                     </button>
                   </div>
-                  <span className="badge badge--green">✓ Semáforo Verde (Confianza 99.8%)</span>
+                  <span className="badge badge--green">✓ Semáforo Verde (Fiabilidad 99.8%)</span>
                 </div>
 
                 {activeTab === 'datos' ? (
@@ -198,7 +220,7 @@ const Hero: React.FC = () => {
 
                     <div className={styles.accountSuggestion}>
                       <div className={styles.suggestText}>
-                        <span className={styles.suggestTitle}>Subcuenta PGC sugerida según histórico del cliente:</span>
+                        <span className={styles.suggestTitle}>Subcuenta PGC propuesta por histórico:</span>
                         <span className={styles.suggestAccount}>628.0001 — Suministros de energía y consumos</span>
                       </div>
                       <span className={styles.suggestMatch}>100% Coincidencia</span>
@@ -259,7 +281,7 @@ const Hero: React.FC = () => {
 
             <div className={styles.floatBadgeSecondary}>
               <div className={styles.floatBadgeDot}></div>
-              <span>Sincronización ERP: Conectado</span>
+              <span>Sincronización ERP: Conexión simulada</span>
             </div>
           </div>
         </div>

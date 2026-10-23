@@ -83,16 +83,29 @@
   --r-2xl: 1.5rem;
   --r-full: 9999px;
 
-  /* Sombras SaaS Suaves y Elegantes */
+  /* Sombras SaaS Suaves y Elegantes con Relieve Cromático */
   --shadow-xs: 0 1px 2px rgba(11, 32, 70, 0.05);
   --shadow-sm: 0 1px 3px rgba(11, 32, 70, 0.07), 0 1px 2px rgba(11, 32, 70, 0.04);
   --shadow-md: 0 4px 14px -2px rgba(11, 32, 70, 0.08), 0 2px 6px -1px rgba(11, 32, 70, 0.04);
   --shadow-lg: 0 10px 25px -4px rgba(11, 32, 70, 0.10), 0 4px 10px -2px rgba(11, 32, 70, 0.04);
   --shadow-xl: 0 20px 35px -6px rgba(11, 32, 70, 0.12), 0 8px 16px -4px rgba(11, 32, 70, 0.05);
   --shadow-blue: 0 8px 24px -4px rgba(10, 120, 252, 0.28);
+  --shadow-blue-lg: 0 14px 34px -4px rgba(10, 120, 252, 0.35);
+  --shadow-card-elevated: 0 16px 36px -8px rgba(11, 32, 70, 0.10), 0 4px 14px rgba(10, 120, 252, 0.06);
+  --shadow-card-hover: 0 22px 48px -10px rgba(11, 32, 70, 0.15), 0 8px 20px rgba(10, 120, 252, 0.12);
+  --shadow-glow-blue: 0 0 24px rgba(10, 120, 252, 0.25);
+  --shadow-inner-subtle: inset 0 1px 1px rgba(255, 255, 255, 0.8), inset 0 -1px 1px rgba(11, 32, 70, 0.05);
+
+  /* Gradientes de Marca KontaPro */
+  --grad-hero: linear-gradient(175deg, #07152B 0%, #0B2046 50%, #102F62 100%);
+  --grad-brand: linear-gradient(135deg, #0B2046 0%, #122E5E 55%, #0A78FC 100%);
+  --grad-accent: linear-gradient(135deg, #0A78FC 0%, #0062D6 100%);
+  --grad-subtle-mesh: radial-gradient(circle at 10% 20%, rgba(10, 120, 252, 0.07) 0%, transparent 40%),
+                      radial-gradient(circle at 90% 80%, rgba(11, 32, 70, 0.05) 0%, transparent 45%);
 
   /* Transiciones */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
   --t-fast: 0.15s;
   --t-base: 0.25s;
   --t-slow: 0.4s;
@@ -461,11 +474,59 @@ input, textarea, select {
   height: 100%;
   border-radius: 50%;
   background: inherit;
-  animation: radarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  animation: radarPing 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 @keyframes radarPing {
   0% { transform: scale(1); opacity: 0.7; }
   75%, 100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* Micro-flotación suave para tarjetas y elementos de relieve */
+@keyframes subtleFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+.motion-float {
+  animation: subtleFloat 5s ease-in-out infinite;
+}
+
+/* Brillo y shimmer sutil para elementos destacados */
+@keyframes shimmerLight {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-effect::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transform: translateX(-100%);
+  animation: shimmerLight 3.5s infinite;
+  pointer-events: none;
+}
+
+/* Pulso de halo en vivo */
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.04); }
+}
+.glow-pulse {
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+/* Superficie Glassmorphism Profesional */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 /* Soporte para preferencias de movimiento reducido (WCAG AA) */

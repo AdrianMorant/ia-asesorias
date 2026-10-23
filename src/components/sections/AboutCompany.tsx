@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './AboutCompany.module.css';
 import { useLanguage } from '../../i18n';
+import { Sparkles, Code2, ShieldCheck, PhoneCall, ArrowRight } from 'lucide-react';
 
 const AboutCompany: React.FC = () => {
   const { t } = useLanguage();
@@ -16,42 +17,48 @@ const AboutCompany: React.FC = () => {
           </div>
 
           <div className={styles.pillarsGrid}>
-            {/* Pilar 1: Clientes y Empresas */}
+            {/* Pilar 1: Beta Cerrada */}
             <div className={styles.pillarCard}>
               <div className={styles.pillarTop}>
-                <span className={styles.pillarIcon} aria-hidden="true">📈</span>
-                <span className={styles.pillarBadge}>Escala Masiva</span>
+                <div className={styles.pillarIconBox}>
+                  <Sparkles size={22} className={styles.iconGold} />
+                </div>
+                <span className={styles.pillarBadge}>Acceso Controlado</span>
               </div>
               <h3 className={styles.pillarTitle}>{t.aboutCompany.pillar1Title}</h3>
               <p className={styles.pillarDesc}>{t.aboutCompany.pillar1Desc}</p>
               <div className={styles.pillarMetric}>
-                ✓ Más de 100.000 clientes gestionados
+                ✓ Acceso prioritario por invitación técnica
               </div>
             </div>
 
-            {/* Pilar 2: Equipo de +75 */}
+            {/* Pilar 2: Interlocución Directa con Creadores */}
             <div className={styles.pillarCard}>
               <div className={styles.pillarTop}>
-                <span className={styles.pillarIcon} aria-hidden="true">👥</span>
-                <span className={styles.pillarBadge}>Equipo Especializado</span>
+                <div className={styles.pillarIconBox}>
+                  <Code2 size={22} className={styles.iconBlue} />
+                </div>
+                <span className={styles.pillarBadge}>Ingeniería y Producto</span>
               </div>
               <h3 className={styles.pillarTitle}>{t.aboutCompany.pillar2Title}</h3>
               <p className={styles.pillarDesc}>{t.aboutCompany.pillar2Desc}</p>
               <div className={styles.pillarMetric}>
-                ✓ Más de 75 empleados y especialistas
+                ✓ Soporte y formación 1 a 1 sin intermediarios
               </div>
             </div>
 
-            {/* Pilar 3: Seguridad ISO 27001 */}
+            {/* Pilar 3: Seguridad Diseñada bajo Controles ISO 27001 */}
             <div className={styles.pillarCard}>
               <div className={styles.pillarTop}>
-                <span className={styles.pillarIcon} aria-hidden="true">🛡️</span>
-                <span className={styles.pillarBadge}>Grado Militar</span>
+                <div className={styles.pillarIconBox}>
+                  <ShieldCheck size={22} className={styles.iconNavy} />
+                </div>
+                <span className={styles.pillarBadge}>Seguridad y DPA</span>
               </div>
               <h3 className={styles.pillarTitle}>{t.aboutCompany.pillar3Title}</h3>
               <p className={styles.pillarDesc}>{t.aboutCompany.pillar3Desc}</p>
               <div className={styles.pillarMetric}>
-                ✓ Certificación ISO 27001 & DPA Art. 28
+                ✓ Controles ISO 27001 & DPA Art. 28 formalizado
               </div>
             </div>
           </div>
@@ -61,16 +68,18 @@ const AboutCompany: React.FC = () => {
             <div className={styles.bannerInfo}>
               <span className={styles.bannerTitle}>Interlocución técnica y soporte directo a despachos</span>
               <span className={styles.bannerSub}>
-                Centro de soporte técnico y fiscal en España • Tiempo medio de resolución &lt; 15 min en periodos de cierre
+                Atención directa para despachos contables y asesorías en España • Periodo de prueba guiado
               </span>
             </div>
 
             <div className={styles.bannerActions}>
               <a href="tel:+34686766266" className={styles.phoneLink}>
-                📞 +34 686 766 266
+                <PhoneCall size={16} />
+                <span>+34 686 766 266</span>
               </a>
               <a href="#demo" className="btn btn--primary">
-                {t.aboutCompany.ctaPrimary}
+                <span>{t.aboutCompany.ctaPrimary}</span>
+                <ArrowRight size={16} />
               </a>
             </div>
           </div>

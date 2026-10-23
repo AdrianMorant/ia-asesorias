@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './RoiCalculator.module.css';
 import { useLanguage } from '../../i18n';
+import { FileText, Clock, Coins, ArrowRight, Info } from 'lucide-react';
 
 const PRESETS = [
   { label: 'Despacho Pequeño', invoices: 500, time: 2.5, rate: 22 },
@@ -15,9 +16,9 @@ const RoiCalculator: React.FC = () => {
   const [hourlyRate, setHourlyRate] = useState(24);
   const { t } = useLanguage();
 
-  // Cálculos matemáticos rigurosos
+  // Cálculos matemáticos demostrativos
   const totalHoursManual = Math.round((invoices * minutesPerInvoice) / 60);
-  const hoursSaved = Math.round(totalHoursManual * 0.82); // 82% de ahorro medio contrastado
+  const hoursSaved = Math.round(totalHoursManual * 0.82); // 82% de ahorro medio estimado
   const daysSaved = Math.round((hoursSaved / 8) * 10) / 10;
   const monthlySavings = Math.round(hoursSaved * hourlyRate);
   const annualSavings = monthlySavings * 12;
@@ -66,9 +67,9 @@ const RoiCalculator: React.FC = () => {
             <span className="mac-bar__dot mac-bar__dot--y"></span>
             <span className="mac-bar__dot mac-bar__dot--g"></span>
             <span className="mac-bar__title">KONTAPRO SUITE // SIMULADOR DE IMPACTO OPERATIVO</span>
-            <div className={styles.liveBadge}>
-              <span className={styles.livePulse}></span>
-              <span>CÁLCULO DINÁMICO EN VIVO</span>
+            
+            <div className={styles.simBadge}>
+              SIMULACIÓN ORIENTATIVA · DATOS ESTIMADOS
             </div>
           </div>
 
@@ -77,14 +78,16 @@ const RoiCalculator: React.FC = () => {
             <div className={styles.slidersCol}>
               <div className={styles.slidersHeader}>
                 <span className={styles.sectionPill}>Parámetros de tu Despacho</span>
-                <span className={styles.sectionHint}>Ajusta para calibrar tus datos</span>
+                <span className={styles.sectionHint}>Ajusta para calibrar tus estimaciones</span>
               </div>
 
               {/* Slider 1: Invoices */}
               <div className={styles.sliderGroup}>
                 <div className={styles.sliderLabelRow}>
                   <div className={styles.labelWithIcon}>
-                    <span className={styles.sliderIcon} aria-hidden="true">📑</span>
+                    <div className={styles.sliderIconBox}>
+                      <FileText size={16} />
+                    </div>
                     <label htmlFor="invoices-input" className={styles.sliderLabel}>
                       Facturas gestionadas al mes:
                     </label>
@@ -120,7 +123,9 @@ const RoiCalculator: React.FC = () => {
               <div className={styles.sliderGroup}>
                 <div className={styles.sliderLabelRow}>
                   <div className={styles.labelWithIcon}>
-                    <span className={styles.sliderIcon} aria-hidden="true">⏱️</span>
+                    <div className={styles.sliderIconBox}>
+                      <Clock size={16} />
+                    </div>
                     <label htmlFor="minutes-input" className={styles.sliderLabel}>
                       Tiempo medio por factura (manual):
                     </label>
@@ -156,7 +161,9 @@ const RoiCalculator: React.FC = () => {
               <div className={styles.sliderGroup}>
                 <div className={styles.sliderLabelRow}>
                   <div className={styles.labelWithIcon}>
-                    <span className={styles.sliderIcon} aria-hidden="true">💶</span>
+                    <div className={styles.sliderIconBox}>
+                      <Coins size={16} />
+                    </div>
                     <label htmlFor="rate-input" className={styles.sliderLabel}>
                       Coste medio por hora contable:
                     </label>
@@ -194,7 +201,7 @@ const RoiCalculator: React.FC = () => {
               <div className={styles.resultsHeader}>
                 <div className={styles.efficiencyBadge}>
                   <div className={styles.efficiencyDot}></div>
-                  <span>82% DE TIEMPO RECUPERADO</span>
+                  <span>~82% DE TIEMPO RECUPERABLE</span>
                 </div>
                 <span className={styles.resultsSubtitle}>Impacto proyectado</span>
               </div>
@@ -217,14 +224,14 @@ const RoiCalculator: React.FC = () => {
                     ></div>
                   </div>
                   <span className={styles.metricSub}>
-                    De <strong>{totalHoursManual}h</strong> de picado manual mensual
+                    De <strong>{totalHoursManual}h</strong> de picado manual mensual estimado
                   </span>
                 </div>
 
                 <div className={styles.metricCard}>
                   <div className={styles.metricTop}>
                     <span className={styles.metricLabel}>Jornadas devueltas</span>
-                    <span className={styles.metricBadgeEmerald}>Tiempo libre</span>
+                    <span className={styles.metricBadgeEmerald}>Tiempo neto</span>
                   </div>
                   <div className={styles.metricBigWrapper}>
                     <span className={`${styles.metricBig} ${styles.metricBigEmerald}`}>{daysSaved}</span>
@@ -237,7 +244,7 @@ const RoiCalculator: React.FC = () => {
                     ></div>
                   </div>
                   <span className={styles.metricSub}>
-                    Para asesoramiento de alto valor y captación
+                    Para asesoramiento fiscal y captación
                   </span>
                 </div>
               </div>
@@ -246,21 +253,26 @@ const RoiCalculator: React.FC = () => {
               <div className={styles.savingsBox}>
                 <div className={styles.savingsTopRow}>
                   <span className={styles.savingsLabel}>{t.calculator.valueRecovered}</span>
-                  <span className={styles.verifiedTag}>✓ ESTIMADO</span>
+                  <span className={styles.verifiedTag}>ESTIMACIÓN</span>
                 </div>
                 <div className={styles.savingsValue}>
                   {annualSavings.toLocaleString()} <span className={styles.savingsCurrency}>€ / año</span>
                 </div>
                 <div className={styles.savingsNote}>
-                  Equivale a unos <strong className={styles.savingsMonthAmount}>{monthlySavings.toLocaleString()} €</strong> netos en tiempo recuperado al mes
+                  Equivale a unos <strong className={styles.savingsMonthAmount}>{monthlySavings.toLocaleString()} €</strong> en horas recuperadas al mes
                 </div>
               </div>
 
               {/* Call to action */}
               <a href="#demo" className={`btn btn--primary ${styles.submitBtn}`}>
                 <span>{t.calculator.cta}</span>
-                <span className={styles.btnArrow} aria-hidden="true">→</span>
+                <ArrowRight size={16} className={styles.btnArrow} />
               </a>
+
+              <div className={styles.disclaimerNote}>
+                <Info size={13} className={styles.discIcon} />
+                <span>Cálculo ilustrativo basado en parámetros medios del sector. Los resultados varían según la complejidad documental de cada cartera.</span>
+              </div>
             </div>
           </div>
         </div>

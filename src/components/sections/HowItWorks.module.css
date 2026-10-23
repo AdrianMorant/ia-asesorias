@@ -266,3 +266,47 @@
     position: static;
   }
 }
+
+.iconCircle {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-md);
+  background: var(--c-blue-50);
+  color: var(--c-blue-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.simBadge {
+  margin-left: auto;
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: #FFFBEB;
+  color: #B45309;
+  border: 1px solid #FCD34D;
+  padding: 2px 7px;
+  border-radius: var(--r-full);
+}
+
+.consoleLiveBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--c-navy-900);
+}
+
+.termIcon {
+  color: var(--c-blue-600);
+}
+
+.noteIconSvg {
+  color: var(--c-blue-600);
+}
+

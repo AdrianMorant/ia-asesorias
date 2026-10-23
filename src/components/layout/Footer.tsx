@@ -3,6 +3,8 @@ import styles from './Footer.module.css';
 import KontaProLogo from '../common/KontaProLogo';
 import { useLanguage } from '../../i18n';
 import LegalModal, { type LegalTab } from '../common/LegalModal';
+import CookieBanner from '../common/CookieBanner';
+import { ShieldCheck, PhoneCall, Sparkles } from 'lucide-react';
 
 const CURRENT_YEAR = 2026;
 
@@ -27,7 +29,7 @@ const Footer: React.FC = () => {
             </div>
             <p className={styles.tagline}>{t.footer.tagline}</p>
             <div className={styles.securityPledge}>
-              <span>🛡️</span>
+              <ShieldCheck size={16} className={styles.pledgeIcon} />
               <span>{t.footer.securityNotice}</span>
             </div>
           </div>
@@ -83,8 +85,9 @@ const Footer: React.FC = () => {
               <a href="#integraciones" className={styles.colLink}>
                 {t.footer.colCompanyLinks[2]}
               </a>
-              <a href="tel:+34686766266" className={styles.colLink}>
-                📞 +34 686 766 266
+              <a href="tel:+34686766266" className={styles.colLinkPhone}>
+                <PhoneCall size={14} />
+                <span>+34 686 766 266</span>
               </a>
             </div>
           </div>
@@ -118,11 +121,22 @@ const Footer: React.FC = () => {
             >
               {t.footer.cookies}
             </button>
+            <span>•</span>
+            <button
+              type="button"
+              className={styles.legalBtn}
+              onClick={() => openLegal('preferences')}
+            >
+              Configurar Cookies
+            </button>
           </div>
 
           <div className={styles.statusIndicator}>
             <span className={styles.statusDot}></span>
-            <span>Motores de Ingesta & Veri*factu Operativos</span>
+            <span>
+              <Sparkles size={11} className={styles.statusSparkle} />
+              Beta Cerrada · Motor Activo
+            </span>
           </div>
         </div>
       </div>
@@ -132,6 +146,8 @@ const Footer: React.FC = () => {
         initialTab={legalTab}
         onClose={() => setLegalModalOpen(false)}
       />
+
+      <CookieBanner onOpenPreferences={() => openLegal('preferences')} />
     </footer>
   );
 };

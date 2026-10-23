@@ -160,3 +160,28 @@
     align-items: flex-start;
   }
 }
+
+.pledgeIcon {
+  color: #38BDF8;
+  flex-shrink: 0;
+}
+
+.colLinkPhone {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: #38BDF8;
+  transition: all var(--t-fast) ease;
+}
+
+.colLinkPhone:hover {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+
+.statusSparkle {
+  color: #34D399;
+}
+

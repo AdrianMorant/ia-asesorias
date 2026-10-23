@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Faq.module.css';
 import { useLanguage } from '../../i18n';
+import { ChevronDown, HelpCircle } from 'lucide-react';
 
 const Faq: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -23,7 +24,10 @@ const Faq: React.FC = () => {
     <section className={styles.section} id="faq">
       <div className="container">
         <div className={styles.header}>
-          <span className="badge badge--blue">{t.faq.badge}</span>
+          <span className="badge badge--blue">
+            <HelpCircle size={13} className={styles.badgeIcon} />
+            {t.faq.badge}
+          </span>
           <h2 className={styles.title}>{t.faq.title}</h2>
           <p className={styles.subtitle}>{t.faq.subtitle}</p>
         </div>
@@ -40,7 +44,9 @@ const Faq: React.FC = () => {
                   aria-expanded={isOpen}
                 >
                   <span className={styles.questionText}>{item.q}</span>
-                  <span className={styles.icon} aria-hidden="true">{isOpen ? '−' : '+'}</span>
+                  <div className={`${styles.iconWrap} ${isOpen ? styles.iconWrapRotated : ''}`}>
+                    <ChevronDown size={18} />
+                  </div>
                 </button>
                 {isOpen && (
                   <div className={styles.answerBox}>

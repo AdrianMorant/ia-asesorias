@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import styles from './Contact.module.css';
 import { useLanguage } from '../../i18n';
 import LegalModal from '../common/LegalModal';
+import { Clock, FileText, CheckCircle2, PhoneCall, AlertTriangle } from 'lucide-react';
 
 const DEFAULT_WEB3FORMS_KEY = '0415647e-e22b-4ed5-a00d-8bd10604a02f';
 
@@ -117,7 +118,7 @@ const Contact: React.FC = () => {
         },
         body: JSON.stringify({
           access_key: accessKey,
-          subject: `🚀 Solicitud Demo KontaPro - ${cleanEmpresa || cleanNombre}`,
+          subject: `Solicitud Acceso Beta KontaPro - ${cleanEmpresa || cleanNombre}`,
           from_name: 'KontaPro Web Segura',
           responsable: cleanNombre,
           empresa: cleanEmpresa,
@@ -157,7 +158,9 @@ const Contact: React.FC = () => {
 
             <div className={styles.benefitsList}>
               <div className={styles.benefitItem}>
-                <div className={styles.benefitIcon}>⏱️</div>
+                <div className={styles.benefitIcon}>
+                  <Clock size={20} className={styles.benefitIconSvg} />
+                </div>
                 <div>
                   <strong>Sesión ejecutiva de 20 minutos</strong>
                   <span>Sin rodeos ni presentaciones genéricas. Vamos directos a la operativa contable de tu despacho.</span>
@@ -165,15 +168,19 @@ const Contact: React.FC = () => {
               </div>
 
               <div className={styles.benefitItem}>
-                <div className={styles.benefitIcon}>📑</div>
+                <div className={styles.benefitIcon}>
+                  <FileText size={20} className={styles.benefitIconSvg} />
+                </div>
                 <div>
                   <strong>Prueba con tus facturas reales</strong>
-                  <span>Puedes traer un lote de facturas complejas de tus clientes para comprobar la extracción y cuadre en vivo.</span>
+                  <span>Puedes traer un lote de facturas de tus clientes para comprobar la extracción y cuadre en vivo.</span>
                 </div>
               </div>
 
               <div className={styles.benefitItem}>
-                <div className={styles.benefitIcon}>🔌</div>
+                <div className={styles.benefitIcon}>
+                  <CheckCircle2 size={20} className={styles.benefitIconSvg} />
+                </div>
                 <div>
                   <strong>Validación de enlace con tu ERP</strong>
                   <span>Comprobamos la generación de enlaces contables para A3, Sage, Contasol o Holded sin compromiso.</span>
@@ -185,7 +192,9 @@ const Contact: React.FC = () => {
               <span className={styles.directLabel}>Atención telefónica directa para despachos:</span>
               <div className={styles.directLinks}>
                 <a href="tel:+34686766266" className={styles.directPhoneLink}>
-                  <span className={styles.directPhoneIcon} aria-hidden="true">📞</span>
+                  <div className={styles.directPhoneIconBox}>
+                    <PhoneCall size={18} className={styles.directPhoneIconSvg} />
+                  </div>
                   <div className={styles.directPhoneInfo}>
                     <strong className={styles.directPhoneNumber}>+34 686 766 266</strong>
                     <span className={styles.directPhoneHours}>Lunes a Viernes · 9:00 a 19:00</span>
@@ -206,7 +215,7 @@ const Contact: React.FC = () => {
 
                 {errorMessage && (
                   <div className={styles.errorMessage} role="alert">
-                    <span>⚠️</span>
+                    <AlertTriangle size={18} className={styles.errorIconSvg} />
                     <span>{errorMessage}</span>
                   </div>
                 )}

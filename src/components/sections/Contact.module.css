@@ -47,7 +47,6 @@
 }
 
 .benefitIcon {
-  font-size: 1.25rem;
   width: 40px;
   height: 40px;
   border-radius: var(--r-md);
@@ -57,6 +56,11 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  color: var(--c-blue-600);
+}
+
+.benefitIconSvg {
+  stroke-width: 2.2;
 }
 
 .benefitItem strong {
@@ -118,8 +122,25 @@
   box-shadow: 0 4px 12px rgba(10, 120, 252, 0.12);
 }
 
-.directPhoneIcon {
-  font-size: 1.25rem;
+.directPhoneIconBox {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-md);
+  background: var(--c-blue-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-blue-600);
+  flex-shrink: 0;
+}
+
+.directPhoneIconSvg {
+  stroke-width: 2.2;
+}
+
+.errorIconSvg {
+  color: #DC2626;
+  flex-shrink: 0;
 }
 
 .directPhoneInfo {

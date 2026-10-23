@@ -47,13 +47,18 @@
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Green Level */
 .green {
   border-top: 4px solid #10B981;
+  transition: all var(--t-base) var(--ease);
+}
+.green:hover {
+  border-color: #10B981;
+  box-shadow: 0 18px 40px -8px rgba(16, 185, 129, 0.22), 0 4px 14px rgba(11, 32, 70, 0.05);
 }
 .green .actionBadge {
   background: #ECFDF5;
@@ -69,6 +74,11 @@
 /* Yellow Level */
 .yellow {
   border-top: 4px solid #F59E0B;
+  transition: all var(--t-base) var(--ease);
+}
+.yellow:hover {
+  border-color: #F59E0B;
+  box-shadow: 0 18px 40px -8px rgba(245, 158, 11, 0.22), 0 4px 14px rgba(11, 32, 70, 0.05);
 }
 .yellow .actionBadge {
   background: #FFFBEB;
@@ -84,6 +94,11 @@
 /* Red Level */
 .red {
   border-top: 4px solid #EF4444;
+  transition: all var(--t-base) var(--ease);
+}
+.red:hover {
+  border-color: #EF4444;
+  box-shadow: 0 18px 40px -8px rgba(239, 68, 68, 0.22), 0 4px 14px rgba(11, 32, 70, 0.05);
 }
 .red .actionBadge {
   background: #FEF2F2;
@@ -104,14 +119,46 @@
   gap: 8px;
 }
 
+.headerIcon {
+  color: var(--c-blue-600);
+}
+
 .levelRow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .trafficLight {
-  font-size: 1.25rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.green .trafficLight {
+  background: #ECFDF5;
+  color: #059669;
+  border: 1px solid #A7F3D0;
+}
+
+.yellow .trafficLight {
+  background: #FFFBEB;
+  color: #D97706;
+  border: 1px solid #FDE68A;
+}
+
+.red .trafficLight {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FECACA;
+}
+
+.trafficIcon {
+  stroke-width: 2.2;
 }
 
 .levelName {

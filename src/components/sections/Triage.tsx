@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Triage.module.css';
 import { useLanguage } from '../../i18n';
+import { CheckCircle2, AlertTriangle, ShieldBan, Sparkles } from 'lucide-react';
 
 const LEVELS = [
   {
@@ -8,9 +9,9 @@ const LEVELS = [
     title: 'Alta Confianza (95% - 99.9%)',
     badge: 'Procesamiento Directo',
     colorClass: 'green',
-    icon: '🟢',
-    condition: 'Datos nítidos, proveedor recurrente identificado y cuadre aritmético 100% verificado.',
-    action: 'Generación directa del borrador o apunte cuadrado en el diario contable de tu ERP sin intervención manual.',
+    icon: CheckCircle2,
+    condition: 'Datos nítidos, proveedor recurrente identificado y cuadre aritmético verificado al 100%.',
+    action: 'Generación directa del borrador de apunte cuadrado en el libro diario de tu ERP sin intervención manual.',
     stats: '~94% del volumen mensual',
     example: 'Factura mensual de suministros o acreedor habitual con desglose de IVA estándar.',
   },
@@ -19,7 +20,7 @@ const LEVELS = [
     title: 'Revisión en 1 Clic',
     badge: 'Verificación Humana',
     colorClass: 'yellow',
-    icon: '🟡',
+    icon: AlertTriangle,
     condition: 'Proveedor nuevo, concepto atípico o posible retención de IRPF profesional que requiere confirmar.',
     action: 'Se deriva a la bandeja de triaje: visor dividido de factura junto a la propuesta para validar con un solo clic.',
     stats: '~4% del volumen mensual',
@@ -30,7 +31,7 @@ const LEVELS = [
     title: 'Incidencia Bloqueada',
     badge: 'Bloqueo Preventivo',
     colorClass: 'red',
-    icon: '🔴',
+    icon: ShieldBan,
     condition: 'Duplicado detectado, descuadre matemático de base + IVA o NIF erróneo / no censado.',
     action: 'Bloqueo inmediato para impedir que un dato defectuoso contamine los balances o las declaraciones fiscales.',
     stats: '~2% del volumen mensual',
@@ -45,7 +46,10 @@ const Triage: React.FC = () => {
     <section className={styles.section} id="triage">
       <div className="container">
         <div className={styles.header}>
-          <span className="badge badge--blue">Seguridad Operativa</span>
+          <span className="badge badge--blue">
+            <Sparkles size={12} className={styles.headerIcon} />
+            Seguridad Operativa KontaPro
+          </span>
           <h2 className={styles.title}>“La IA propone. Tu despacho mantiene el control.”</h2>
           <p className={styles.subtitle}>
             {t.solution.s1Desc}
@@ -53,39 +57,44 @@ const Triage: React.FC = () => {
         </div>
 
         <div className={styles.grid}>
-          {LEVELS.map((item, idx) => (
-            <div key={idx} className={`${styles.card} ${styles[item.colorClass]}`}>
-              <div className={styles.cardTop}>
-                <div className={styles.levelRow}>
-                  <span className={styles.trafficLight}>{item.icon}</span>
-                  <span className={styles.levelName}>{item.level}</span>
+          {LEVELS.map((item, idx) => {
+            const IconComponent = item.icon;
+            return (
+              <div key={idx} className={`${styles.card} ${styles[item.colorClass]}`}>
+                <div className={styles.cardTop}>
+                  <div className={styles.levelRow}>
+                    <div className={styles.trafficLight}>
+                      <IconComponent size={20} className={styles.trafficIcon} />
+                    </div>
+                    <span className={styles.levelName}>{item.level}</span>
+                  </div>
+                  <span className={styles.actionBadge}>{item.badge}</span>
                 </div>
-                <span className={styles.actionBadge}>{item.badge}</span>
-              </div>
 
-              <h3 className={styles.cardTitle}>{item.title}</h3>
+                <h3 className={styles.cardTitle}>{item.title}</h3>
 
-              <div className={styles.sectionBlock}>
-                <span className={styles.blockLabel}>Criterio de activación:</span>
-                <p className={styles.blockDesc}>{item.condition}</p>
-              </div>
-
-              <div className={styles.sectionBlock}>
-                <span className={styles.blockLabel}>Acción del sistema:</span>
-                <p className={styles.blockDesc}>{item.action}</p>
-              </div>
-
-              <div className={styles.cardFooter}>
-                <div className={styles.footerRow}>
-                  <span className={styles.statsLabel}>Frecuencia estimada:</span>
-                  <span className={styles.statsVal}>{item.stats}</span>
+                <div className={styles.sectionBlock}>
+                  <span className={styles.blockLabel}>Criterio de activación:</span>
+                  <p className={styles.blockDesc}>{item.condition}</p>
                 </div>
-                <div className={styles.exampleText}>
-                  <em>Ejemplo: {item.example}</em>
+
+                <div className={styles.sectionBlock}>
+                  <span className={styles.blockLabel}>Acción del sistema:</span>
+                  <p className={styles.blockDesc}>{item.action}</p>
+                </div>
+
+                <div className={styles.cardFooter}>
+                  <div className={styles.footerRow}>
+                    <span className={styles.statsLabel}>Frecuencia estimada:</span>
+                    <span className={styles.statsVal}>{item.stats}</span>
+                  </div>
+                  <div className={styles.exampleText}>
+                    <em>Ejemplo: {item.example}</em>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
