@@ -113,8 +113,8 @@ export const va: TranslationSchema = {
   },
   calculator: {
     badge: 'Simulador d’Impacte Operatiu',
-    title: 'Calcula l’estalvi estimat del teu despatx',
-    subtitle: 'Selecciona el volum de la teua assessoria i visualitza el temps i costos recuperables.',
+    title: 'Calcula quant de temps i diners estalvia el teu despatx al mes',
+    subtitle: 'Selecciona el volum de la teua assessoria i visualitza el temps i els costos recuperables.',
     companiesLabel: 'Empreses gestionades:',
     invoicesLabel: 'Factures mitjanes mensuals per client:',
     hoursSavedMonth: 'Hores mensuals recuperables',

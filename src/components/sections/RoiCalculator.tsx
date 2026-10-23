@@ -4,10 +4,10 @@ import { useLanguage } from '../../i18n';
 import { FileText, Clock, Coins, ArrowRight, Info } from 'lucide-react';
 
 const PRESETS = [
-  { label: 'Despacho Pequeño', invoices: 500, time: 2.5, rate: 22 },
+  { label: 'Despacho Pequeño', invoices: 200, time: 2.5, rate: 20 },
   { label: 'Despacho Medio', invoices: 1200, time: 3.5, rate: 24 },
-  { label: 'Gran Asesoría', invoices: 3500, time: 4.0, rate: 28 },
-  { label: 'Corporativo', invoices: 6500, time: 4.5, rate: 32 },
+  { label: 'Gran Asesoría', invoices: 4000, time: 4.0, rate: 28 },
+  { label: 'Corporativo', invoices: 8000, time: 4.5, rate: 32 },
 ];
 
 const RoiCalculator: React.FC = () => {
@@ -16,9 +16,10 @@ const RoiCalculator: React.FC = () => {
   const [hourlyRate, setHourlyRate] = useState(24);
   const { t } = useLanguage();
 
-  // Cálculos matemáticos demostrativos
+  // Cálculos matemáticos transparentes y coherentes con los datos de referencia
   const totalHoursManual = Math.round((invoices * minutesPerInvoice) / 60);
-  const hoursSaved = Math.round(totalHoursManual * 0.82); // 82% de ahorro medio estimado
+  // Relación de referencia: 70h manuales -> 57h recuperables (~82% de tiempo recuperable)
+  const hoursSaved = Math.round(totalHoursManual * (57 / 70));
   const daysSaved = Math.round((hoursSaved / 8) * 10) / 10;
   const monthlySavings = Math.round(hoursSaved * hourlyRate);
   const annualSavings = monthlySavings * 12;
@@ -77,8 +78,8 @@ const RoiCalculator: React.FC = () => {
             {/* Sliders Column */}
             <div className={styles.slidersCol}>
               <div className={styles.slidersHeader}>
-                <span className={styles.sectionPill}>Parámetros de tu Despacho</span>
-                <span className={styles.sectionHint}>Ajusta para calibrar tus estimaciones</span>
+                <span className={styles.sectionPill}>Parámetros de tu despacho</span>
+                <span className={styles.sectionHint}>Ajusta los parámetros para calibrar tus estimaciones</span>
               </div>
 
               {/* Slider 1: Invoices */}
@@ -201,7 +202,7 @@ const RoiCalculator: React.FC = () => {
               <div className={styles.resultsHeader}>
                 <div className={styles.efficiencyBadge}>
                   <div className={styles.efficiencyDot}></div>
-                  <span>~82% DE TIEMPO RECUPERABLE</span>
+                  <span>~82 % de tiempo recuperable</span>
                 </div>
                 <span className={styles.resultsSubtitle}>Impacto proyectado</span>
               </div>
@@ -224,7 +225,7 @@ const RoiCalculator: React.FC = () => {
                     ></div>
                   </div>
                   <span className={styles.metricSub}>
-                    De <strong>{totalHoursManual}h</strong> de picado manual mensual estimado
+                    De <strong>{totalHoursManual} h</strong> de trabajo manual mensual estimado
                   </span>
                 </div>
 
@@ -244,7 +245,7 @@ const RoiCalculator: React.FC = () => {
                     ></div>
                   </div>
                   <span className={styles.metricSub}>
-                    Para asesoramiento fiscal y captación
+                    Tiempo potencialmente disponible para asesoramiento fiscal y captación
                   </span>
                 </div>
               </div>
@@ -252,7 +253,7 @@ const RoiCalculator: React.FC = () => {
               {/* Main Annual Savings Showcase */}
               <div className={styles.savingsBox}>
                 <div className={styles.savingsTopRow}>
-                  <span className={styles.savingsLabel}>{t.calculator.valueRecovered}</span>
+                  <span className={styles.savingsLabel}>Ahorro económico anual estimado</span>
                   <span className={styles.verifiedTag}>ESTIMACIÓN</span>
                 </div>
                 <div className={styles.savingsValue}>
@@ -264,7 +265,7 @@ const RoiCalculator: React.FC = () => {
               </div>
 
               {/* Call to action */}
-              <a href="#demo" className={`btn btn--primary ${styles.submitBtn}`}>
+              <a href="https://www.kontaprosuite.com/#demo" className={`btn btn--primary ${styles.submitBtn}`}>
                 <span>{t.calculator.cta}</span>
                 <ArrowRight size={16} className={styles.btnArrow} />
               </a>

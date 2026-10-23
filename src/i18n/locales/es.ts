@@ -113,8 +113,8 @@ export const es: TranslationSchema = {
   },
   calculator: {
     badge: 'Simulador de Impacto Operativo',
-    title: 'Calcula el ahorro estimado de tu despacho',
-    subtitle: 'Selecciona el volumen de tu asesoría y visualiza el tiempo y costes recuperables.',
+    title: 'Calcula cuánto tiempo y dinero ahorra tu despacho al mes',
+    subtitle: 'Selecciona el volumen de tu asesoría y visualiza el tiempo y los costes recuperables.',
     companiesLabel: 'Empresas gestionadas:',
     invoicesLabel: 'Facturas medias mensuales por cliente:',
     hoursSavedMonth: 'Horas mensuales recuperables',

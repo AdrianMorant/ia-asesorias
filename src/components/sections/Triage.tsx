@@ -6,24 +6,24 @@ import { CheckCircle2, AlertTriangle, ShieldBan, Sparkles } from 'lucide-react';
 const LEVELS = [
   {
     level: 'Nivel Verde',
-    title: 'Alta Confianza (95% - 99.9%)',
+    title: 'Alta Confianza Algorítmica',
     badge: 'Procesamiento Directo',
     colorClass: 'green',
     icon: CheckCircle2,
-    condition: 'Datos nítidos, proveedor recurrente identificado y cuadre aritmético verificado al 100%.',
+    condition: 'Datos nítidos, proveedor recurrente identificado y cuadre aritmético verificado al céntimo.',
     action: 'Generación directa del borrador de apunte cuadrado en el libro diario de tu ERP sin intervención manual.',
-    stats: '~94% del volumen mensual',
+    scope: 'Operativa recurrente del despacho',
     example: 'Factura mensual de suministros o acreedor habitual con desglose de IVA estándar.',
   },
   {
     level: 'Nivel Amarillo',
-    title: 'Revisión en 1 Clic',
+    title: 'Supervisión en 1 Clic',
     badge: 'Verificación Humana',
     colorClass: 'yellow',
     icon: AlertTriangle,
-    condition: 'Proveedor nuevo, concepto atípico o posible retención de IRPF profesional que requiere confirmar.',
+    condition: 'Proveedor nuevo, concepto atípico, retención de IRPF profesional o importe relevante para el Modelo 347.',
     action: 'Se deriva a la bandeja de triaje: visor dividido de factura junto a la propuesta para validar con un solo clic.',
-    stats: '~4% del volumen mensual',
+    scope: 'Revisión asistida por excepción',
     example: 'Primera factura de un proveedor o factura con tipos mixtos de IVA.',
   },
   {
@@ -34,7 +34,7 @@ const LEVELS = [
     icon: ShieldBan,
     condition: 'Duplicado detectado, descuadre matemático de base + IVA o NIF erróneo / no censado.',
     action: 'Bloqueo inmediato para impedir que un dato defectuoso contamine los balances o las declaraciones fiscales.',
-    stats: '~2% del volumen mensual',
+    scope: 'Protección y parada de seguridad',
     example: 'Factura ya registrada el mes anterior o suma de bases que no coincide con el total.',
   },
 ];
@@ -85,8 +85,8 @@ const Triage: React.FC = () => {
 
                 <div className={styles.cardFooter}>
                   <div className={styles.footerRow}>
-                    <span className={styles.statsLabel}>Frecuencia estimada:</span>
-                    <span className={styles.statsVal}>{item.stats}</span>
+                    <span className={styles.statsLabel}>Tipo de operativa:</span>
+                    <span className={styles.statsVal}>{item.scope}</span>
                   </div>
                   <div className={styles.exampleText}>
                     <em>Ejemplo: {item.example}</em>

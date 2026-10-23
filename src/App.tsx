@@ -15,8 +15,12 @@ import Security from './components/sections/Security';
 import AboutCompany from './components/sections/AboutCompany';
 import Faq from './components/sections/Faq';
 import Contact from './components/sections/Contact';
+import { useAnimatedFavicon } from './utils/useAnimatedFavicon';
 
 function AppContent() {
+  // Favicon dinámico con fondo oscuro animado que cicla de tonalidades sutiles
+  useAnimatedFavicon();
+
   useEffect(() => {
     // Observador para revelado suave al hacer scroll respetando accesibilidad
     const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
