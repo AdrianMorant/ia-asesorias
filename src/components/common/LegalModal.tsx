@@ -15,15 +15,10 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, initialTab = 'privacy',
   const [prevInitial, setPrevInitial] = useState<LegalTab>(initialTab);
 
   // Estados de preferencias de cookies
-  const [analyticsConsent, setAnalyticsConsent] = useState(false);
+  const [analyticsConsent, setAnalyticsConsent] = useState(() => {
+    return localStorage.getItem('kontapro_cookie_analytics') === 'true';
+  });
   const [savedNotice, setSavedNotice] = useState(false);
-
-  useEffect(() => {
-    const stored = localStorage.getItem('kontapro_cookie_analytics');
-    if (stored === 'true') {
-      setAnalyticsConsent(true);
-    }
-  }, []);
 
   if (initialTab !== prevInitial) {
     setPrevInitial(initialTab);

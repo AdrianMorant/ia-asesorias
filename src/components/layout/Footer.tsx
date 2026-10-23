@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Footer.module.css';
 import KontaProLogo from '../common/KontaProLogo';
 import { useLanguage } from '../../i18n';
 import LegalModal, { type LegalTab } from '../common/LegalModal';
 import CookieBanner from '../common/CookieBanner';
-import { ShieldCheck, PhoneCall, Sparkles } from 'lucide-react';
+import { ShieldCheck, PhoneCall } from 'lucide-react';
 
 const CURRENT_YEAR = 2026;
 
@@ -25,7 +26,9 @@ const Footer: React.FC = () => {
           {/* Marca KontaPro */}
           <div className={styles.brand}>
             <div className={styles.logoWrapper}>
-              <KontaProLogo theme="dark" height={36} />
+              <Link to="/" aria-label="KontaPro Suite">
+                <KontaProLogo theme="dark" height={36} />
+              </Link>
             </div>
             <p className={styles.tagline}>{t.footer.tagline}</p>
             <div className={styles.securityPledge}>
@@ -34,57 +37,51 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Columnas de Navegación y Soluciones */}
+          {/* Columnas de Navegación Multipágina */}
           <div className={styles.cols}>
             <div className={styles.col}>
-              <h4 className={styles.colTitle}>{t.footer.colProduct}</h4>
-              <a href="#showcase" className={styles.colLink}>
-                {t.footer.colProductLinks[0]}
-              </a>
-              <a href="#showcase" className={styles.colLink}>
-                {t.footer.colProductLinks[1]}
-              </a>
-              <a href="#showcase" className={styles.colLink}>
-                {t.footer.colProductLinks[2]}
-              </a>
-              <a href="#showcase" className={styles.colLink}>
-                {t.footer.colProductLinks[3]}
-              </a>
-              <a href="#showcase" className={styles.colLink}>
-                {t.footer.colProductLinks[4]}
-              </a>
+              <h4 className={styles.colTitle}>Producto</h4>
+              <Link to="/soluciones" className={styles.colLink}>
+                Soluciones para Despachos
+              </Link>
+              <Link to="/funcionalidades" className={styles.colLink}>
+                Funcionalidades & PGC
+              </Link>
+              <Link to="/como-funciona" className={styles.colLink}>
+                Cómo Funciona & Triaje
+              </Link>
+              <Link to="/simulador" className={styles.colLink}>
+                Simulador de Impacto
+              </Link>
             </div>
 
             <div className={styles.col}>
-              <h4 className={styles.colTitle}>{t.footer.colCompliance}</h4>
-              <a href="#seguridad" className={styles.colLink}>
-                {t.footer.colComplianceLinks[0]}
-              </a>
-              <a href="#seguridad" className={styles.colLink}>
-                {t.footer.colComplianceLinks[1]}
-              </a>
-              <a href="#seguridad" className={styles.colLink}>
-                {t.footer.colComplianceLinks[2]}
-              </a>
-              <a href="#seguridad" className={styles.colLink}>
-                {t.footer.colComplianceLinks[3]}
-              </a>
-              <a href="#seguridad" className={styles.colLink}>
-                {t.footer.colComplianceLinks[4]}
-              </a>
+              <h4 className={styles.colTitle}>Seguridad & Normativa</h4>
+              <Link to="/seguridad" className={styles.colLink}>
+                Preparado para Veri*factu
+              </Link>
+              <Link to="/seguridad" className={styles.colLink}>
+                Controles de Referencia ISO 27001
+              </Link>
+              <Link to="/seguridad" className={styles.colLink}>
+                Blindaje RGPD & DPA (Art. 28)
+              </Link>
+              <Link to="/seguridad" className={styles.colLink}>
+                Cifrado Bancario AES-256
+              </Link>
             </div>
 
             <div className={styles.col}>
-              <h4 className={styles.colTitle}>{t.footer.colCompany}</h4>
-              <a href="#demo" className={styles.colLink}>
-                {t.footer.colCompanyLinks[0]}
-              </a>
-              <a href="#calculadora" className={styles.colLink}>
-                {t.footer.colCompanyLinks[1]}
-              </a>
-              <a href="#integraciones" className={styles.colLink}>
-                {t.footer.colCompanyLinks[2]}
-              </a>
+              <h4 className={styles.colTitle}>Acceso Comercial</h4>
+              <Link to="/demo" className={styles.colLink}>
+                Solicitar Acceso Beta
+              </Link>
+              <Link to="/precios" className={styles.colLink}>
+                Condiciones & Precios
+              </Link>
+              <Link to="/simulador" className={styles.colLink}>
+                Calcular Ahorro Mensual
+              </Link>
               <a href="tel:+34686766266" className={styles.colLinkPhone}>
                 <PhoneCall size={14} />
                 <span>+34 686 766 266</span>
@@ -121,33 +118,16 @@ const Footer: React.FC = () => {
             >
               {t.footer.cookies}
             </button>
-            <span>•</span>
-            <button
-              type="button"
-              className={styles.legalBtn}
-              onClick={() => openLegal('preferences')}
-            >
-              Configurar Cookies
-            </button>
-          </div>
-
-          <div className={styles.statusIndicator}>
-            <span className={styles.statusDot}></span>
-            <span>
-              <Sparkles size={11} className={styles.statusSparkle} />
-              Beta Cerrada · Motor Activo
-            </span>
           </div>
         </div>
       </div>
 
       <LegalModal
         isOpen={legalModalOpen}
-        initialTab={legalTab}
         onClose={() => setLegalModalOpen(false)}
+        initialTab={legalTab}
       />
-
-      <CookieBanner onOpenPreferences={() => openLegal('preferences')} />
+      <CookieBanner onOpenPreferences={() => openLegal('cookies')} />
     </footer>
   );
 };

@@ -65,6 +65,12 @@
   background: var(--c-blue-50);
 }
 
+.navLinkActive {
+  color: var(--c-blue-700) !important;
+  background: var(--c-blue-50);
+  font-weight: 700;
+}
+
 /* ── Actions & Controls ── */
 .actions {
   display: flex;

@@ -8,8 +8,14 @@ export interface LanguageContextProps {
 
 export interface TranslationSchema {
   nav: {
+    home: string;
     solutions: string;
     features: string;
+    howItWorks: string;
+    simulator: string;
+    security: string;
+    pricing: string;
+    demo: string;
     triage: string;
     integrations: string;
     compliance: string;

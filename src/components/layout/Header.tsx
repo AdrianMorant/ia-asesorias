@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import styles from './Header.module.css';
 import KontaProLogo from '../common/KontaProLogo';
 import { useLanguage } from '../../i18n';
@@ -22,13 +23,13 @@ const Header: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { label: t.nav.solutions, href: '#soluciones' },
-    { label: t.nav.triage, href: '#triage' },
-    { label: t.nav.features, href: '#showcase' },
-    { label: t.nav.integrations, href: '#integraciones' },
-    { label: t.nav.calculator, href: '#calculadora' },
-    { label: t.nav.compliance, href: '#seguridad' },
-    { label: t.nav.faq, href: '#faq' },
+    { label: t.nav.home, path: '/' },
+    { label: t.nav.solutions, path: '/soluciones' },
+    { label: t.nav.features, path: '/funcionalidades' },
+    { label: t.nav.howItWorks, path: '/como-funciona' },
+    { label: t.nav.simulator, path: '/simulador' },
+    { label: t.nav.security, path: '/seguridad' },
+    { label: t.nav.pricing, path: '/precios' },
   ];
 
   const handleLangChange = (lang: Language) => {
@@ -38,17 +39,24 @@ const Header: React.FC = () => {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`container ${styles.inner}`}>
-        {/* Columna 1: Logotipo Oficial KontaPro */}
-        <a href="#" className={styles.logo} aria-label="KontaPro - Inicio">
+        {/* Columna 1: Logotipo Oficial KontaPro enlazando a Inicio */}
+        <Link to="/" className={styles.logo} aria-label="KontaPro Suite - Inicio">
           <KontaProLogo height={34} />
-        </a>
+        </Link>
 
-        {/* Columna 2: Navegación Principal */}
+        {/* Columna 2: Navegación Principal Multipágina */}
         <nav className={styles.nav} aria-label="Navegación principal">
           {navLinks.map((n) => (
-            <a key={n.href} href={n.href} className={styles.navLink}>
+            <NavLink
+              key={n.path}
+              to={n.path}
+              end={n.path === '/'}
+              className={({ isActive }) =>
+                `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
+              }
+            >
               {n.label}
-            </a>
+            </NavLink>
           ))}
         </nav>
 
@@ -70,10 +78,10 @@ const Header: React.FC = () => {
             ))}
           </div>
 
-          <a href="#demo" className={`btn btn--primary ${styles.ctaBtn}`}>
+          <Link to="/demo" className={`btn btn--primary ${styles.ctaBtn}`}>
             <span className={styles.ctaGlowDot} aria-hidden="true"></span>
-            <span>{t.nav.requestDemo}</span>
-          </a>
+            <span>{t.nav.demo}</span>
+          </Link>
 
           {/* Botón Hamburger Móvil */}
           <button
@@ -93,14 +101,17 @@ const Header: React.FC = () => {
       {menuOpen && (
         <div className={styles.mobileMenu}>
           {navLinks.map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              className={styles.mobileLink}
+            <NavLink
+              key={n.path}
+              to={n.path}
+              end={n.path === '/'}
+              className={({ isActive }) =>
+                `${styles.mobileLink} ${isActive ? styles.mobileLinkActive : ''}`
+              }
               onClick={() => setMenuOpen(false)}
             >
               {n.label}
-            </a>
+            </NavLink>
           ))}
 
           <div className={styles.mobileControls}>
@@ -123,14 +134,14 @@ const Header: React.FC = () => {
             </div>
           </div>
 
-          <a
-            href="#demo"
+          <Link
+            to="/demo"
             className="btn btn--primary"
             style={{ width: '100%', textAlign: 'center', marginTop: '0.75rem' }}
             onClick={() => setMenuOpen(false)}
           >
-            {t.nav.requestDemo}
-          </a>
+            {t.nav.demo} — Acceso Beta
+          </Link>
         </div>
       )}
     </header>
