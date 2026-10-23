@@ -7,7 +7,7 @@
 
   <!-- Título SEO Oficial -->
   <title>KontaPro | Software de Contabilidad, Facturación & Copiloto Fiscal IA para Asesorías</title>
-  <link rel="icon" href="/favicon.svg">
+
   <!-- Meta Descripción & Keywords -->
   <meta name="description"
     content="KontaPro automatiza el triaje de facturas, cuadre de asientos contables en partida doble y conciliación bancaria para asesorías y gestorías. Integración nativa con A3, Sage, Contasol y Holded conforme a Veri*factu." />
@@ -42,10 +42,12 @@
   <meta name="twitter:image" content="https://www.kontaprosuite.com/kontapro-logo.png" />
 
   <!-- Favicon e Iconos Oficiales para Google Search y Navegadores -->
-  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="https://www.kontaprosuite.com/favicon.svg" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="alternate icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
 
@@ -56,31 +58,53 @@
     href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet" />
 
-  <!-- Datos Estructurados JSON-LD (Schema.org SoftwareApplication) -->
+  <!-- Datos Estructurados JSON-LD (Schema.org con Logo Oficial para Google Search) -->
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "KontaPro",
-      "applicationCategory": "AccountingApplication",
-      "operatingSystem": "Web, iOS, Android (PWA)",
-      "description": "Plataforma de contabilidad, facturación, triaje con IA y copiloto fiscal para asesorías y despachos contables.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "EUR",
-        "description": "Demostración técnica y estudio de viabilidad sin compromiso"
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.kontaprosuite.com/#organization",
+        "name": "KontaPro",
+        "url": "https://www.kontaprosuite.com/",
+        "logo": "https://www.kontaprosuite.com/favicon.svg",
+        "image": "https://www.kontaprosuite.com/favicon.svg",
+        "description": "Software de Contabilidad, Facturación & Copiloto Fiscal IA para Asesorías"
       },
-      "featureList": [
-        "Triaje inteligente de facturas con Semáforo Fiscal",
-        "Propuesta de asientos contables en partida doble",
-        "Conciliación bancaria con Norma 43",
-        "Generación de borradores de Modelos AEAT (303, 111, 115)",
-        "Enlace nativo con A3 (SUENLACE), Sage, Contasol y Holded",
-        "Preparado para Veri*factu y digitalización ágil de facturas"
-      ]
-    }
-    </script>
+      {
+        "@type": "WebSite",
+        "@id": "https://www.kontaprosuite.com/#website",
+        "url": "https://www.kontaprosuite.com/",
+        "name": "KontaPro Suite",
+        "publisher": {
+          "@id": "https://www.kontaprosuite.com/#organization"
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "KontaPro",
+        "applicationCategory": "AccountingApplication",
+        "operatingSystem": "Web, iOS, Android (PWA)",
+        "description": "Plataforma de contabilidad, facturación, triaje con IA y copiloto fiscal para asesorías y despachos contables.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "description": "Demostración técnica y estudio de viabilidad sin compromiso"
+        },
+        "featureList": [
+          "Triaje inteligente de facturas con Semáforo Fiscal",
+          "Propuesta de asientos contables en partida doble",
+          "Conciliación bancaria con Norma 43",
+          "Generación de borradores de Modelos AEAT (303, 111, 115)",
+          "Enlace nativo con A3 (SUENLACE), Sage, Contasol y Holded",
+          "Preparado para Veri*factu y digitalización ágil de facturas"
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body>
