@@ -1,65 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%" fill="none">
-  <defs>
-    <!-- Gradiente de fondo oscuro dinámico con transición continua de color -->
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#06101E">
-        <animate attributeName="stop-color"
-          values="#06101E;#0a1f3d;#0f172a;#08253d;#141a36;#06101E"
-          dur="7s" repeatCount="indefinite" />
-      </stop>
-      <stop offset="100%" stop-color="#0B2046">
-        <animate attributeName="stop-color"
-          values="#0B2046;#172554;#1e1b4b;#0d3a52;#1e1b4b;#0B2046"
-          dur="7s" repeatCount="indefinite" />
-      </stop>
-    </linearGradient>
-
-    <!-- Resplandor de color animado tipo aurora que ilumina el fondo oscuro -->
-    <radialGradient id="auroraGlow" cx="65%" cy="35%" r="70%">
-      <stop offset="0%" stop-color="#0A78FC" stop-opacity="0.6">
-        <animate attributeName="stop-color"
-          values="#0A78FC;#00D4B2;#6366F1;#38BDF8;#8B5CF6;#0A78FC"
-          dur="7s" repeatCount="indefinite" />
-        <animate attributeName="stop-opacity"
-          values="0.6;0.85;0.65;0.8;0.7;0.6"
-          dur="7s" repeatCount="indefinite" />
-      </stop>
-      <stop offset="60%" stop-color="#0A78FC" stop-opacity="0.15">
-        <animate attributeName="stop-color"
-          values="#0A78FC;#00D4B2;#6366F1;#38BDF8;#8B5CF6;#0A78FC"
-          dur="7s" repeatCount="indefinite" />
-      </stop>
-      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
-    </radialGradient>
-
-    <!-- Filtro de sombra suave para dar profundidad tridimensional al isotipo -->
-    <filter id="iconShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.5" />
-    </filter>
-  </defs>
-
-  <!-- Capa 1: Fondo base oscuro con bordes redondeados estándar -->
-  <rect width="100" height="100" rx="22" fill="url(#bgGrad)" />
-
-  <!-- Capa 2: Efecto de color animado en el fondo (aurora multicolor) -->
-  <rect width="100" height="100" rx="22" fill="url(#auroraGlow)" />
-
-  <!-- Capa 3: Borde sutil de cristal para máxima nitidez en fondos claros y oscuros de Google Search -->
-  <rect x="0.75" y="0.75" width="98.5" height="98.5" rx="21.25" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" fill="none" />
-
-  <!-- Capa 4: Símbolo Isotipo Oficial KontaPro -->
-  <g transform="translate(6, 6) scale(0.88)" filter="url(#iconShadow)">
-    <!-- Base Vertical Stem (Blanco nítido) -->
-    <rect x="20" y="16" width="16" height="68" rx="4" fill="#FFFFFF" />
-    
-    <!-- Lower Diagonal Leg (Blanco nítido) -->
-    <path d="M36 50 L62 84 H82 L47 38 Z" fill="#FFFFFF" />
-    
-    <!-- Dynamic Diagonal Slash with Ascending Arrow (Flecha dinámica con color vivo) -->
-    <path d="M24 64 L66 26 L76 34 L88 12 L54 16 L61 23 L20 60 Z" fill="#0A78FC">
-      <animate attributeName="fill"
-        values="#0A78FC;#00D4B2;#38BDF8;#6366F1;#0A78FC"
-        dur="7s" repeatCount="indefinite" />
-    </path>
+  <!-- Fondo Oficial KontaPro Azul Navy -->
+  <rect width="100" height="100" rx="22" fill="#0B2046" />
+  <!-- Borde sutil de cristal para máxima nitidez en pestañas claras y oscuras -->
+  <rect x="0.75" y="0.75" width="98.5" height="98.5" rx="21.25" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" fill="none" />
+  
+  <!-- Isotipo Oficial KontaPro Vectorizado Exacto -->
+  <g>
+    <!-- Pilar Vertical Izquierdo (Blanco Puro) -->
+    <rect x="18" y="12" width="22" height="76" rx="5" fill="#FFFFFF" />
+    <!-- Brazo Diagonal Inferior (Blanco Puro) -->
+    <path d="M40 50 L75 88 H96 L53 38 Z" fill="#FFFFFF" />
+    <!-- Flecha Dinámica Ascendente (Azul Eléctrico Corporativo) -->
+    <path d="M22 66 L68 25 L79 34 L94 8 L54 13 L63 21 L16 62 Z" fill="#0A78FC" />
   </g>
 </svg>

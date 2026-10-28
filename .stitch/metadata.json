@@ -1,0 +1,62 @@
+{
+  "name": "projects/3443545559833804912",
+  "projectId": "3443545559833804912",
+  "title": "KontaPro - Rediseño Web SaaS",
+  "visibility": "PRIVATE",
+  "createTime": "2026-10-27T07:53:55.511328Z",
+  "updateTime": "2026-10-27T10:20:00.000000Z",
+  "projectType": "PROJECT_DESIGN",
+  "origin": "STITCH",
+  "deviceType": "DESKTOP",
+  "lastSyncTime": "2026-10-27T10:35:00.000Z",
+  "designTheme": {
+    "colorMode": "LIGHT",
+    "font": "PLUS_JAKARTA_SANS",
+    "headlineFont": "PLUS_JAKARTA_SANS",
+    "bodyFont": "INTER",
+    "labelFont": "INTER",
+    "roundness": "ROUND_FOUR",
+    "customColor": "#0b2046",
+    "overridePrimaryColor": "#0b2046",
+    "overrideSecondaryColor": "#0a78fc",
+    "overrideTertiaryColor": "#10b981",
+    "overrideNeutralColor": "#64748b"
+  },
+  "screens": {
+    "demo_cockpit": {
+      "id": "9052a0ff916c4e218b9d9dda238649e0",
+      "label": "KontaPro Suite - Interactive Live Demo & Accounting Cockpit",
+      "sourceScreen": "projects/3443545559833804912/screens/9052a0ff916c4e218b9d9dda238649e0",
+      "width": 2560,
+      "height": 4036,
+      "canvasPosition": { "x": 0, "y": 18487 }
+    },
+    "editorial_home": {
+      "id": "dd3bf6f0d810424a88d2fe6b56633d8e",
+      "label": "KontaPro Suite - Nueva Experiencia Editorial (Inicio)",
+      "sourceScreen": "projects/3443545559833804912/screens/dd3bf6f0d810424a88d2fe6b56633d8e",
+      "width": 2560,
+      "height": 9246,
+      "canvasPosition": { "x": 0, "y": 13609 }
+    },
+    "revision_demo": {
+      "id": "33b4ef7fc12b42439b82d2bd059f3089",
+      "label": "KontaPro Suite - Inicio (Revisión Demo)",
+      "sourceScreen": "projects/3443545559833804912/screens/33b4ef7fc12b42439b82d2bd059f3089",
+      "width": 2560,
+      "height": 8580,
+      "canvasPosition": { "x": 3392, "y": 6412 }
+    },
+    "logo_asset": {
+      "id": "1158615318227453747",
+      "label": "Logotipo geométrico KontaPro en azul.png",
+      "sourceScreen": "projects/3443545559833804912/screens/1158615318227453747",
+      "width": 1254,
+      "height": 1254,
+      "canvasPosition": { "x": 0, "y": 12841 }
+    }
+  },
+  "metadata": {
+    "userRole": "OWNER"
+  }
+}

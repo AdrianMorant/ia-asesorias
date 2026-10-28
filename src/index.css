@@ -1,556 +1,180 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
 
-/* ═══════════════════════════════════════════════
-   KONTAPRO SAAS DESIGN SYSTEM TOKENS
-   Identidad Oficial KontaPro: Navy & Electric Blue
-   Inspirado en la claridad y rigor visual SaaS B2B
-═══════════════════════════════════════════════ */
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-navy: var(--navy);
+  --color-midnight: var(--midnight);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-on-dark: var(--on-dark);
+  --color-on-dark-muted: var(--on-dark-muted);
+  --color-glass: var(--glass);
+  --color-glass-border: var(--glass-border);
+  --color-surface: var(--surface);
+}
+
 :root {
-  /* Marca Corporativa KontaPro (Extraídos del Logotipo Oficial) */
-  --c-navy-950:     #07152B; /* Navy Ultra Oscuro / Contraste Máximo */
-  --c-navy-900:     #0B2046; /* Navy Corporativo Oficial KontaPro ("Konta") */
-  --c-navy-800:     #122E5E; /* Navy Medio */
-  --c-navy-700:     #1C3E78; /* Navy Secundario */
-
-  --c-blue-700:     #0062D6; /* Azul de Interacción / Hover */
-  --c-blue-600:     #0A78FC; /* Azul Eléctrico Oficial KontaPro ("Pro" / Flecha) */
-  --c-blue-500:     #2589FE; /* Azul Acento Claro */
-  --c-blue-100:     #DBEAFE; /* Tint Acento */
-  --c-blue-50:      #EFF6FF; /* Fondo Sutil Acento */
-
-  /* Fondos y Superficies Limpias (Estándar SaaS Luminoso) */
-  --c-bg:           #FFFFFF;
-  --c-bg-subtle:    #F8FAFC;
-  --c-bg-alt:       #F1F5F9;
-  --c-surface:      #FFFFFF;
-  --c-surface-hover:#F8FAFC;
-  --c-surface-card: #FFFFFF;
-
-  /* Tipografía y Textos */
-  --c-ink-heading:  #0B2046; /* Encabezados en Azul Marino Profundo */
-  --c-ink:          #0F172A; /* Texto Base con Alto Contraste */
-  --c-muted:        #334155; /* Texto Secundario (WCAG AA > 7:1) */
-  --c-subtle:       #64748B; /* Texto Muted (WCAG AA > 4.6:1) */
-  --c-disabled:     #94A3B8;
-
-  /* Delimitadores y Bordes */
-  --c-border:       #E2E8F0;
-  --c-border-subtle:#F1F5F9;
-  --c-border-hover: #CBD5E1;
-  --c-border-focus: #0A78FC;
-
-  /* Semáforo Fiscal & Estados */
-  --c-emerald:      #10B981;
-  --c-emerald-bg:   #ECFDF5;
-  --c-emerald-border:#A7F3D0;
-  --c-emerald-text: #065F46;
-
-  --c-amber:        #F59E0B;
-  --c-amber-bg:     #FFFBEB;
-  --c-amber-border: #FDE68A;
-  --c-amber-text:   #92400E;
-
-  --c-red:          #EF4444;
-  --c-red-bg:       #FEF2F2;
-  --c-red-border:   #FECACA;
-  --c-red-text:     #991B1B;
-
-  /* Tipografía */
-  --font:      'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
-
-  /* Espaciado */
-  --sp-1: 0.25rem;
-  --sp-2: 0.5rem;
-  --sp-3: 0.75rem;
-  --sp-4: 1rem;
-  --sp-5: 1.25rem;
-  --sp-6: 1.5rem;
-  --sp-8: 2rem;
-  --sp-10: 2.5rem;
-  --sp-12: 3rem;
-  --sp-16: 4rem;
-  --sp-20: 5rem;
-  --sp-24: 6rem;
-  --sp-28: 7rem;
-
-  /* Radios */
-  --r-xs: 0.25rem;
-  --r-sm: 0.375rem;
-  --r-md: 0.5rem;
-  --r-lg: 0.75rem;
-  --r-xl: 1rem;
-  --r-2xl: 1.5rem;
-  --r-full: 9999px;
-
-  /* Sombras SaaS Suaves y Elegantes con Relieve Cromático */
-  --shadow-xs: 0 1px 2px rgba(11, 32, 70, 0.05);
-  --shadow-sm: 0 1px 3px rgba(11, 32, 70, 0.07), 0 1px 2px rgba(11, 32, 70, 0.04);
-  --shadow-md: 0 4px 14px -2px rgba(11, 32, 70, 0.08), 0 2px 6px -1px rgba(11, 32, 70, 0.04);
-  --shadow-lg: 0 10px 25px -4px rgba(11, 32, 70, 0.10), 0 4px 10px -2px rgba(11, 32, 70, 0.04);
-  --shadow-xl: 0 20px 35px -6px rgba(11, 32, 70, 0.12), 0 8px 16px -4px rgba(11, 32, 70, 0.05);
-  --shadow-blue: 0 8px 24px -4px rgba(10, 120, 252, 0.28);
-  --shadow-blue-lg: 0 14px 34px -4px rgba(10, 120, 252, 0.35);
-  --shadow-card-elevated: 0 16px 36px -8px rgba(11, 32, 70, 0.10), 0 4px 14px rgba(10, 120, 252, 0.06);
-  --shadow-card-hover: 0 22px 48px -10px rgba(11, 32, 70, 0.15), 0 8px 20px rgba(10, 120, 252, 0.12);
-  --shadow-glow-blue: 0 0 24px rgba(10, 120, 252, 0.25);
-  --shadow-inner-subtle: inset 0 1px 1px rgba(255, 255, 255, 0.8), inset 0 -1px 1px rgba(11, 32, 70, 0.05);
-
-  /* Gradientes de Marca KontaPro */
-  --grad-hero: linear-gradient(175deg, #07152B 0%, #0B2046 50%, #102F62 100%);
-  --grad-brand: linear-gradient(135deg, #0B2046 0%, #122E5E 55%, #0A78FC 100%);
-  --grad-accent: linear-gradient(135deg, #0A78FC 0%, #0062D6 100%);
-  --grad-subtle-mesh: radial-gradient(circle at 10% 20%, rgba(10, 120, 252, 0.07) 0%, transparent 40%),
-                      radial-gradient(circle at 90% 80%, rgba(11, 32, 70, 0.05) 0%, transparent 45%);
-
-  /* Transiciones */
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --t-fast: 0.15s;
-  --t-base: 0.25s;
-  --t-slow: 0.4s;
+  --radius: 0.75rem;
+  --background: oklch(1 0 0);
+  --surface: oklch(0.984 0.003 247.858);
+  --foreground: oklch(0.24 0.07 262);
+  --navy: oklch(0.24 0.07 262);
+  --midnight: oklch(0.18 0.05 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.24 0.07 262);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.24 0.07 262);
+  --primary: oklch(0.6 0.21 255);
+  --primary-hover: oklch(0.53 0.2 257);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.24 0.07 262);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.5 0.04 257);
+  --accent: oklch(0.95 0.03 250);
+  --accent-foreground: oklch(0.24 0.07 262);
+  --destructive: oklch(0.64 0.21 25);
+  --destructive-foreground: oklch(1 0 0);
+  --success: oklch(0.7 0.15 163);
+  --warning: oklch(0.77 0.16 70);
+  --danger: oklch(0.64 0.21 25);
+  --border: oklch(0.92 0.013 255);
+  --input: oklch(0.92 0.013 255);
+  --ring: oklch(0.6 0.21 255);
+  --on-dark: oklch(0.98 0.005 250);
+  --on-dark-muted: oklch(0.72 0.03 255);
+  --glass: oklch(1 0 0 / 4%);
+  --glass-border: oklch(1 0 0 / 10%);
+  --shadow-glow: 0 0 40px -8px color-mix(in oklab, var(--primary) 60%, transparent);
+  --shadow-elegant: 0 30px 60px -20px color-mix(in oklab, var(--navy) 35%, transparent);
 }
 
-/* ═══════════════════════════════════════════════
-   RESET & BASE GLOBAL
-═══════════════════════════════════════════════ */
-*, *::before, *::after { 
-  box-sizing: border-box; 
-  margin: 0; 
-  padding: 0; 
-  min-width: 0;
-}
-
-html { 
-  scroll-behavior: smooth; 
-  scroll-padding-top: 5rem;
-  font-size: 16px;
-  background-color: var(--c-bg);
-  color-scheme: light;
-}
-
-body {
-  font-family: var(--font);
-  background: var(--c-bg);
-  color: var(--c-ink);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  position: relative;
-  width: 100%;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  color: var(--c-ink-heading);
-}
-
-p {
-  color: var(--c-muted);
-}
-
-a { 
-  text-decoration: none; 
-  color: inherit; 
-  transition: all var(--t-fast) ease; 
-}
-
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-  outline: 2px solid var(--c-blue-600);
-  outline-offset: 2px;
-}
-
-button { 
-  cursor: pointer; 
-  font-family: inherit; 
-  border: none; 
-  background: none; 
-}
-
-img { 
-  display: block; 
-  max-width: 100%; 
-  height: auto; 
-}
-
-input, textarea, select { 
-  font-family: inherit;
-  font-size: 15px;
-  color: var(--c-ink);
-}
-
-.app-container {
-  padding-top: 4.5rem;
-  overflow-x: clip;
-  max-width: 100%;
-  width: 100%;
-  position: relative;
-}
-
-@media (max-width: 480px) {
-  .app-container {
-    padding-top: 4rem;
+@layer base {
+  * {
+    border-color: var(--color-border);
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
   }
 }
 
-/* Scrollbar estilizada */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--c-bg-subtle);
-}
-::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
-}
-
-/* ═══════════════════════════════════════════════
-   LAYOUT & CONTENEDORES
-═══════════════════════════════════════════════ */
-.container {
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 var(--sp-6);
-  position: relative;
-}
-
-.container--narrow {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 0 var(--sp-6);
-  position: relative;
-}
-
-@media (max-width: 768px) {
-  .container,
-  .container--narrow {
-    padding: 0 1.25rem;
-  }
-}
-
-.section { 
-  padding: var(--sp-20) 0; 
-  position: relative;
-}
-.section--sm { 
-  padding: var(--sp-12) 0; 
-  position: relative;
-}
-.section--subtle { 
-  background: var(--c-bg-subtle); 
-  border-top: 1px solid var(--c-border);
-  border-bottom: 1px solid var(--c-border);
-}
-.section--white { 
-  background: #FFFFFF; 
-}
-
-@media (max-width: 768px) {
-  .section { padding: var(--sp-16) 0; }
-  .section--sm { padding: var(--sp-10) 0; }
-}
-
-/* ═══════════════════════════════════════════════
-   TARJETAS Y PANELES SAAS
-═══════════════════════════════════════════════ */
-.card {
-  background: var(--c-surface);
-  border: 1px solid var(--c-border);
-  border-radius: var(--r-xl);
-  padding: var(--sp-8);
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--t-base) var(--ease), border-color var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
-}
-
-.card:hover {
-  border-color: var(--c-border-hover);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
-
-.card--interactive {
-  cursor: pointer;
-}
-.card--interactive:hover {
-  border-color: var(--c-blue-500);
-  box-shadow: var(--shadow-lg), var(--shadow-blue);
-}
-
-/* ═══════════════════════════════════════════════
-   BOTONES PREMIUM KONTAPRO
-═══════════════════════════════════════════════ */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--sp-2);
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--r-md);
-  font-weight: 600;
-  font-size: 0.9375rem;
-  letter-spacing: -0.01em;
-  transition: all var(--t-base) var(--ease);
-  white-space: nowrap;
-  cursor: pointer;
-  font-family: var(--font);
-  position: relative;
-  text-decoration: none;
-}
-
-.btn--primary {
-  background: var(--c-blue-600);
-  color: #FFFFFF;
-  border: 1px solid transparent;
-  box-shadow: var(--shadow-blue);
-}
-
-.btn--primary:hover {
-  background: var(--c-blue-700);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 28px -4px rgba(10, 120, 252, 0.38);
-  color: #FFFFFF;
-}
-
-.btn--secondary {
-  background: var(--c-navy-900);
-  color: #FFFFFF;
-  border: 1px solid transparent;
-  box-shadow: var(--shadow-sm);
-}
-
-.btn--secondary:hover {
-  background: var(--c-navy-800);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-  color: #FFFFFF;
-}
-
-.btn--outline {
-  background: #FFFFFF;
-  color: var(--c-navy-900);
-  border: 1px solid var(--c-border-hover);
-  box-shadow: var(--shadow-xs);
-}
-
-.btn--outline:hover {
-  background: var(--c-bg-subtle);
-  border-color: var(--c-blue-600);
-  color: var(--c-blue-700);
-  transform: translateY(-1px);
-}
-
-.btn--ghost {
-  background: transparent;
-  color: var(--c-navy-900);
-  border: 1px solid transparent;
-}
-
-.btn--ghost:hover {
-  background: var(--c-bg-subtle);
-  color: var(--c-blue-600);
-}
-
-/* ═══════════════════════════════════════════════
-   INSIGNIAS Y BADGES
-═══════════════════════════════════════════════ */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0.35rem 0.75rem;
-  border-radius: var(--r-full);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  line-height: 1;
-}
-
-.badge--blue {
-  background: var(--c-blue-50);
-  color: var(--c-blue-700);
-  border: 1px solid var(--c-blue-100);
-}
-
-.badge--green {
-  background: var(--c-emerald-bg);
-  color: var(--c-emerald-text);
-  border: 1px solid var(--c-emerald-border);
-}
-
-.badge--amber {
-  background: var(--c-amber-bg);
-  color: var(--c-amber-text);
-  border: 1px solid var(--c-amber-border);
-}
-
-.badge--red {
-  background: var(--c-red-bg);
-  color: var(--c-red-text);
-  border: 1px solid var(--c-red-border);
-}
-
-.badge--navy {
-  background: #EBF3FF;
-  color: var(--c-navy-900);
-  border: 1px solid #CFE2FF;
-}
-
-/* ═══════════════════════════════════════════════
-   VENTANA HUD / DEMO WINDOW (ESTILO MAC LIMPIO)
-═══════════════════════════════════════════════ */
-.mac-bar {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 0.75rem 1.25rem;
-  background: #F8FAFC;
-  border-bottom: 1px solid var(--c-border);
-}
-
-.mac-bar__dot { 
-  width: 10px; 
-  height: 10px; 
-  border-radius: 50%; 
-}
-.mac-bar__dot--r { background: #FF5F56; }
-.mac-bar__dot--y { background: #FFBD2E; }
-.mac-bar__dot--g { background: #27C93F; }
-
-.mac-bar__title {
-  margin-left: var(--sp-2);
-  font-size: 0.75rem;
+@utility num {
   font-family: var(--font-mono);
-  font-weight: 600;
-  color: var(--c-subtle);
-  letter-spacing: 0.03em;
+  font-variant-numeric: tabular-nums;
 }
 
-/* ═══════════════════════════════════════════════
-   ANIMACIONES Y REVELADO ACCESIBLE
-═══════════════════════════════════════════════ */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-}
-.reveal.is-visible { 
-  opacity: 1; 
-  transform: none; 
-}
-.reveal--d1 { transition-delay: 0.08s; }
-.reveal--d2 { transition-delay: 0.16s; }
-.reveal--d3 { transition-delay: 0.24s; }
-.reveal--d4 { transition-delay: 0.32s; }
-
-@keyframes heroFadeUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: none; }
-}
-.hero-enter { animation: heroFadeUp 0.7s var(--ease) both; }
-.hero-enter--d1 { animation-delay: 0.1s; }
-.hero-enter--d2 { animation-delay: 0.2s; }
-.hero-enter--d3 { animation-delay: 0.3s; }
-.hero-enter--d4 { animation-delay: 0.4s; }
-
-/* Radar pulse sutil */
-.radar-pulse {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.radar-pulse::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: inherit;
-  animation: radarPing 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-@keyframes radarPing {
-  0% { transform: scale(1); opacity: 0.7; }
-  75%, 100% { transform: scale(2.4); opacity: 0; }
+@utility grid-pattern {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--navy) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--navy) 6%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
 }
 
-/* Micro-flotación suave para tarjetas y elementos de relieve */
-@keyframes subtleFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
-}
-.motion-float {
-  animation: subtleFloat 5s ease-in-out infinite;
+@utility grid-pattern-dark {
+  background-image:
+    linear-gradient(to right, oklch(1 0 0 / 5%) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(1 0 0 / 5%) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
 }
 
-/* Brillo y shimmer sutil para elementos destacados */
-@keyframes shimmerLight {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(200%); }
+@utility beam {
+  background: radial-gradient(600px circle at 50% 0%, color-mix(in oklab, var(--primary) 35%, transparent), transparent 60%);
 }
-.shimmer-effect {
+
+@utility glass-panel {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+@utility shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
+@utility shadow-elegant {
+  box-shadow: var(--shadow-elegant);
+}
+
+@utility shimmer {
   position: relative;
   overflow: hidden;
-}
-.shimmer-effect::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-  transform: translateX(-100%);
-  animation: shimmerLight 3.5s infinite;
-  pointer-events: none;
-}
-
-/* Pulso de halo en vivo */
-@keyframes glowPulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.04); }
-}
-.glow-pulse {
-  animation: glowPulse 4s ease-in-out infinite;
-}
-
-/* Superficie Glassmorphism Profesional */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-}
-
-/* Soporte para preferencias de movimiento reducido (WCAG AA) */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, oklch(1 0 0 / 45%) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.8s ease;
   }
-  .reveal {
-    opacity: 1 !important;
-    transform: none !important;
+  &:hover::after {
+    transform: translateX(120%);
   }
 }
 
-/* ═══════════════════════════════════════════════
-   RESPONSIVE UTILITIES
-═══════════════════════════════════════════════ */
-@media (max-width: 480px) {
-  .btn {
-    white-space: normal;
-    text-align: center;
-    padding: 0.75rem 1.25rem;
-    font-size: 0.9rem;
-  }
+@utility spotlight-border {
+  background: radial-gradient(400px circle at var(--x, 50%) var(--y, 50%), var(--primary), var(--border) 45%);
+}
+
+@utility spotlight-fill {
+  background: radial-gradient(500px circle at var(--x, 50%) var(--y, 50%), color-mix(in oklab, var(--primary) 7%, var(--card)), var(--card) 50%);
+}
+
+@utility laser {
+  background: linear-gradient(to bottom, transparent, var(--primary), transparent);
+  box-shadow: 0 0 24px 4px color-mix(in oklab, var(--primary) 70%, transparent);
 }

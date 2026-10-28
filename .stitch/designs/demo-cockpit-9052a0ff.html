@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KontaPro Suite - Automatización Contable y Fiscal</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-container": "#009c6b",
+            "on-primary": "#ffffff",
+            "on-primary-fixed": "#041a40",
+            "surface-tint": "#4c5e87",
+            "secondary": "#0058be",
+            "tertiary-container": "#002718",
+            "background": "#f8f9ff",
+            "surface-container-high": "#dce9ff",
+            "on-surface-variant": "#44464e",
+            "surface-variant": "#d3e4fe",
+            "on-primary-container": "#7688b4",
+            "inverse-primary": "#b4c6f5",
+            "surface-container": "#e5eeff",
+            "on-secondary-fixed": "#001a42",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed-variant": "#005236",
+            "primary-container": "#0b2046",
+            "tertiary-fixed-dim": "#4edea3",
+            "primary-fixed-dim": "#b4c6f5",
+            "outline": "#75777f",
+            "on-primary-fixed-variant": "#34466e",
+            "on-tertiary": "#ffffff",
+            "surface": "#f8f9ff",
+            "on-surface": "#0b1c30",
+            "on-error": "#ffffff",
+            "tertiary": "#000d06",
+            "surface-dim": "#cbdbf5",
+            "inverse-on-surface": "#eaf1ff",
+            "secondary-fixed-dim": "#adc6ff",
+            "surface-container-lowest": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "secondary-fixed": "#d8e2ff",
+            "on-secondary-container": "#fefcff",
+            "outline-variant": "#c5c6cf",
+            "on-tertiary-fixed": "#002113",
+            "surface-container-low": "#eff4ff",
+            "tertiary-fixed": "#6ffbbe",
+            "on-secondary-fixed-variant": "#004495",
+            "inverse-surface": "#213145",
+            "on-secondary": "#ffffff",
+            "primary": "#000922",
+            "error-container": "#ffdad6",
+            "secondary-container": "#006fed",
+            "on-error-container": "#93000a",
+            "on-background": "#0b1c30",
+            "surface-container-highest": "#d3e4fe",
+            "primary-fixed": "#d9e2ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "margin": "1.5rem",
+            "space-md": "1rem",
+            "gutter": "1rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "label-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "code-num": ["Inter"],
+            "label-sm": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.005em", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "code-num": ["13px", { "lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-xl-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "700" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-secondary/20 selection:text-secondary">
+<!-- HEADER -->
+<header class="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-[1440px] rounded-xl border border-outline-variant/30 bg-surface/90 backdrop-blur-md px-6 py-3 flex items-center justify-between z-50 shadow-sm">
+<div class="flex items-center gap-3">
+<a class="flex items-center" href="#">
+<img alt="KontaPro Isotype" class="w-8 h-8 object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XSEASd83bTv2dp3wpyI50qHGt471HZrX4QR-wdie854dF3BTBaLiyIpYsAJLSq8mtaRtIKzcG1expceJ8ADjvXJLJEMzN6tSYY5O0yZwfUHTtno-fyYjhLmekCFLnBjLF0qPjwAbZfy4d_jDxvrHS_54wFUKJeMh0fUVR-mP-zNv3UNaSSruTA15RkjyQsdtLDY6fFTlnVnUP5mofxHR27iFnT6rCWk7W0LOz0wDC6LT2BpqW38cDrBg"/>
+</a>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#soluciones">Soluciones</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#funcionalidades">Funcionalidades</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#como-funciona">Como funciona</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#simulador">Simulador</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#seguridad">Seguridad</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#precios">Precios</a>
+</nav>
+<div class="flex items-center gap-3">
+<a class="hidden sm:inline-flex items-center px-4 py-2 rounded-lg border border-outline-variant/50 font-label-md text-on-surface hover:bg-surface-container transition-colors" href="#beta">
+        Solicitar acceso beta
+      </a>
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-on-primary font-label-md hover:bg-primary/90 transition-all shadow-sm" href="#demo">
+<span>Explorar demo</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</header>
+<!-- MAIN CONTENT CONTAINER -->
+<main class="max-w-[1440px] mx-auto px-4 sm:px-6 pt-28 pb-16">
+<!-- INTERACTIVE DEMO WORKSPACE HERO -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-12">
+<div class="lg:col-span-5 space-y-6">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 font-label-sm">
+<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+          Veri*factu Ready &amp; SII
+        </div>
+<h1 class="font-headline-xl text-primary tracking-tight">
+          Automatización contable y fiscal autónoma para asesorías
+        </h1>
+<p class="font-body-lg text-on-surface-variant leading-relaxed">
+          Plataforma de alta precisión basada en inteligencia determinista para el procesamiento masivo de facturas, conciliación bancaria y cumplimiento normativo automatizado.
+        </p>
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+<a class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-secondary text-on-secondary font-label-md hover:bg-secondary/90 transition-all shadow-md" href="#demo">
+<span>Explorar demo</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+<a class="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-outline-variant font-label-md text-on-surface hover:bg-surface-container transition-colors" href="#beta">
+            Solicitar acceso beta
+          </a>
+</div>
+</div>
+<!-- DOMINANT SOFTWARE CONSOLE -->
+<div class="lg:col-span-7 bg-slate-900 text-slate-100 rounded-2xl shadow-2xl border border-slate-800 p-6">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+<div class="flex items-center gap-2 text-xs text-emerald-400 font-code-num">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Sincronizado con AEAT en tiempo real
+          </div>
+<div class="flex items-center gap-3">
+<div class="px-3 py-1 rounded bg-slate-800 border border-slate-700 text-xs text-slate-300 font-code-num">
+              Asesoría Alvear &amp; Asociados - Madrid
+            </div>
+<span class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 text-xs font-code-num">Lote #ES-2025-04892</span>
+</div>
+</div>
+<!-- Interactive Tabs for Timeline -->
+<div class="grid grid-cols-3 gap-2 my-4 bg-slate-950 p-1 rounded-lg border border-slate-800">
+<button class="px-3 py-2 rounded text-xs font-label-md text-center transition-all bg-slate-800 text-white shadow" id="tab-btn-1" onclick="switchTab(1)">
+            Step 1: Captura OCR
+          </button>
+<button class="px-3 py-2 rounded text-xs font-label-md text-center transition-all text-slate-400 hover:text-white" id="tab-btn-2" onclick="switchTab(2)">
+            Step 2: Clasificación
+          </button>
+<button class="px-3 py-2 rounded text-xs font-label-md text-center transition-all text-slate-400 hover:text-white" id="tab-btn-3" onclick="switchTab(3)">
+            Step 3: Asiento Validado
+          </button>
+</div>
+<!-- Tab Contents -->
+<div class="space-y-4 tab-pane" id="tab-content-1">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+<div class="flex justify-between items-center text-xs text-slate-400">
+<span>Documento PDF / Factura</span>
+<span class="text-emerald-400">OCR 99.8% Confianza</span>
+</div>
+<div class="p-3 bg-slate-900 rounded border border-slate-800 space-y-2 text-xs font-code-num">
+<div class="flex justify-between"><span>Emisor:</span> <span class="text-white">Cloud Server Solutions S.L.</span></div>
+<div class="flex justify-between"><span>NIF:</span> <span class="text-white">B88492011</span></div>
+<div class="flex justify-between"><span>Fecha:</span> <span class="text-white">24/02/2025</span></div>
+<div class="flex justify-between border-t border-slate-800 pt-2 font-bold"><span>Base Imponible:</span> <span class="text-white">1.000,00 EUR</span></div>
+</div>
+</div>
+<div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+<div class="text-xs text-slate-400">Desglose Fiscal Verificado</div>
+<div class="space-y-2 text-xs font-code-num">
+<div class="flex justify-between p-2 rounded bg-slate-900"><span>Base Imponible</span> <span>1.000,00 €</span></div>
+<div class="flex justify-between p-2 rounded bg-slate-900"><span>IVA (21%)</span> <span>210,00 €</span></div>
+<div class="flex justify-between p-2 rounded bg-slate-900"><span>Retención IRPF</span> <span class="text-red-400">-150,00 €</span></div>
+<div class="flex justify-between p-2 rounded bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 font-bold"><span>Total Factura</span> <span>1.060,00 €</span></div>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4 tab-pane hidden" id="tab-content-2">
+<div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+<div class="text-xs text-slate-400">Conciliación Bancaria Automática (PSD2)</div>
+<div class="space-y-2 text-xs font-code-num">
+<div class="p-3 bg-slate-900 rounded border border-slate-800 flex justify-between items-center">
+<div>
+<div class="text-white font-medium">Cargo SEPA - Cloud Server Solutions</div>
+<div class="text-slate-400">Ref: TR-994821 - Banco Santander</div>
+</div>
+<span class="px-2 py-1 bg-emerald-950 text-emerald-400 rounded">Conciliado 100%</span>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4 tab-pane hidden" id="tab-content-3">
+<div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+<div class="text-xs text-slate-400">Asiento Doble Partida Generado (Plan General Contable)</div>
+<div class="space-y-2 text-xs font-code-num">
+<div class="grid grid-cols-12 gap-2 p-2 text-slate-400 border-b border-slate-800 text-[11px]">
+<div class="col-span-2">Cuenta</div>
+<div class="col-span-6">Descripción</div>
+<div class="col-span-2 text-right">Debe</div>
+<div class="col-span-2 text-right">Haber</div>
+</div>
+<div class="grid grid-cols-12 gap-2 p-2 items-center hover:bg-slate-900 rounded">
+<div class="col-span-2 text-emerald-400">62800000</div>
+<div class="col-span-6 text-slate-200">Suministros IT</div>
+<div class="col-span-2 text-right">1.000,00 €</div>
+<div class="col-span-2 text-right">-</div>
+</div>
+<div class="grid grid-cols-12 gap-2 p-2 items-center hover:bg-slate-900 rounded">
+<div class="col-span-2 text-emerald-400">47200021</div>
+<div class="col-span-6 text-slate-200">H.P. IVA Soportado</div>
+<div class="col-span-2 text-right">210,00 €</div>
+<div class="col-span-2 text-right">-</div>
+</div>
+<div class="grid grid-cols-12 gap-2 p-2 items-center hover:bg-slate-900 rounded">
+<div class="col-span-2 text-blue-400">41000047</div>
+<div class="col-span-6 text-slate-200">Acreedores por prest. serv.</div>
+<div class="col-span-2 text-right">-</div>
+<div class="col-span-2 text-right">1.210,00 €</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Console Actions -->
+<div class="flex items-center justify-between pt-4 mt-4 border-t border-slate-800">
+<button class="px-4 py-2 rounded bg-slate-800 text-slate-300 text-xs font-label-md hover:bg-slate-700 transition-colors">
+            Ajustar Criterio
+          </button>
+<button class="px-4 py-2 rounded bg-secondary text-white text-xs font-label-md hover:bg-secondary/90 transition-colors flex items-center gap-2">
+<span>Validar y Exportar al ERP (SUENLACE)</span>
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+</button>
+</div>
+</div>
+</section>
+<!-- FEATURE DEEP-DIVE MODULES -->
+<section class="py-16 my-12 border-t border-outline-variant/20" id="funcionalidades">
+<div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
+<h2 class="font-headline-lg text-primary">Arquitectura de Alta Precisión</h2>
+<p class="font-body-md text-on-surface-variant">Módulos avanzados diseñados específicamente para optimizar la operativa contable de asesorías y grandes corporaciones.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/30 space-y-4 hover:shadow-lg transition-shadow">
+<div class="w-12 h-12 rounded-lg bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">shield</span>
+</div>
+<h3 class="font-headline-md text-primary">Veri*factu Cryptographic Audit Trail</h3>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+            Cadena inalterable SHA-256 de registros de facturación con cumplimiento estricto de las directivas de la AEAT y trazabilidad total de eventos.
+          </p>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/30 space-y-4 hover:shadow-lg transition-shadow">
+<div class="w-12 h-12 rounded-lg bg-secondary text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">sync</span>
+</div>
+<h3 class="font-headline-md text-primary">Autonomous Bank Reconciliation</h3>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+            Integración directa PSD2 con más de 50 entidades bancarias y un 99.4% de confianza en el emparejamiento automatizado de apuntes.
+          </p>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/30 space-y-4 hover:shadow-lg transition-shadow">
+<div class="w-12 h-12 rounded-lg bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">description</span>
+</div>
+<h3 class="font-headline-md text-primary">Instant AEAT Tax Filing Generator</h3>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+            Preparación automatizada y validación previa de los Modelos 303, 390, 111 y 115 con conexión directa a la sede electrónica.
+          </p>
+</div>
+</div>
+</section>
+<!-- INTERACTIVE ROI METRIC CALCULATOR -->
+<section class="py-16 my-12 bg-surface-container-low rounded-2xl p-8 md:p-12 border border-outline-variant/20" id="simulador">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-6 space-y-6">
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-secondary/10 text-secondary font-label-sm">Simulador de Eficiencia</div>
+<h2 class="font-headline-lg text-primary">Calcula el impacto en tu despacho</h2>
+<p class="font-body-md text-on-surface-variant">Ajusta los parámetros de tu operativa diaria para comprobar el ahorro real de horas y costes fiscales.</p>
+<div class="space-y-6 pt-4">
+<div class="space-y-2">
+<div class="flex justify-between text-sm font-label-md">
+<span class="text-on-surface">Número de empresas / clientes gestionados</span>
+<span class="text-primary font-bold" id="val-clientes">120</span>
+</div>
+<input class="w-full accent-secondary cursor-pointer" id="range-clientes" max="500" min="20" type="range" value="120"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm font-label-md">
+<span class="text-on-surface">Volumen mensual de facturas</span>
+<span class="text-primary font-bold" id="val-facturas">4.500</span>
+</div>
+<input class="w-full accent-secondary cursor-pointer" id="range-facturas" max="25000" min="500" step="500" type="range" value="4500"/>
+</div>
+</div>
+</div>
+<div class="lg:col-span-6 bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/40 shadow-sm space-y-6">
+<div class="text-xs font-label-sm text-on-surface-variant uppercase tracking-wider">Resultados estimados mensuales</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="p-4 rounded-lg bg-surface-container-low border border-outline-variant/20">
+<div class="text-xs text-on-surface-variant">Horas recuperadas al mes</div>
+<div class="font-headline-xl text-primary mt-1" id="res-horas">168 h</div>
+</div>
+<div class="p-4 rounded-lg bg-surface-container-low border border-outline-variant/20">
+<div class="text-xs text-on-surface-variant">Ahorro anual estimado</div>
+<div class="font-headline-xl text-secondary mt-1" id="res-ahorro">48.200 €</div>
+</div>
+</div>
+<div class="p-4 rounded-lg bg-primary-container text-on-primary flex items-center justify-between">
+<div>
+<div class="text-xs text-primary-fixed-dim">Cierre fiscal trimestral</div>
+<div class="font-headline-sm mt-0.5">Reducción del 72% en tiempos</div>
+</div>
+<span class="material-symbols-outlined text-[32px] text-primary-fixed-dim">trending_down</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="w-full bg-primary text-on-primary border-t border-outline-variant/15">
+<div class="max-w-[1600px] mx-auto px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="space-y-3 text-center md:text-left">
+<div class="font-headline-md text-on-primary font-bold">KontaPro Suite</div>
+<p class="font-body-sm text-on-primary-container max-w-lg">
+          © 2025 KontaPro Technologies S.L. Conforme normativa Veri*factu y PGC. Todos los derechos reservados. RGPD Art. 28, SOC2 Type II certificado.
+        </p>
+</div>
+<div class="flex flex-wrap justify-center gap-6 font-label-md text-on-primary-container">
+<a class="hover:text-on-primary transition-colors" href="#plataforma">Plataforma</a>
+<a class="hover:text-on-primary transition-colors" href="#verifactu">Conformidad Veri*factu</a>
+<a class="hover:text-on-primary transition-colors" href="#seguridad">Seguridad SOC2</a>
+<a class="hover:text-on-primary transition-colors" href="#integraciones">Integraciones</a>
+<a class="hover:text-on-primary transition-colors" href="#aviso">Aviso Legal</a>
+<a class="hover:text-on-primary transition-colors" href="#privacidad">Privacidad</a>
+</div>
+</div>
+</footer>
+<!-- INTERACTIVE JS SCRIPT -->
+<script>
+    function switchTab(step) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+      document.getElementById('tab-content-' + step).classList.remove('hidden');
+
+      for (let i = 1; i <= 3; i++) {
+        const btn = document.getElementById('tab-btn-' + i);
+        if (i === step) {
+          btn.className = "px-3 py-2 rounded text-xs font-label-md text-center transition-all bg-slate-800 text-white shadow";
+        } else {
+          btn.className = "px-3 py-2 rounded text-xs font-label-md text-center transition-all text-slate-400 hover:text-white";
+        }
+      }
+    }
+
+    const rangeClientes = document.getElementById('range-clientes');
+    const rangeFacturas = document.getElementById('range-facturas');
+    const valClientes = document.getElementById('val-clientes');
+    const valFacturas = document.getElementById('val-facturas');
+    const resHoras = document.getElementById('res-horas');
+    const resAhorro = document.getElementById('res-ahorro');
+
+    function updateCalculator() {
+      const clientes = parseInt(rangeClientes.value);
+      const facturas = parseInt(rangeFacturas.value);
+
+      valClientes.textContent = clientes;
+      valFacturas.textContent = facturas.toLocaleString('es-ES');
+
+      const horasCalculadas = Math.round(clientes * 1.4 + (facturas / 100) * 0.8);
+      const ahorroCalculado = Math.round(horasCalculadas * 12 * 24);
+
+      resHoras.textContent = horasCalculadas + ' h';
+      resAhorro.textContent = ahorroCalculado.toLocaleString('es-ES') + ' €';
+    }
+
+    rangeClientes.addEventListener('input', updateCalculator);
+    rangeFacturas.addEventListener('input', updateCalculator);
+  </script>
+</body></html>

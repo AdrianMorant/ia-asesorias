@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import styles from './LegalModal.module.css';
-import { Shield, FileText, Cookie, X, Check, Sliders, AlertCircle } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Shield, FileText, Cookie, X, Check, Sliders, Lock, Phone } from "lucide-react";
 
-export type LegalTab = 'privacy' | 'legal' | 'cookies' | 'preferences';
+export type LegalTab = "privacy" | "legal" | "cookies" | "preferences" | "security";
 
 interface LegalModalProps {
   isOpen: boolean;
@@ -10,38 +10,42 @@ interface LegalModalProps {
   onClose: () => void;
 }
 
-const LegalModal: React.FC<LegalModalProps> = ({ isOpen, initialTab = 'privacy', onClose }) => {
+export const LegalModal: React.FC<LegalModalProps> = ({
+  isOpen,
+  initialTab = "privacy",
+  onClose,
+}) => {
   const [tab, setTab] = useState<LegalTab>(initialTab);
-  const [prevInitial, setPrevInitial] = useState<LegalTab>(initialTab);
 
-  // Estados de preferencias de cookies
+  // Sincronizar tab si cambia el prop initialTab
+  useEffect(() => {
+    if (isOpen) {
+      setTab(initialTab);
+    }
+  }, [isOpen, initialTab]);
+
+  // Preferencias de Cookies guardadas en localStorage
   const [analyticsConsent, setAnalyticsConsent] = useState(() => {
-    return localStorage.getItem('kontapro_cookie_analytics') === 'true';
+    return localStorage.getItem("kontapro_cookie_analytics") === "true";
   });
   const [savedNotice, setSavedNotice] = useState(false);
 
-  if (initialTab !== prevInitial) {
-    setPrevInitial(initialTab);
-    setTab(initialTab);
-  }
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     };
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
-      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
     }
     return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose]);
 
   const handleSaveCookiePreferences = () => {
-    localStorage.setItem('kontapro_cookie_analytics', analyticsConsent ? 'true' : 'false');
-    localStorage.setItem('kontapro_cookie_consent_status', 'customized');
+    localStorage.setItem("kontapro_cookie_analytics", analyticsConsent ? "true" : "false");
     setSavedNotice(true);
     setTimeout(() => {
       setSavedNotice(false);
@@ -49,250 +53,274 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, initialTab = 'privacy',
     }, 1200);
   };
 
-  if (!isOpen) return null;
+  const navItems = [
+    { id: "privacy", label: "Privacidad", icon: Shield },
+    { id: "legal", label: "Aviso Legal", icon: FileText },
+    { id: "cookies", label: "Cookies", icon: Cookie },
+    { id: "security", label: "Seguridad & Veri*factu", icon: Lock },
+    { id: "preferences", label: "Configurar", icon: Sliders },
+  ] as const;
 
   return (
-    <div
-      className={styles.backdrop}
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="legal-modal-title"
-    >
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <div className={styles.header}>
-          <div className={styles.titleRow}>
-            <div className={styles.titleIconBox}>
-              <Shield size={20} className={styles.titleIcon} />
-            </div>
-            <h3 id="legal-modal-title" className={styles.title}>
-              Información Legal & Transparencia Normativa
-            </h3>
-          </div>
-          <button
-            type="button"
-            className={styles.closeBtn}
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+          {/* Backdrop con desenfoque */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             onClick={onClose}
-            aria-label="Cerrar ventana legal"
+            className="fixed inset-0 bg-midnight/80 backdrop-blur-md"
+            aria-hidden="true"
+          />
+
+          {/* Modal Container */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 15 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="relative flex flex-col w-full max-w-3xl max-h-[85vh] rounded-3xl border border-border bg-card shadow-elegant overflow-hidden z-10"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="legal-modal-title"
           >
-            <X size={20} />
-          </button>
-        </div>
-
-        {/* Tab Navigation Bar */}
-        <div className={styles.tabBar} role="tablist">
-          <button
-            type="button"
-            role="tab"
-            aria-selected={tab === 'privacy'}
-            className={`${styles.tabBtn} ${tab === 'privacy' ? styles.tabBtnActive : ''}`}
-            onClick={() => setTab('privacy')}
-          >
-            <Shield size={15} />
-            Política de Privacidad
-          </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={tab === 'legal'}
-            className={`${styles.tabBtn} ${tab === 'legal' ? styles.tabBtnActive : ''}`}
-            onClick={() => setTab('legal')}
-          >
-            <FileText size={15} />
-            Aviso Legal
-          </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={tab === 'cookies'}
-            className={`${styles.tabBtn} ${tab === 'cookies' ? styles.tabBtnActive : ''}`}
-            onClick={() => setTab('cookies')}
-          >
-            <Cookie size={15} />
-            Política de Cookies
-          </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={tab === 'preferences'}
-            className={`${styles.tabBtn} ${tab === 'preferences' ? styles.tabBtnActive : ''}`}
-            onClick={() => setTab('preferences')}
-          >
-            <Sliders size={15} />
-            Configurar Cookies
-          </button>
-        </div>
-
-        {/* Modal Scrollable Content */}
-        <div className={styles.content}>
-          {tab === 'privacy' && (
-            <>
-              <div className={styles.noticePending}>
-                <AlertCircle size={16} className={styles.noticeIcon} />
-                <span>
-                  <strong>Nota de transparencia:</strong> Los datos identificativos del responsable señalados con <code>[Pendiente de confirmación]</code> serán completados de forma definitiva con los datos mercantiles antes del lanzamiento comercial abierto.
-                </span>
-              </div>
-
-              <h4>1. Responsable del Tratamiento de Datos</h4>
-              <p>
-                El responsable del tratamiento de los datos recogidos a través de este sitio web es:
-              </p>
-              <ul>
-                <li><strong>Denominación comercial:</strong> KontaPro Suite</li>
-                <li><strong>Titular / Razón Social:</strong> <em>[Razón social del titular pendiente de confirmación antes de publicación final]</em></li>
-                <li><strong>NIF / CIF:</strong> <em>[NIF pendiente de confirmación antes de publicación final]</em></li>
-                <li><strong>Domicilio Social:</strong> <em>[Domicilio fiscal pendiente de confirmación antes de publicación final]</em></li>
-                <li><strong>Email de Contacto Privacidad:</strong> <em>[Email corporativo legal pendiente de confirmación antes de publicación final]</em></li>
-                <li><strong>Atención Telefónica de Soporte:</strong> +34 686 766 266</li>
-              </ul>
-
-              <h4>2. Finalidad del Tratamiento y Legitimación</h4>
-              <p>
-                Los datos personales aportados mediante el formulario de contacto y solicitud de acceso a la beta cerrada (nombre, empresa, correo corporativo, teléfono y software contable utilizado) se tratan estrictamente para:
-              </p>
-              <ul>
-                <li>Gestionar y coordinar la sesión de demostración técnica del software KontaPro.</li>
-                <li>Evaluar la compatibilidad técnica y el volumen de facturación del despacho solicitante.</li>
-                <li>Atender consultas técnicas previas y facilitar el acceso guiado a la beta.</li>
-              </ul>
-              <p>
-                La base jurídica del tratamiento es la <strong>aplicación de medidas precontractuales a petición del interesado</strong> y el <strong>consentimiento expreso</strong> facilitado al enviar el formulario (Arts. 6.1.a y 6.1.b del RGPD UE 2016/679).
-              </p>
-
-              <h4>3. Conservación de los Datos</h4>
-              <p>
-                Los datos se conservarán durante el periodo necesario para gestionar la relación precontractual con el despacho y el seguimiento de la beta, o hasta que el usuario solicite su supresión.
-              </p>
-
-              <h4>4. Destinatarios y Proveedores</h4>
-              <p>
-                KontaPro no cede ni comercializa datos personales con terceros. Los servidores de almacenamiento y cómputo se encuentran alojados exclusivamente en la Unión Europea bajo estándares conformes al RGPD. Los datos contables nunca se transfieren a terceros ni se utilizan para entrenar modelos públicos de inteligencia artificial.
-              </p>
-
-              <h4>5. Ejercicio de Derechos</h4>
-              <p>
-                El usuario puede solicitar el ejercicio de sus derechos de Acceso, Rectificación, Supresión, Limitación, Oposición y Portabilidad dirigiéndose por escrito con referencia &quot;Protección de Datos&quot; al teléfono <strong>+34 686 766 266</strong> o al correo legal de la entidad una vez designado formalmente.
-              </p>
-            </>
-          )}
-
-          {tab === 'legal' && (
-            <>
-              <div className={styles.noticePending}>
-                <AlertCircle size={16} className={styles.noticeIcon} />
-                <span>
-                  <strong>Información LSSI-CE:</strong> Campos societarios oficiales pendientes de incorporación registral definitiva.
-                </span>
-              </div>
-
-              <h4>1. Información General y Titularidad</h4>
-              <p>
-                En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE):
-              </p>
-              <ul>
-                <li><strong>Nombre del Proyecto:</strong> KontaPro</li>
-                <li><strong>Titular de la Web:</strong> <em>[Razón social / Titular de la explotación pendiente de confirmación]</em></li>
-                <li><strong>NIF:</strong> <em>[NIF pendiente de confirmación]</em></li>
-                <li><strong>Dirección:</strong> <em>[Dirección de la sede pendiente de confirmación]</em></li>
-                <li><strong>Contacto Directo:</strong> +34 686 766 266</li>
-              </ul>
-
-              <h4>2. Propiedad Intelectual e Industrial</h4>
-              <p>
-                El código fuente, arquitectura del software, logotipos, elementos gráficos, textos explicativos, maquetas de interfaz y algoritmos de triaje de KontaPro son titularidad de sus desarrolladores legítimos o cuentan con autorización de uso, estando protegidos por la normativa de propiedad intelectual.
-              </p>
-
-              <h4>3. Carácter Demostrativo del Entorno Web</h4>
-              <p>
-                Los paneles interactivos, importes numéricos y tablas de facturación mostrados en la web pública tienen carácter de prototipo demostrativo con datos ficticios. No constituyen operaciones bancarias reales ni implican homologaciones no acreditadas.
-              </p>
-            </>
-          )}
-
-          {tab === 'cookies' && (
-            <>
-              <h4>1. ¿Qué son las cookies?</h4>
-              <p>
-                Una cookie es un fichero técnico que se descarga en el navegador del usuario al acceder a determinados sitios web para permitir la navegación segura y el almacenamiento de preferencias operativas.
-              </p>
-
-              <h4>2. Tipología de Cookies Empleadas en KontaPro</h4>
-              <ul>
-                <li>
-                  <strong>Cookies Técnicas (Estrictamente Necesarias):</strong> Indispensables para el funcionamiento de la web (almacenamiento de preferencia de idioma <code>kontapro_language_preference</code> y control de sesiones seguras). No requieren consentimiento previo al ser necesarias para prestar el servicio solicitado.
-                </li>
-                <li>
-                  <strong>Cookies de Preferencias / Rendimiento:</strong> Destinadas a recordar configuraciones personalizadas del usuario. Vienen desactivadas por defecto y solo se ejecutan tras consentimiento explícito.
-                </li>
-                <li>
-                  <strong>Sin Cookies Publicitarias de Terceros:</strong> KontaPro no instala cookies de rastreo publicitario cruzado ni comparte identificadores con redes de publicidad.
-                </li>
-              </ul>
-            </>
-          )}
-
-          {tab === 'preferences' && (
-            <div className={styles.preferencesPanel}>
-              <h4>Panel de Configuración de Cookies</h4>
-              <p className={styles.prefDesc}>
-                Puedes activar o desactivar cada categoría de cookies. Las cookies técnicas son obligatorias para el funcionamiento de la plataforma web.
-              </p>
-
-              <div className={styles.prefItem}>
-                <div className={styles.prefInfo}>
-                  <strong>Cookies Técnicas y de Navegación</strong>
-                  <span className={styles.prefSub}>
-                    Necesarias para la selección de idioma, envío seguro de formularios y renderizado visual.
-                  </span>
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-border px-6 py-4.5 bg-surface">
+              <div className="flex items-center gap-3">
+                <div className="grid h-10 w-10 place-items-center rounded-xl bg-primary/10 text-primary">
+                  <Shield className="h-5 w-5" />
                 </div>
-                <span className={styles.alwaysActive}>Siempre activas</span>
-              </div>
-
-              <div className={styles.prefItem}>
-                <div className={styles.prefInfo}>
-                  <strong>Métricas y Rendimiento Agregado</strong>
-                  <span className={styles.prefSub}>
-                    Permiten medir de forma anónima el rendimiento de la consola y la estabilidad de carga.
-                  </span>
+                <div>
+                  <h3 id="legal-modal-title" className="text-base sm:text-lg font-bold text-navy">
+                    Información Legal & Transparencia Normativa
+                  </h3>
+                  <p className="text-xs text-muted-foreground">KontaPro Suite · RGPD, LSSI-CE & Veri*factu</p>
                 </div>
-                <label className={styles.switch}>
-                  <input
-                    type="checkbox"
-                    checked={analyticsConsent}
-                    onChange={(e) => setAnalyticsConsent(e.target.checked)}
-                  />
-                  <span className={styles.slider}></span>
-                </label>
               </div>
+              <button
+                type="button"
+                onClick={onClose}
+                className="grid h-9 w-9 place-items-center rounded-xl border border-border bg-background text-muted-foreground hover:text-navy hover:bg-muted transition-colors cursor-pointer"
+                aria-label="Cerrar modal"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
 
-              {savedNotice && (
-                <div className={styles.savedAlert}>
-                  <Check size={16} /> Preferencias guardadas correctamente.
-                </div>
+            {/* Tab Navigation */}
+            <div className="flex border-b border-border bg-background px-4 overflow-x-auto scrollbar-none gap-1 py-1.5 shrink-0">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setTab(item.id as LegalTab)}
+                  className={`flex items-center gap-2 px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-colors whitespace-nowrap cursor-pointer ${
+                    tab === item.id
+                      ? "bg-primary text-primary-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-navy hover:bg-muted"
+                  }`}
+                >
+                  <item.icon className="h-3.5 w-3.5" />
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Scrollable Content Body */}
+            <div className="flex-1 overflow-y-auto px-6 py-6 text-sm text-foreground/90 space-y-5 leading-relaxed">
+              {tab === "privacy" && (
+                <>
+                  <div className="rounded-2xl border border-primary/20 bg-primary/5 p-4 text-xs text-primary leading-relaxed">
+                    <strong>Cumplimiento RGPD (UE 2016/679) y LOPDGDD 3/2018:</strong> KontaPro garantiza el tratamiento confidencial y la máxima seguridad en todos los datos de contacto y facturación recopilados.
+                  </div>
+
+                  <h4 className="text-base font-bold text-navy pt-1">1. Responsable del Tratamiento de Datos</h4>
+                  <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-muted-foreground">
+                    <li><strong className="text-navy">Razón Social:</strong> KontaPro Suite S.L.</li>
+                    <li><strong className="text-navy">Actividad:</strong> Desarrollo y explotación de soluciones software de copiloto fiscal y automatización contable con IA para asesorías.</li>
+                    <li><strong className="text-navy">Email de Contacto Oficial:</strong> <a href="mailto:adriantrabajo005@gmail.com" className="text-primary underline">adriantrabajo005@gmail.com</a></li>
+                    <li><strong className="text-navy">Teléfono Oficial de Soporte y Privacidad:</strong> <a href="tel:+34686766266" className="text-primary underline">+34 686 76 62 66</a></li>
+                    <li><strong className="text-navy">Ámbito Geográfico:</strong> Servidores e infraestructura alojados exclusivamente dentro de la Unión Europea.</li>
+                  </ul>
+
+                  <h4 className="text-base font-bold text-navy pt-2">2. Finalidad del Tratamiento y Legitimación</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
+                    Los datos facilitados a través del formulario de contacto (nombre, email profesional, nombre del despacho, teléfono y volumen de clientes) se tratan con las siguientes finalidades legítimas:
+                  </p>
+                  <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm text-muted-foreground">
+                    <li>Elaborar y remitir una propuesta comercial personalizada a medida de su volumen de facturas.</li>
+                    <li>Coordinar demostraciones técnicas interactivas y atender consultas previas de enlace con su ERP.</li>
+                    <li>Gestión de la relación precontractual a petición expresa del interesado (Art. 6.1.b RGPD).</li>
+                  </ul>
+
+                  <h4 className="text-base font-bold text-navy pt-2">3. No Cesión a Terceros ni Entrenamiento de Modelos</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
+                    KontaPro no vende, cede ni transfiere datos de usuarios o despachos a terceros bajo ninguna circunstancia. Los datos contables procesados durante las demostraciones o la actividad del software <strong className="text-navy">jamás se utilizan para entrenar modelos públicos de inteligencia artificial</strong> ni abandonan los entornos de procesamiento seguro de la Unión Europea.
+                  </p>
+
+                  <h4 className="text-base font-bold text-navy pt-2">4. Ejercicio de Derechos ARCO</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
+                    Usted puede ejercer en cualquier momento sus derechos de <strong>Acceso, Rectificación, Supresión, Limitación, Oposición y Portabilidad</strong> enviando una solicitud formal por escrito junto con copia de su documento de identidad a <a href="mailto:adriantrabajo005@gmail.com" className="text-primary underline">adriantrabajo005@gmail.com</a> o contactando al <a href="tel:+34686766266" className="text-primary underline">+34 686 76 62 66</a>. Asimismo, tiene derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD) en caso de estimarlo oportuno.
+                  </p>
+                </>
               )}
 
-              <div className={styles.prefActions}>
-                <button
-                  type="button"
-                  className="btn btn--primary"
-                  onClick={handleSaveCookiePreferences}
-                >
-                  Guardar Preferencias
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
+              {tab === "legal" && (
+                <>
+                  <h4 className="text-base font-bold text-navy">1. Información General (LSSI-CE Ley 34/2002)</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
+                    En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa de que este sitio web es propiedad y está operado por <strong>KontaPro Suite S.L.</strong>
+                  </p>
+                  <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm text-muted-foreground">
+                    <li><strong className="text-navy">Titular del servicio:</strong> KontaPro Suite S.L.</li>
+                    <li><strong className="text-navy">Email de contacto:</strong> adriantrabajo005@gmail.com</li>
+                    <li><strong className="text-navy">Atención directa:</strong> 686 76 62 66</li>
+                  </ul>
 
-        <div className={styles.footer}>
-          <button type="button" className="btn btn--secondary" onClick={onClose}>
-            Cerrar
-          </button>
+                  <h4 className="text-base font-bold text-navy pt-2">2. Propiedad Intelectual e Industrial</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
+                    Todos los derechos de propiedad intelectual e industrial sobre el diseño web, logotipos corporativos, marcas registradas, código fuente, algoritmos de cuadre en partida doble y módulos de triaje de KontaPro son titularidad exclusiva de KontaPro Suite S.L. Queda prohibida la reproducción, distribución o comunicación pública sin autorización previa por escrito.
+                  </p>
+
+                  <h4 className="text-base font-bold text-navy pt-2">3. Entorno de Demostración y Simulación</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
+                    La consola de triaje y la calculadora de ahorro presentes en la web son herramientas demostrativas e interactivas calculadas sobre estimaciones estándar (reducción del 81,4% del tiempo manual). Los nombres de facturas mostrados en la demo (Iberdrola, Telefónica) corresponden a datos simulados con fines pedagógicos.
+                  </p>
+                </>
+              )}
+
+              {tab === "cookies" && (
+                <>
+                  <h4 className="text-base font-bold text-navy">1. ¿Qué son las cookies?</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
+                    Una cookie es un pequeño archivo técnico que se almacena en su navegador al visitar este sitio web para garantizar el funcionamiento fluido, recordar preferencias de navegación y permitir una experiencia interactiva segura.
+                  </p>
+
+                  <h4 className="text-base font-bold text-navy pt-2">2. Clasificación de Cookies en KontaPro</h4>
+                  <div className="space-y-3">
+                    <div className="rounded-xl border border-border bg-surface p-3.5">
+                      <strong className="block text-navy text-xs sm:text-sm font-bold">Cookies Técnicas (Estrictamente Necesarias)</strong>
+                      <span className="text-xs text-muted-foreground">
+                        Permiten la navegación segura, el funcionamiento del formulario contra ataques CSRF/spam y el almacenamiento temporal de datos para la simulación. No requieren consentimiento y están siempre activas.
+                      </span>
+                    </div>
+                    <div className="rounded-xl border border-border bg-surface p-3.5">
+                      <strong className="block text-navy text-xs sm:text-sm font-bold">Cookies de Análisis y Métricas Agregadas</strong>
+                      <span className="text-xs text-muted-foreground">
+                        Miden de forma totalmente anonimizada la estabilidad de carga de los componentes interactivos. Se activan únicamente si usted lo autoriza en el panel de configuración.
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground pt-1">
+                    KontaPro <strong>no utiliza cookies de publicidad comportamental de terceros</strong> ni comercializa con redes de rastreo publicitario.
+                  </p>
+                </>
+              )}
+
+              {tab === "security" && (
+                <>
+                  <div className="rounded-2xl border border-success/30 bg-success/10 p-4 text-xs text-success leading-relaxed flex items-start gap-3">
+                    <Lock className="h-5 w-5 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="font-bold text-sm block">Seguridad Blindada & Homologación Veri*factu</strong>
+                      <span>Cumplimiento del Real Decreto 1007/2023 y la Ley 11/2021 de Medidas de Prevención y Lucha contra el Fraude Fiscal.</span>
+                    </div>
+                  </div>
+
+                  <h4 className="text-base font-bold text-navy pt-1">1. Registro de Asientos Inalterables y Hash SHA-256</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
+                    Cada asiento y factura procesada a través de KontaPro genera una huella digital criptográfica encadenada (SHA-256) garantizando la inalterabilidad, trazabilidad e integridad de los registros contables, en plena concordancia con las especificaciones técnicas publicadas por la Agencia Estatal de Administración Tributaria (AEAT).
+                  </p>
+
+                  <h4 className="text-base font-bold text-navy pt-2">2. Cifrado y Alojamiento en la Unión Europea</h4>
+                  <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-muted-foreground">
+                    <li><strong className="text-navy">Cifrado en tránsito:</strong> Conexiones protegidas mediante TLS 1.3 con certificados SSL de alta seguridad y cabeceras estrictas HSTS.</li>
+                    <li><strong className="text-navy">Cifrado en reposo:</strong> Bases de datos cifradas mediante el estándar bancario AES-256.</li>
+                    <li><strong className="text-navy">Aislamiento por Despacho:</strong> Particionamiento lógico estricto para que la contabilidad de cada cliente permanezca completamente aislada e inaccesible para otros usuarios.</li>
+                  </ul>
+
+                  <h4 className="text-base font-bold text-navy pt-2">3. Enlace con ERPs Tradicionales</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
+                    La sincronización con A3, Sage, Contasol u Holded se efectúa mediante conectores certificados y ficheros estándar (SUENLACE, ficheros ASCII/XML oficiales) sin exponer credenciales críticas de bases de datos locales.
+                  </p>
+                </>
+              )}
+
+              {tab === "preferences" && (
+                <div className="space-y-4">
+                  <h4 className="text-base font-bold text-navy">Panel de Configuración de Privacidad</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
+                    Ajuste sus preferencias de almacenamiento local. Puede modificarlas en cualquier momento.
+                  </p>
+
+                  <div className="rounded-2xl border border-border bg-surface p-4 flex items-center justify-between gap-4">
+                    <div>
+                      <strong className="text-navy text-xs sm:text-sm block">Cookies Técnicas Obligatorias</strong>
+                      <span className="text-xs text-muted-foreground">Necesarias para la navegación y envío seguro de formularios.</span>
+                    </div>
+                    <span className="rounded-lg bg-primary/10 px-3 py-1 text-xs font-semibold text-primary shrink-0">Siempre activas</span>
+                  </div>
+
+                  <div className="rounded-2xl border border-border bg-surface p-4 flex items-center justify-between gap-4">
+                    <div>
+                      <strong className="text-navy text-xs sm:text-sm block">Telemetría y Rendimiento Técnico</strong>
+                      <span className="text-xs text-muted-foreground">Métricas anónimas para evaluar el rendimiento de la demo en vivo.</span>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={analyticsConsent}
+                        onChange={(e) => setAnalyticsConsent(e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                  </div>
+
+                  {savedNotice && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="rounded-xl bg-success/15 px-4 py-2.5 text-xs font-semibold text-success flex items-center gap-2"
+                    >
+                      <Check className="h-4 w-4" /> Preferencias guardadas correctamente.
+                    </motion.div>
+                  )}
+
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={handleSaveCookiePreferences}
+                      className="rounded-xl bg-primary px-5 py-2.5 text-xs sm:text-sm font-semibold text-primary-foreground hover:bg-primary-hover shadow-glow transition-colors cursor-pointer"
+                    >
+                      Guardar Preferencias
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="flex items-center justify-between border-t border-border bg-surface px-6 py-4">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span className="text-navy font-semibold">Atención telefónica:</span>
+                <a href="tel:+34686766266" className="inline-flex items-center gap-1 font-bold text-primary hover:text-primary-hover transition-colors">
+                  <Phone className="h-3.5 w-3.5" /> 686 76 62 66
+                </a>
+              </div>
+              <button
+                type="button"
+                onClick={onClose}
+                className="rounded-xl border border-border bg-background px-4 py-2 text-xs sm:text-sm font-semibold text-navy hover:bg-muted transition-colors cursor-pointer"
+              >
+                Cerrar
+              </button>
+            </div>
+          </motion.div>
         </div>
-      </div>
-    </div>
+      )}
+    </AnimatePresence>
   );
 };
-
-export default LegalModal;
